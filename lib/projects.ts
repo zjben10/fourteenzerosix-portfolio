@@ -104,7 +104,7 @@ export const projects: Project[] = [
     tags: ["Content", "Climate Tech Accelerator"],
     description:
       "Authored a long-form article for Climate Drift exploring sustainable rubber innovation within the climate tech accelerator ecosystem.",
-    metric: "Placeholder metric",
+    metric: "",
     keyOutcomes: [
       "Placeholder outcome — swap with a real result from this project.",
       "Placeholder outcome — quantify impact where possible.",
