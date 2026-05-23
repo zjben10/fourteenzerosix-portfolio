@@ -32,18 +32,31 @@ function RowContent({ project }: { project: Project }) {
             </span>
           ))}
         </div>
+        {/* Description visible on mobile only — desktop uses its own grid column */}
+        {project.description && (
+          <p className="mt-3 text-sm leading-relaxed md:hidden" style={{ color: "rgba(242,238,230,0.8)" }}>
+            {project.description}
+          </p>
+        )}
+        {project.metric && (
+          <span className="mt-2 block text-[11px] tracking-[0.15em] font-medium md:hidden" style={{ color: "var(--brand-sage)" }}>
+            {project.metric.toUpperCase()}
+          </span>
+        )}
       </div>
 
       <div className="hidden md:block">
         <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(242,238,230,0.8)" }}>
           {project.description}
         </p>
-        <span
-          className="text-[11px] tracking-[0.15em] font-medium"
-          style={{ color: "var(--brand-sage)" }}
-        >
-          {project.metric.toUpperCase()}
-        </span>
+        {project.metric && (
+          <span
+            className="text-[11px] tracking-[0.15em] font-medium"
+            style={{ color: "var(--brand-sage)" }}
+          >
+            {project.metric.toUpperCase()}
+          </span>
+        )}
       </div>
 
       <div className="hidden md:flex items-start justify-end pt-1">
