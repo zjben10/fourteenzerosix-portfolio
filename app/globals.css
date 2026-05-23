@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --brand-cream: #F2EEE6;
+  --brand-dark: #1A1714;
+  --brand-terracotta: #B5622A;
+  --brand-earth: #3D2010;
+  --brand-sage: #5D7A55;
+}
+
+@theme inline {
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-terracotta: var(--brand-terracotta);
+  --color-brand-earth: var(--brand-earth);
+  --color-brand-sage: var(--brand-sage);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--brand-cream);
+  color: var(--brand-dark);
+  font-family: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
