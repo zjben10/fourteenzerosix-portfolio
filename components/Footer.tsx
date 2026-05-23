@@ -1,8 +1,8 @@
 "use client";
 
 const socials = [
-  { label: "Instagram", href: "#" },
-  { label: "LinkedIn", href: "#" },
+  { label: "Instagram", href: "https://www.instagram.com/zjbceramics" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/zoeibenzon/" },
 ];
 
 export default function Footer() {
