@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects, getProjectBySlug } from "@/lib/projects";
+import PasswordGate from "@/components/PasswordGate";
 
 export async function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return projects
+    .filter((p) => !p.externalUrl)
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -27,47 +30,10 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
-  if (!project) notFound();
+  if (!project || project.externalUrl) notFound();
 
-  return (
-    <div style={{ backgroundColor: "var(--brand-cream)", minHeight: "100vh" }}>
-      {/* Nav bar */}
-      <header
-        className="fixed top-0 left-0 right-0 z-50"
-        style={{
-          backgroundColor: "rgba(242,238,230,0.9)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(26,23,20,0.08)",
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-xs tracking-[0.25em] uppercase font-medium"
-            style={{ color: "var(--brand-terracotta)" }}
-          >
-            fourteenzerosix
-          </Link>
-          {/* Green hover: sage = navigate / proceed */}
-          <Link
-            href="/#work"
-            className="hover-sage inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium"
-            style={{ color: "rgba(26,23,20,0.5)" }}
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Back to work
-          </Link>
-        </div>
-      </header>
-
+  const projectContent = (
+    <>
       <main className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-24">
         {/* ── Tag · Date ── */}
         <div className="flex items-center gap-3 mb-6">
@@ -132,10 +98,7 @@ export default async function ProjectPage({
 
         {/* ── Content grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
-          {/* Left col: Key Outcomes + Challenge */}
           <div className="md:col-span-7 flex flex-col gap-14">
-
-            {/* Key Outcomes — green: growth / positive results */}
             <section>
               <p
                 className="text-[10px] tracking-[0.3em] uppercase font-medium mb-5"
@@ -161,7 +124,6 @@ export default async function ProjectPage({
               </ul>
             </section>
 
-            {/* Challenge */}
             <section>
               <p
                 className="text-[10px] tracking-[0.3em] uppercase font-medium mb-5"
@@ -178,10 +140,7 @@ export default async function ProjectPage({
             </section>
           </div>
 
-          {/* Right col: Scope + Tools */}
           <div className="md:col-span-5 flex flex-col gap-12">
-
-            {/* Scope */}
             <section>
               <p
                 className="text-[10px] tracking-[0.3em] uppercase font-medium mb-5"
@@ -205,7 +164,6 @@ export default async function ProjectPage({
               </ul>
             </section>
 
-            {/* Tools Used */}
             <section>
               <p
                 className="text-[10px] tracking-[0.3em] uppercase font-medium mb-5"
@@ -232,7 +190,6 @@ export default async function ProjectPage({
         </div>
       </main>
 
-      {/* Page footer */}
       <footer
         className="py-12 px-6 md:px-12"
         style={{ borderTop: "1px solid rgba(26,23,20,0.1)" }}
@@ -262,6 +219,53 @@ export default async function ProjectPage({
           </Link>
         </div>
       </footer>
+    </>
+  );
+
+  return (
+    <div style={{ backgroundColor: "var(--brand-cream)", minHeight: "100vh" }}>
+      {/* Nav bar */}
+      <header
+        className="fixed top-0 left-0 right-0 z-50"
+        style={{
+          backgroundColor: "rgba(242,238,230,0.9)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(26,23,20,0.08)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+          <Link
+            href="/"
+            className="text-xs tracking-[0.25em] uppercase font-medium"
+            style={{ color: "var(--brand-terracotta)" }}
+          >
+            fourteenzerosix
+          </Link>
+          {/* Green hover: sage = navigate / proceed */}
+          <Link
+            href="/#work"
+            className="hover-sage inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium"
+            style={{ color: "rgba(26,23,20,0.5)" }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Back to work
+          </Link>
+        </div>
+      </header>
+
+      {project.password ? (
+        <PasswordGate password={project.password}>{projectContent}</PasswordGate>
+      ) : (
+        projectContent
+      )}
     </div>
   );
 }

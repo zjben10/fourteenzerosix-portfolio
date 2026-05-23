@@ -12,6 +12,8 @@ export type Project = {
   challenge: string;
   scope: string[];
   tools: string[];
+  password?: string;
+  externalUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -39,6 +41,7 @@ export const projects: Project[] = [
       "B2B positioning",
     ],
     tools: ["Notion", "HubSpot", "Google Docs"],
+    password: "capitalprojects",
   },
   {
     id: 2,
@@ -115,6 +118,7 @@ export const projects: Project[] = [
       "Editorial strategy",
     ],
     tools: ["Notion", "Google Docs", "Ahrefs"],
+    externalUrl: "https://climatedrift.substack.com/p/are-there-sustainable-alternatives",
   },
   {
     id: 5,
