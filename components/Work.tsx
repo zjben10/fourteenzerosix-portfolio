@@ -10,28 +10,19 @@ export default function Work() {
     >
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-16 md:mb-20">
-          <div>
-            <p
-              className="text-xs tracking-[0.3em] uppercase font-medium mb-4"
-              style={{ color: "var(--brand-terracotta)" }}
-            >
-              Selected Work
-            </p>
-            <h2
-              className="text-3xl md:text-5xl font-semibold leading-tight"
-              style={{ color: "rgba(242,238,230,0.95)" }}
-            >
-              Projects I&apos;ve built &amp; launched.
-            </h2>
-          </div>
+        <div className="mb-16 md:mb-20">
           <p
-            className="text-sm leading-relaxed max-w-xs md:text-right"
-            style={{ color: "rgba(242,238,230,0.4)" }}
+            className="text-xs tracking-[0.3em] uppercase font-medium mb-4"
+            style={{ color: "var(--brand-terracotta)" }}
           >
-            Six placeholder engagements — swap in your real brand work,
-            campaigns, and results.
+            Selected Work
           </p>
+          <h2
+            className="text-3xl md:text-5xl font-semibold leading-tight"
+            style={{ color: "rgba(242,238,230,0.95)" }}
+          >
+            Projects I&apos;ve built &amp; launched.
+          </h2>
         </div>
 
         {/* Row list */}

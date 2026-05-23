@@ -3,7 +3,6 @@
 const socials = [
   { label: "Instagram", href: "#" },
   { label: "LinkedIn", href: "#" },
-  { label: "Email", href: "mailto:zoei@fourteenzerosix.com" },
 ];
 
 export default function Footer() {
@@ -28,16 +27,6 @@ export default function Footer() {
           >
             Let&apos;s work together.
           </p>
-          {/* Green email link: green = action / go in UX color theory */}
-          <a
-            href="mailto:zoei@fourteenzerosix.com"
-            className="inline-block mt-3 text-sm underline underline-offset-4 transition-colors duration-200"
-            style={{ color: "var(--brand-dark)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-dark)")}
-          >
-            zoei@fourteenzerosix.com
-          </a>
         </div>
 
         {/* Right */}
