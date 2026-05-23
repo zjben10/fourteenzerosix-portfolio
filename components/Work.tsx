@@ -35,7 +35,7 @@ function RowContent({ project }: { project: Project }) {
       </div>
 
       <div className="hidden md:block">
-        <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(242,238,230,0.5)" }}>
+        <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(242,238,230,0.8)" }}>
           {project.description}
         </p>
         <span

@@ -1,8 +1,8 @@
 "use client";
 
 const socials = [
-  { label: "Instagram", href: "#" },
-  { label: "LinkedIn", href: "#" },
+  { label: "Instagram", href: "https://www.instagram.com/zjbceramics" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/zoeibenzon/" },
 ];
 
 export default function Footer() {
@@ -36,6 +36,8 @@ export default function Footer() {
               <a
                 key={s.label}
                 href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"
                 style={{ color: "rgba(26,23,20,0.45)" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
