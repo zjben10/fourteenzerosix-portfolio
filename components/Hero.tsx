@@ -10,12 +10,12 @@ export default function Hero() {
           Gen Marketer
         </p>
 
-        {/* Name */}
+        {/* Name — reduced from 14vw/13rem */}
         <h1
           className="font-bold leading-[0.9] tracking-tight mb-10 md:mb-14"
           style={{
             fontFamily: "var(--font-space-grotesk), sans-serif",
-            fontSize: "clamp(4rem, 14vw, 13rem)",
+            fontSize: "clamp(3rem, 8.5vw, 8rem)",
             color: "var(--brand-dark)",
           }}
         >
@@ -35,6 +35,7 @@ export default function Hero() {
           >
             Strategic marketing across brand, content, and digital — built to connect and convert.
           </p>
+          {/* Green arrow: sage = forward direction / progress in UX color theory */}
           <a
             href="#work"
             className="inline-flex items-center gap-3 text-sm tracking-[0.1em] uppercase font-medium group"
@@ -43,7 +44,7 @@ export default function Hero() {
             View Work
             <span
               className="inline-block w-8 h-px transition-all duration-300 group-hover:w-12"
-              style={{ backgroundColor: "var(--brand-terracotta)" }}
+              style={{ backgroundColor: "var(--brand-sage)" }}
             />
           </a>
         </div>

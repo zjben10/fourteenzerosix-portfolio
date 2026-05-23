@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,24 +21,30 @@ export default function Nav() {
       }}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-        <span
+        <Link
+          href="/"
           className="text-xs tracking-[0.25em] uppercase font-medium"
           style={{ color: "var(--brand-terracotta)" }}
         >
           fourteenzerosix
-        </span>
+        </Link>
         <nav className="flex gap-8">
+          {/* Green hover: sage signals "go / proceed" — a navigational affordance in UX color theory */}
           <a
-            href="#work"
-            className="text-xs tracking-[0.15em] uppercase font-medium opacity-60 hover:opacity-100 transition-opacity"
-            style={{ color: "var(--brand-dark)" }}
+            href="/#work"
+            className="text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"
+            style={{ color: "rgba(26,23,20,0.5)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(26,23,20,0.5)")}
           >
             Work
           </a>
           <a
-            href="#contact"
-            className="text-xs tracking-[0.15em] uppercase font-medium opacity-60 hover:opacity-100 transition-opacity"
-            style={{ color: "var(--brand-dark)" }}
+            href="/#contact"
+            className="text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"
+            style={{ color: "rgba(26,23,20,0.5)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(26,23,20,0.5)")}
           >
             Contact
           </a>

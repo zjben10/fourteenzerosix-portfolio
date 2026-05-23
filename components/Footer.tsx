@@ -1,3 +1,5 @@
+"use client";
+
 const socials = [
   { label: "Instagram", href: "#" },
   { label: "LinkedIn", href: "#" },
@@ -26,10 +28,13 @@ export default function Footer() {
           >
             Let&apos;s work together.
           </p>
+          {/* Green email link: green = action / go in UX color theory */}
           <a
             href="mailto:zoei@fourteenzerosix.com"
-            className="inline-block mt-3 text-sm underline underline-offset-4 transition-opacity hover:opacity-60"
+            className="inline-block mt-3 text-sm underline underline-offset-4 transition-colors duration-200"
             style={{ color: "var(--brand-dark)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-dark)")}
           >
             zoei@fourteenzerosix.com
           </a>
@@ -42,8 +47,10 @@ export default function Footer() {
               <a
                 key={s.label}
                 href={s.href}
-                className="text-xs tracking-[0.15em] uppercase font-medium opacity-50 hover:opacity-100 transition-opacity"
-                style={{ color: "var(--brand-dark)" }}
+                className="text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"
+                style={{ color: "rgba(26,23,20,0.45)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(26,23,20,0.45)")}
               >
                 {s.label}
               </a>
