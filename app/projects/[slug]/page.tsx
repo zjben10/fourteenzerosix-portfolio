@@ -138,6 +138,36 @@ export default async function ProjectPage({
                 {project.challenge}
               </p>
             </section>
+
+            {project.videos && project.videos.length > 0 && (
+              <section>
+                <p
+                  className="text-[10px] tracking-[0.3em] uppercase font-medium mb-5"
+                  style={{ color: "var(--brand-sage)" }}
+                >
+                  Videos
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {project.videos.map((v) => (
+                    <li key={v.label} className="flex items-center gap-3">
+                      <span
+                        className="mt-0 flex-shrink-0 w-1 h-1 rounded-full"
+                        style={{ backgroundColor: "var(--brand-sage)" }}
+                      />
+                      <a
+                        href={v.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm underline underline-offset-2 transition-opacity hover:opacity-60"
+                        style={{ color: "rgba(26,23,20,0.75)" }}
+                      >
+                        {v.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
 
           <div className="md:col-span-5 flex flex-col gap-12">
