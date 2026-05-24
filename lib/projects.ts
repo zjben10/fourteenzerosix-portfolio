@@ -14,6 +14,7 @@ export type Project = {
   tools: string[];
   password?: string;
   externalUrl?: string;
+  videos?: { label: string; url: string }[];
 };
 
 export const projects: Project[] = [
@@ -260,21 +261,28 @@ export const projects: Project[] = [
     tags: ["Video", "UX Research", "Operations"],
     description:
       "Produced Scout Stories, a content series spotlighting UX research insights and the dscout community through video and editorial.",
-    metric: "Placeholder metric",
+    metric: "4 full-length videos produced for brand event",
     keyOutcomes: [
-      "Placeholder outcome — swap with a real result from this project.",
-      "Placeholder outcome — quantify impact where possible.",
-      "Placeholder outcome — focus on business value delivered.",
+      "Increased participant “Scout” panel growth through community-centered video storytelling.",
+      "Produced evergreen video content used to promote the participant platform on an ongoing basis.",
+      "Project managed timelines from survey creation through post-production, ensuring timely delivery for event debut.",
+      "Led creative direction and post-production edits across four full-length Scout profile videos, aired live at brand event.",
     ],
     challenge:
-      "Describe the strategic or creative problem this project set out to solve. What was the tension, constraint, or opportunity that shaped the work?",
+      "Showcase core platform elements to increase usage of dscout's participant management tool. With stakeholders across the CEO, Content, and External Editors, the project needed to produce compelling, evergreen video content that spotlighted the Scout community — driving participant panel growth and giving the brand a human story to tell.",
     scope: [
+      "Project management",
+      "Creative direction",
       "Video production",
-      "Content strategy",
-      "UX research storytelling",
-      "Operations",
+      "Post-production",
     ],
     tools: ["Premiere Pro", "Notion", "Frame.io", "YouTube"],
+    videos: [
+      { label: "JJ", url: "https://www.youtube.com/watch?v=FZkmQhIB9Sc" },
+      { label: "Caroline", url: "https://www.youtube.com/watch?v=tZfJEyS4xxs" },
+      { label: "Steph", url: "https://www.youtube.com/watch?v=dmcfZC9BER8" },
+      { label: "Joyce", url: "https://www.youtube.com/watch?v=sXuC88bGaY0" },
+    ],
   },
 ];
 
