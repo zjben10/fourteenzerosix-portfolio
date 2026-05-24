@@ -173,7 +173,7 @@ export const projects: Project[] = [
       "Digital programming",
     ],
     tools: ["Hopin", "Figma", "Notion", "Webflow"],
-    heroImage: "/images/people-nerds-virtual-conference-hero.png",
+    heroImage: "/images/people nerds 2022.jpg",
   },
   {
     id: 7,
@@ -227,7 +227,7 @@ export const projects: Project[] = [
       "Cross-functional coordination",
     ],
     tools: ["Eventbrite", "Figma", "Notion", "Canva"],
-    heroImage: "/images/people-nerds-conference-hero.png",
+    heroImage: "/images/PN 2019 Image .001.jpeg",
   },
   {
     id: 9,
