@@ -15,6 +15,7 @@ export type Project = {
   password?: string;
   externalUrl?: string;
   videos?: { label: string; url: string }[];
+  heroImage?: string;
 };
 
 export const projects: Project[] = [
@@ -209,21 +210,23 @@ export const projects: Project[] = [
     tags: ["Brand", "In-Person Events", "B2B"],
     description:
       "Designed and executed the in-person People Nerds conference — an immersive brand experience for the UX research community.",
-    metric: "Generated $1.4M of new and existing revenue",
+    metric: "Generated $1.4M in new and existing business revenue",
     keyOutcomes: [
-      "Placeholder outcome — swap with a real result from this project.",
-      "Placeholder outcome — quantify impact where possible.",
-      "Placeholder outcome — focus on business value delivered.",
+      "Generated $1.4M in new and existing business revenue.",
+      "Achieved a 70% attendee show rate.",
+      "Retrenched brand high ground and created a stronger link between People Nerds and the dscout platform, driving measurable platform usage and reducing churn.",
+      "Translated a design-forward vision into a $500,000 on-budget reality — educating cross-functional teams on event marketing goals and establishing systems across the marketing tool stack for budgeting, design, and stakeholder collaboration.",
     ],
     challenge:
-      "Describe the strategic or creative problem this project set out to solve. What was the tension, constraint, or opportunity that shaped the work?",
+      "Link the People Nerds brand with the dscout platform, reduce churn through platform education, and get researchers in a room to share best practices — all at scale, live, in San Francisco. Working with Leadership, Marketing, and Sales, the challenge was to create dscout's inaugural in-person conference: curate a speaker program, build a design-forward experience, and execute it within budget.",
     scope: [
-      "Event production",
-      "Brand experience",
-      "Venue & logistics",
-      "Programming",
+      "Inaugural event strategy",
+      "Speaker programming",
+      "Budget management ($500K)",
+      "Cross-functional coordination",
     ],
     tools: ["Eventbrite", "Figma", "Notion", "Canva"],
+    heroImage: "/images/people-nerds-conference-hero.png",
   },
   {
     id: 9,
