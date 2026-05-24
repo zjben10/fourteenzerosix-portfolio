@@ -66,35 +66,46 @@ export default async function ProjectPage({
           {project.title}
         </h1>
 
-        {/* ── Image placeholder ── */}
-        <div
-          className="w-full mb-16 md:mb-20 flex items-center justify-center"
-          style={{
-            aspectRatio: "16/9",
-            backgroundColor: "rgba(26,23,20,0.06)",
-            border: "1px dashed rgba(26,23,20,0.2)",
-          }}
-        >
-          <div className="text-center">
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              className="mx-auto mb-3 opacity-25"
-            >
-              <rect x="4" y="8" width="32" height="24" rx="2" stroke="#1A1714" strokeWidth="1.5" />
-              <circle cx="14" cy="17" r="3" stroke="#1A1714" strokeWidth="1.5" />
-              <path d="M4 28l8-6 6 5 6-8 12 9" stroke="#1A1714" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <p
-              className="text-xs tracking-[0.15em] uppercase"
-              style={{ color: "rgba(26,23,20,0.3)" }}
-            >
-              Project image
-            </p>
+        {/* ── Hero image / placeholder ── */}
+        {project.heroImage ? (
+          <div className="w-full mb-16 md:mb-20 overflow-hidden rounded-sm">
+            <img
+              src={project.heroImage}
+              alt={`${project.title} hero`}
+              className="w-full object-cover"
+              style={{ maxHeight: "600px" }}
+            />
           </div>
-        </div>
+        ) : (
+          <div
+            className="w-full mb-16 md:mb-20 flex items-center justify-center"
+            style={{
+              aspectRatio: "16/9",
+              backgroundColor: "rgba(26,23,20,0.06)",
+              border: "1px dashed rgba(26,23,20,0.2)",
+            }}
+          >
+            <div className="text-center">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                className="mx-auto mb-3 opacity-25"
+              >
+                <rect x="4" y="8" width="32" height="24" rx="2" stroke="#1A1714" strokeWidth="1.5" />
+                <circle cx="14" cy="17" r="3" stroke="#1A1714" strokeWidth="1.5" />
+                <path d="M4 28l8-6 6 5 6-8 12 9" stroke="#1A1714" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <p
+                className="text-xs tracking-[0.15em] uppercase"
+                style={{ color: "rgba(26,23,20,0.3)" }}
+              >
+                Project image
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* ── Content grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
