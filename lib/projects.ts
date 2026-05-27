@@ -184,16 +184,16 @@ export const projects: Project[] = [
     client: "dscout",
     tags: ["GTM", "B2B", "Campaign"],
     description:
-      "Drove customer marketing, lifecycle email, and sales enablement programs that contributed directly to new and existing revenue at dscout.",
+      "dscout's product was powerful — but customers weren't activating. In 2020, I stepped into the gap between 'signed' and 'using it' to build an onboarding experience from scratch that actually stuck.",
     metric: "Doubled activation rates after one quarter",
     keyOutcomes: [
-      "Doubled activation rates after one quarter.",
-      "Leadership staffed a new team to support evolving onboarding pain points surfaced through the program.",
-      "Connected product designers and managers with sales and success feedback channels, creating lasting cross-functional collaboration.",
-      "Built a pre-, during-, and post-webinar strategy that established a consistent webinar practice — including guest sourcing, design asset collaboration, and post-webinar follow-up flow to attendees and registrants.",
+      "Doubled activation rates after one quarter — proof that the right onboarding experience changes behavior, not just awareness.",
+      "The pain points surfaced through the program were significant enough that leadership staffed an entirely new team to own them long-term.",
+      "For the first time, product designers and managers were looped into sales and success feedback — closing a loop that had been open for years.",
+      "Built a full webinar practice from the ground up: pre-, during-, and post-event strategy, guest sourcing, design collaboration, and a handoff flow that made sure no lead fell through the cracks.",
     ],
     challenge:
-      "Increase usage and visibility among two of dscout's largest accounts, set the foundation for an iterative onboarding process, and create consistent cross-functional collaboration between marketing and product. Working with Marketing, Product, and Sales, the task was to design and execute a new customer onboarding experience from scratch — one that could scale.",
+      "It was mid-2020, and two of dscout's largest accounts weren't getting what they needed out of the platform. The product team was shipping, sales was closing — but nobody owned what happened after the contract was signed. Activation rates were suffering, and the silence between teams was getting louder. The opportunity was to step into that gap: design an onboarding experience that felt human, build a repeatable playbook, and get marketing, product, and sales aligned around the same customer for the first time.",
     scope: [
       "Customer onboarding",
       "Webinar strategy & execution",
