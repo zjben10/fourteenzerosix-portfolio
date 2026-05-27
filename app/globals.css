@@ -37,6 +37,15 @@ a:hover .project-arrow {
   color: var(--brand-sage);
 }
 
+/* Fun section arrow: cream at rest, bright cream on row hover */
+.fun-arrow {
+  color: rgba(242, 238, 230, 0.25);
+  transition: color 0.2s ease;
+}
+div:hover .fun-arrow {
+  color: rgba(242, 238, 230, 0.9);
+}
+
 body {
   background-color: var(--brand-cream);
   color: var(--brand-dark);
