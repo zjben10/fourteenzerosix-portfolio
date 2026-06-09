@@ -38,15 +38,6 @@ export default function Nav() {
           >
             Work
           </a>
-          <Link
-            href="/fun"
-            className="text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"
-            style={{ color: "rgba(26,23,20,0.5)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(26,23,20,0.5)")}
-          >
-            Fun
-          </Link>
           <a
             href="/#contact"
             className="text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"

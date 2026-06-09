@@ -33,7 +33,7 @@ export default function Hero() {
             className="text-sm md:text-base leading-relaxed max-w-sm"
             style={{ color: "rgba(26,23,20,0.55)" }}
           >
-            Strategic marketing across brand, content, and digital — built to connect and convert.
+            Strategic marketing across brand, content, and digital.
           </p>
           {/* Green arrow: sage = forward direction / progress in UX color theory */}
           <a

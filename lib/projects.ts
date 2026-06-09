@@ -26,9 +26,9 @@ export const projects: Project[] = [
     date: "2026",
     title: "Roebling GTM",
     client: "Roebling",
-    tags: ["B2B", "GTM", "Content"],
+    tags: ["B2B", "GTM"],
     description:
-      "Placeholder description for this go-to-market project. Replace with your real project story and outcomes.",
+      "As marketing lead at Roebling, building GTM strategy, demand generation, and brand positioning from the ground up.",
     metric: "Placeholder metric",
     keyOutcomes: [
       "Placeholder outcome — swap with a real result from this project.",
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     tags: ["Brand", "Strategy", "Partnerships"],
     description:
       "Built and launched the brand identity and community strategy for Outdoor Color Crew, driving engagement through partnerships and grassroots marketing.",
-    metric: "Placeholder metric",
+    metric: "",
     keyOutcomes: [
       "Placeholder outcome — swap with a real result from this project.",
       "Placeholder outcome — quantify impact where possible.",
@@ -229,32 +229,6 @@ export const projects: Project[] = [
     ],
     tools: ["Eventbrite", "Figma", "Notion", "Canva"],
     heroImage: "/images/PN 2019 Image .001.jpeg",
-  },
-  {
-    id: 9,
-    slug: "design-operations",
-    year: "2019–2023",
-    date: "2019 & 2023",
-    title: "Design Operations",
-    client: "dscout",
-    tags: ["Design", "Operations"],
-    description:
-      "Managed design production and operations at dscout across two separate engagements, building systems that scaled creative output.",
-    metric: "Placeholder metric",
-    keyOutcomes: [
-      "Placeholder outcome — swap with a real result from this project.",
-      "Placeholder outcome — quantify impact where possible.",
-      "Placeholder outcome — focus on business value delivered.",
-    ],
-    challenge:
-      "Describe the strategic or creative problem this project set out to solve. What was the tension, constraint, or opportunity that shaped the work?",
-    scope: [
-      "Design production",
-      "Process systems",
-      "Asset management",
-      "Team coordination",
-    ],
-    tools: ["Figma", "Notion", "Airtable", "Loom"],
   },
   {
     id: 10,
