@@ -189,7 +189,7 @@ export const projects: Project[] = [
     client: "dscout",
     tags: ["GTM", "B2B", "Campaign"],
     description:
-      "dscout's product was powerful, but customers weren't activating. In 2020, I stepped into the gap between 'signed' and 'using it' to build an onboarding experience from scratch that actually stuck.",
+      "Part of a larger land and expand account management strategy, this project built the onboarding and engagement infrastructure to deepen usage within dscout's largest accounts and drive expansion revenue.",
     metric: "Doubled activation rates after one quarter",
     keyOutcomes: [
       "Doubled activation rates after one quarter, proof that the right onboarding experience changes behavior, not just awareness.",
@@ -198,7 +198,7 @@ export const projects: Project[] = [
       "Built a full webinar practice from the ground up: pre-, during-, and post-event strategy, guest sourcing, design collaboration, and a handoff flow that made sure no lead fell through the cracks.",
     ],
     challenge:
-      "It was mid-2020, and two of dscout's largest accounts weren't getting what they needed out of the platform. The product team was shipping, sales was closing, but nobody owned what happened after the contract was signed. Activation rates were suffering, and the silence between teams was getting louder. The opportunity was to step into that gap: design an onboarding experience that felt human, build a repeatable playbook, and get marketing, product, and sales aligned around the same customer for the first time.",
+      "As part of a land and expand account management strategy, the goal was to increase usage and visibility within two of dscout's largest accounts and build the foundation for a repeatable process. Nobody owned what happened after a deal was signed, and marketing, product, and sales weren't talking to each other about the same customers. The opportunity was to build the infrastructure that connected those teams and created a consistent onboarding experience that could scale.",
     scope: [
       "Customer onboarding",
       "Webinar strategy & execution",
