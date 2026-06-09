@@ -38,25 +38,12 @@ function RowContent({ project }: { project: Project }) {
             {project.description}
           </p>
         )}
-        {project.metric && (
-          <span className="mt-2 block text-[11px] tracking-[0.15em] font-medium md:hidden" style={{ color: "var(--brand-sage)" }}>
-            {project.metric.toUpperCase()}
-          </span>
-        )}
       </div>
 
       <div className="hidden md:block">
-        <p className="text-sm leading-relaxed mb-3" style={{ color: "rgba(242,238,230,0.8)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "rgba(242,238,230,0.8)" }}>
           {project.description}
         </p>
-        {project.metric && (
-          <span
-            className="text-[11px] tracking-[0.15em] font-medium"
-            style={{ color: "var(--brand-sage)" }}
-          >
-            {project.metric.toUpperCase()}
-          </span>
-        )}
       </div>
 
       <div className="hidden md:flex items-start justify-end pt-1">
