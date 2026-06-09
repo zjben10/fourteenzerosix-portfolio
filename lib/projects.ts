@@ -58,7 +58,7 @@ export const projects: Project[] = [
     tags: ["Brand", "Partnerships", "GTM"],
     description:
       "Placeholder description for this brand campaign. Replace with your real project story and outcomes.",
-    metric: "Placeholder metric",
+    metric: "",
     keyOutcomes: [
       "Placeholder outcome: swap with a real result from this project.",
       "Placeholder outcome: quantify impact where possible.",
@@ -135,22 +135,23 @@ export const projects: Project[] = [
     client: "dscout",
     tags: ["Brand", "Web", "B2B", "Digital Media"],
     description:
-      "Led events and digital media strategy for the People Nerds webinar series across a five-year run, building a loyal UX research community.",
-    metric: "",
+      "Built and scaled the People Nerds webinar program from scratch, growing it into dscout's highest driver of leads and a go-to resource for the UX research community.",
+    metric: "74 to 964 registrants in the first year; 300-400 median at scale",
     keyOutcomes: [
-      "Placeholder outcome: swap with a real result from this project.",
-      "Placeholder outcome: quantify impact where possible.",
-      "Placeholder outcome: focus on business value delivered.",
+      "Grew webinar registrations 13x in the first year, from 74 registrants in February 2018 to a peak of 964 in September, establishing People Nerds webinars as dscout's highest driver of leads.",
+      "After reaching peak registration, stabilized a consistent median of 300-400 registrants per month by building a repeatable webinar playbook and production process.",
+      "Expanded the format mix from single-speaker sessions into panels, use cases, and interviews to meet UX researchers at every level of their practice.",
+      "Experimented continuously with new engagement strategies across five years, creating an evergreen content library that extended the value of each webinar well past the live event.",
     ],
     challenge:
-      "Describe the strategic or creative problem this project set out to solve. What was the tension, constraint, or opportunity that shaped the work?",
+      "People Nerds webinars were dscout's highest-performing lead channel, but they lacked the infrastructure to scale. The goal was to build consistency into the program, create a repeatable playbook, and keep experimenting with formats and engagement strategies to grow and retain a community of UX researchers over the long term.",
     scope: [
-      "Event strategy",
-      "Digital media",
+      "Webinar strategy & production",
+      "Content programming",
       "Community building",
-      "Web",
+      "Lead generation",
     ],
-    tools: ["Zoom", "Notion", "HubSpot", "Webflow"],
+    tools: ["Zoom", "HubSpot", "Webflow", "Notion"],
   },
   {
     id: 6,
@@ -231,7 +232,7 @@ export const projects: Project[] = [
       "Budget management ($500K)",
       "Cross-functional coordination",
     ],
-    tools: ["Eventbrite", "Figma", "Notion", "Canva"],
+    tools: ["Eventbrite", "Figma", "Trello", "HubSpot", "Salesforce"],
     heroImage: "/images/PN 2019 Image .001.jpeg",
   },
   {
