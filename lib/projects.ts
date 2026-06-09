@@ -31,7 +31,7 @@ export const projects: Project[] = [
       "First marketing hire at Roebling, building the company's entire marketing function from zero and leading the Synonym-to-Roebling rebrand ahead of its July 2025 self-service launch.",
     metric: "",
     keyOutcomes: [
-      "Led the end-to-end rebrand from Synonym to Roebling, including the .co to .com domain migration, brand guidelines (Attila Sans Sharp + Inter, navy/gold), and brand voice framework. Supported 8 pre-self-service deals and $300K in revenue in the first months post-rebrand.",
+      "Led the end-to-end rebrand from Synonym to Roebling, including the .co to .com domain migration, brand guidelines, and brand voice framework. Supported 8 pre-self-service deals and $300K in revenue in the first months post-rebrand.",
       "Met Q1 Early Access Program goals with 100 participants.",
       "Owned end-to-end event strategy across 25+ annual tradeshows and conferences, including target account selection, pre-event outreach, on-site execution, and post-event conversion. Created the Steel in the Ground dinner series to push late-stage and early-stage prospects down the funnel.",
       "Built the full Q2 demand gen slate: two Roland Berger co-hosted webinars, ChemE Show, Reindustrialize Detroit, R&D-to-FID gated asset, and EAP drip campaign. Completed the nine-piece blog series and the R&D to FID in the Age of AI handbook.",
