@@ -182,6 +182,23 @@ export default async function ProjectPage({
           </div>
 
           <div className="md:col-span-5 flex flex-col gap-12">
+            {project.metric && (
+              <section>
+                <p
+                  className="text-[10px] tracking-[0.3em] uppercase font-medium mb-3"
+                  style={{ color: "var(--brand-sage)" }}
+                >
+                  Key Result
+                </p>
+                <p
+                  className="text-lg font-semibold leading-snug"
+                  style={{ color: "var(--brand-dark)" }}
+                >
+                  {project.metric}
+                </p>
+              </section>
+            )}
+
             <section>
               <p
                 className="text-[10px] tracking-[0.3em] uppercase font-medium mb-5"
