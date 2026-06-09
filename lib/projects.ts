@@ -72,6 +72,7 @@ export const projects: Project[] = [
       "Go-to-market strategy",
     ],
     tools: ["Figma", "Notion", "Canva"],
+    password: "capitalprojects",
   },
   {
     id: 3,
