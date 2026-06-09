@@ -55,7 +55,7 @@ export const projects: Project[] = [
     date: "2025",
     title: "Better with Bio Campaign",
     client: "Roebling (formerly known as Synonym)",
-    tags: ["Brand", "Partnerships", "GTM"],
+    tags: ["Partnerships"],
     description:
       "Placeholder description for this brand campaign. Replace with your real project story and outcomes.",
     metric: "",
@@ -67,11 +67,12 @@ export const projects: Project[] = [
     challenge:
       "Describe the strategic or creative problem this project set out to solve. What was the tension, constraint, or opportunity that shaped the work?",
     scope: [
-      "Brand campaign",
-      "Partnerships",
-      "Go-to-market strategy",
+      "Building the marketing tech stack from scratch",
+      "Event strategy",
+      "Demand Gen and Content",
+      "Rebrand and brand systems",
     ],
-    tools: ["Figma", "Notion", "Canva"],
+    tools: ["HeyReach", "HubSpot", "Claude Cowork", "n8n", "Profound"],
     password: "capitalprojects",
   },
   {
