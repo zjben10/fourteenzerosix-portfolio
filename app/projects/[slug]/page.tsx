@@ -5,7 +5,7 @@ import PasswordGate from "@/components/PasswordGate";
 
 export async function generateStaticParams() {
   return projects
-    .filter((p) => !p.externalUrl)
+    .filter((p) => !p.externalUrl && !p.hidden)
     .map((p) => ({ slug: p.slug }));
 }
 
@@ -30,7 +30,7 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
-  if (!project || project.externalUrl) notFound();
+  if (!project || project.externalUrl || project.hidden) notFound();
 
   const projectContent = (
     <>

@@ -3,14 +3,7 @@ import { projects, type Project } from "@/lib/projects";
 
 function RowContent({ project }: { project: Project }) {
   return (
-    <div className="grid grid-cols-[3rem_1fr] md:grid-cols-[4rem_1fr_1fr_2rem] gap-x-6 md:gap-x-10 py-8 md:py-10 items-start">
-      <span
-        className="text-xs pt-1 tabular-nums"
-        style={{ color: "rgba(242,238,230,0.35)" }}
-      >
-        {project.year}
-      </span>
-
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_2rem] gap-x-6 md:gap-x-10 py-8 md:py-10 items-start">
       <div>
         <h3
           className="text-xl md:text-2xl font-semibold leading-snug mb-1 transition-opacity group-hover:opacity-70"
@@ -94,7 +87,7 @@ export default function Work() {
         </div>
 
         <div>
-          {projects.map((project) =>
+          {projects.filter((project) => !project.hidden).map((project) =>
             project.externalUrl ? (
               <a
                 key={project.id}

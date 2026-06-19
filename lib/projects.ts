@@ -16,6 +16,7 @@ export type Project = {
   externalUrl?: string;
   videos?: { label: string; url: string }[];
   heroImage?: string;
+  hidden?: boolean;
 };
 
 export const projects: Project[] = [
@@ -47,6 +48,7 @@ export const projects: Project[] = [
     ],
     tools: ["PostHog", "Attio", "Clay", "FullEnrich", "Notion"],
     password: "capitalprojects",
+    hidden: true, // temporarily hidden
   },
   {
     id: 2,
@@ -74,6 +76,7 @@ export const projects: Project[] = [
     ],
     tools: ["HeyReach", "HubSpot", "Claude Cowork", "n8n", "Profound"],
     password: "capitalprojects",
+    hidden: true, // temporarily hidden
   },
   {
     id: 3,
@@ -100,6 +103,7 @@ export const projects: Project[] = [
       "Launch marketing",
     ],
     tools: ["Figma", "Notion", "Instagram", "Canva"],
+    heroImage: "/images/outdoor-color-crew.webp",
   },
   {
     id: 4,
@@ -153,6 +157,7 @@ export const projects: Project[] = [
       "Lead generation",
     ],
     tools: ["Zoom", "HubSpot", "Webflow", "Notion"],
+    heroImage: "/images/people-nerds-webinars.webp",
   },
   {
     id: 6,
@@ -207,6 +212,7 @@ export const projects: Project[] = [
       "Post-webinar flow & sales handoff",
     ],
     tools: ["HubSpot", "Klaviyo", "Notion", "Google Analytics"],
+    hidden: true, // temporarily hidden
   },
   {
     id: 8,
