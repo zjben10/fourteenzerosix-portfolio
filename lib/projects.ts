@@ -253,7 +253,7 @@ export const projects: Project[] = [
     client: "dscout",
     tags: ["Video", "UX Research", "Operations"],
     description:
-      "Collaborated to produce Scout Stories, a content series spotlighting UX research insights and the dscout community through video and editorial.",
+      "Collaborated with internal and external stakeholders to produce Scout Stories, a content series spotlighting UX research insights and the dscout community through video and editorial.",
     metric: "4 full-length videos produced for brand event",
     keyOutcomes: [
       "Increased participant “Scout” panel growth through community-centered video storytelling.",
