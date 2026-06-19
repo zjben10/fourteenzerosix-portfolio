@@ -2,15 +2,7 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex flex-col justify-end pb-20 px-6 md:px-12 pt-32">
       <div className="max-w-7xl mx-auto w-full">
-        {/* Label */}
-        <p
-          className="text-xs tracking-[0.3em] uppercase font-medium mb-6 md:mb-8"
-          style={{ color: "var(--brand-terracotta)" }}
-        >
-          Gen Marketer
-        </p>
-
-        {/* Name — reduced from 14vw/13rem */}
+        {/* Name */}
         <h1
           className="font-bold leading-[0.9] tracking-tight mb-10 md:mb-14"
           style={{
