@@ -87,22 +87,24 @@ export const projects: Project[] = [
     client: "Outdoor Color Crew",
     tags: ["Brand", "Strategy", "Partnerships"],
     description:
-      "Built and launched the brand identity and community strategy for Outdoor Color Crew, driving engagement through partnerships and grassroots marketing.",
-    metric: "",
+      "Co-founded Outdoor Color Crew in 2024, a collective built to help people of color experience the outdoors through meetups and social activities, and led its marketing and partnership strategy from launch.",
+    metric: "2–3 community meetups hosted each month",
     keyOutcomes: [
-      "Placeholder outcome: swap with a real result from this project.",
-      "Placeholder outcome: quantify impact where possible.",
-      "Placeholder outcome: focus on business value delivered.",
+      "Co-founded Outdoor Color Crew in 2024 to build a collective of people of color experiencing the outdoors together through meetups and social activities.",
+      "Created voice and tone messaging ahead of launch to align marketing and design efforts from day one.",
+      "Collaborated with a brand designer to establish brand guidelines, templates, and social media visuals.",
+      "Partnered with local Chicago outdoor organizations and businesses — Movement Gyms, First Ascent, Mappy Hour, and Guild Row — as well as Arc'teryx Chicago and Chicago Adventure Therapy, to increase access to outdoor activities.",
+      "Established a project management system and messaging templates to streamline outreach and plan 2–3 monthly meetup events.",
     ],
     challenge:
-      "Describe the strategic or creative problem this project set out to solve. What was the tension, constraint, or opportunity that shaped the work?",
+      "Outdoor spaces haven't always felt accessible or welcoming to people of color. Outdoor Color Crew set out to change that by building a Chicago collective where people of color could experience the outdoors together. The challenge was to launch a brand and community from scratch — establishing a clear voice, a cohesive visual identity, and a partnership network that could sustain regular meetups and broaden access to outdoor activities.",
     scope: [
-      "Brand identity",
-      "Community strategy",
+      "Brand voice & messaging",
+      "Brand identity & design direction",
       "Partnership development",
-      "Launch marketing",
+      "Community & event programming",
     ],
-    tools: ["Figma", "Notion", "Instagram", "Canva"],
+    tools: ["Trello", "Canva", "Figma", "Partiful"],
     heroImage: "/images/outdoor-color-crew.webp",
   },
   {
@@ -156,7 +158,7 @@ export const projects: Project[] = [
       "Community building",
       "Lead generation",
     ],
-    tools: ["Zoom", "HubSpot", "Webflow", "Notion"],
+    tools: ["Zoom", "HubSpot", "Adobe Premiere Pro"],
     heroImage: "/images/people-nerds-webinars.webp",
   },
   {
@@ -183,7 +185,7 @@ export const projects: Project[] = [
       "Sales enablement",
       "Digital programming",
     ],
-    tools: ["Hopin", "Figma", "Notion", "Webflow"],
+    tools: ["Hopin", "Figma", "Webflow"],
     heroImage: "/images/people nerds 2022.jpg",
   },
   {
@@ -267,7 +269,8 @@ export const projects: Project[] = [
       "Video production",
       "Post-production",
     ],
-    tools: ["Premiere Pro", "Notion", "Frame.io", "YouTube"],
+    tools: ["Premiere Pro", "YouTube"],
+    heroImage: "/images/scout-stories.webp",
     videos: [
       { label: "JJ", url: "https://www.youtube.com/watch?v=FZkmQhIB9Sc" },
       { label: "Caroline", url: "https://www.youtube.com/watch?v=tZfJEyS4xxs" },
