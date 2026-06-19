@@ -9,8 +9,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Zoei Benzon — Gen Marketer",
-  description: "Marketing portfolio of Zoei Benzon — fourteenzerosix studios",
+  title: "Zoei Benzon | Gen Marketer",
+  description: "Marketing portfolio of Zoei Benzon, fourteenzerosix studios",
 };
 
 export default function RootLayout({

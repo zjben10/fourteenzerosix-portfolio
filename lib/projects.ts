@@ -93,11 +93,11 @@ export const projects: Project[] = [
       "Co-founded Outdoor Color Crew in 2024 to build a collective of people of color experiencing the outdoors together through meetups and social activities.",
       "Created voice and tone messaging ahead of launch to align marketing and design efforts from day one.",
       "Collaborated with a brand designer to establish brand guidelines, templates, and social media visuals.",
-      "Partnered with local Chicago outdoor organizations and businesses — Movement Gyms, First Ascent, Mappy Hour, and Guild Row — as well as Arc'teryx Chicago and Chicago Adventure Therapy, to increase access to outdoor activities.",
+      "Partnered with local Chicago outdoor organizations and businesses, including Movement Gyms, First Ascent, Mappy Hour, and Guild Row, as well as Arc'teryx Chicago and Chicago Adventure Therapy, to increase access to outdoor activities.",
       "Established a project management system and messaging templates to streamline outreach and plan 2–3 monthly meetup events.",
     ],
     challenge:
-      "Outdoor spaces haven't always felt accessible or welcoming to people of color. Outdoor Color Crew set out to change that by building a Chicago collective where people of color could experience the outdoors together. The challenge was to launch a brand and community from scratch — establishing a clear voice, a cohesive visual identity, and a partnership network that could sustain regular meetups and broaden access to outdoor activities.",
+      "Outdoor spaces haven't always felt accessible or welcoming to people of color. Outdoor Color Crew set out to change that by building a Chicago collective where people of color could experience the outdoors together. The challenge was to launch a brand and community from scratch, establishing a clear voice, a cohesive visual identity, and a partnership network that could sustain regular meetups and broaden access to outdoor activities.",
     scope: [
       "Brand voice & messaging",
       "Brand identity & design direction",
@@ -253,7 +253,7 @@ export const projects: Project[] = [
     client: "dscout",
     tags: ["Video", "UX Research", "Operations"],
     description:
-      "Produced Scout Stories, a content series spotlighting UX research insights and the dscout community through video and editorial.",
+      "Collaborated to produce Scout Stories, a content series spotlighting UX research insights and the dscout community through video and editorial.",
     metric: "4 full-length videos produced for brand event",
     keyOutcomes: [
       "Increased participant “Scout” panel growth through community-centered video storytelling.",
