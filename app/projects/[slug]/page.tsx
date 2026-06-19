@@ -35,7 +35,7 @@ export default async function ProjectPage({
   const projectContent = (
     <>
       <main className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-24">
-        {/* ── Tag · Date ── */}
+        {/* ── Tag ── */}
         <div className="flex items-center gap-3 mb-6">
           <span
             className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-full border"
@@ -45,12 +45,6 @@ export default async function ProjectPage({
             }}
           >
             {project.tags[0]}
-          </span>
-          <span
-            className="text-xs"
-            style={{ color: "rgba(26,23,20,0.4)" }}
-          >
-            {project.date}
           </span>
         </div>
 
