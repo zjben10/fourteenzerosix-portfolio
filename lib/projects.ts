@@ -157,6 +157,7 @@ export const projects: Project[] = [
       "Lead generation",
     ],
     tools: ["Zoom", "HubSpot", "Webflow", "Notion"],
+    heroImage: "/images/people-nerds-webinars.webp",
   },
   {
     id: 6,
