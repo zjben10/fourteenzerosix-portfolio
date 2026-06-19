@@ -5,7 +5,7 @@ import PasswordGate from "@/components/PasswordGate";
 
 export async function generateStaticParams() {
   return projects
-    .filter((p) => !p.externalUrl)
+    .filter((p) => !p.externalUrl && !p.hidden)
     .map((p) => ({ slug: p.slug }));
 }
 
@@ -30,12 +30,12 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
-  if (!project || project.externalUrl) notFound();
+  if (!project || project.externalUrl || project.hidden) notFound();
 
   const projectContent = (
     <>
       <main className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-24">
-        {/* ── Tag ── */}
+        {/* ── Tag · Date ── */}
         <div className="flex items-center gap-3 mb-6">
           <span
             className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-full border"
@@ -45,6 +45,12 @@ export default async function ProjectPage({
             }}
           >
             {project.tags[0]}
+          </span>
+          <span
+            className="text-xs"
+            style={{ color: "rgba(26,23,20,0.4)" }}
+          >
+            {project.date}
           </span>
         </div>
 

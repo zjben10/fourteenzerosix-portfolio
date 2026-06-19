@@ -103,6 +103,7 @@ export const projects: Project[] = [
       "Launch marketing",
     ],
     tools: ["Figma", "Notion", "Instagram", "Canva"],
+    heroImage: "/images/outdoor-color-crew.webp",
   },
   {
     id: 4,
@@ -210,6 +211,7 @@ export const projects: Project[] = [
       "Post-webinar flow & sales handoff",
     ],
     tools: ["HubSpot", "Klaviyo", "Notion", "Google Analytics"],
+    hidden: true, // temporarily hidden
   },
   {
     id: 8,
