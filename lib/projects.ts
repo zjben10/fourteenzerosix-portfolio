@@ -156,7 +156,7 @@ export const projects: Project[] = [
       "Community building",
       "Lead generation",
     ],
-    tools: ["Zoom", "HubSpot", "Webflow", "Notion"],
+    tools: ["Zoom", "HubSpot", "Adobe Premiere Pro"],
     heroImage: "/images/people-nerds-webinars.webp",
   },
   {
@@ -183,7 +183,7 @@ export const projects: Project[] = [
       "Sales enablement",
       "Digital programming",
     ],
-    tools: ["Hopin", "Figma", "Notion", "Webflow"],
+    tools: ["Hopin", "Figma", "Webflow"],
     heroImage: "/images/people nerds 2022.jpg",
   },
   {
@@ -267,7 +267,8 @@ export const projects: Project[] = [
       "Video production",
       "Post-production",
     ],
-    tools: ["Premiere Pro", "Notion", "Frame.io", "YouTube"],
+    tools: ["Premiere Pro", "YouTube"],
+    heroImage: "/images/scout-stories.webp",
     videos: [
       { label: "JJ", url: "https://www.youtube.com/watch?v=FZkmQhIB9Sc" },
       { label: "Caroline", url: "https://www.youtube.com/watch?v=tZfJEyS4xxs" },
