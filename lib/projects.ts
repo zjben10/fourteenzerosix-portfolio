@@ -173,7 +173,7 @@ export const projects: Project[] = [
       "Produced and branded dscout's fully virtual People Nerds user conference, bringing together the UX research community online.",
     metric: "1,500+ attendees at first digital-only event",
     keyOutcomes: [
-      "Secured 100+ sales meetings across pre-, during-, and post-event promotion, meeting Q3 2023 business goals.",
+      "Secured 100+ sales meetings across pre-, during-, and post-event promotion, meeting Q3 2022 business goals.",
       "Produced dscout's first digital-only event with 1,500+ attendees.",
       "Created case study pieces and 20+ evergreen content pieces for the People Nerds blog, feeding the content engine for quarterly themes.",
     ],
