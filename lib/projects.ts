@@ -186,7 +186,7 @@ export const projects: Project[] = [
       "Digital programming",
     ],
     tools: ["Hopin", "Figma", "Webflow"],
-    heroImage: "/images/people nerds 2022.jpg",
+    heroImage: "/images/people-nerds-2022.jpg",
   },
   {
     id: 7,
@@ -242,7 +242,7 @@ export const projects: Project[] = [
       "Cross-functional coordination",
     ],
     tools: ["Eventbrite", "Figma", "Trello", "HubSpot", "Salesforce"],
-    heroImage: "/images/PN 2019 Image .001.jpeg",
+    heroImage: "/images/pn-2019.jpeg",
   },
   {
     id: 10,
