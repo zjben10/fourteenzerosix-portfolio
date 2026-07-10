@@ -63,13 +63,13 @@ export default function Hero() {
               className="text-base md:text-lg leading-relaxed max-w-xl mb-1.5"
               style={{ color: "rgba(26,23,20,0.7)" }}
             >
-              Strategic marketing across brand, content, and digital.
+              Strategic marketing across demand gen, brand, and field marketing.
             </p>
             <p
               className="text-base md:text-lg leading-relaxed max-w-xl"
               style={{ color: "rgba(26,23,20,0.4)" }}
             >
-              Projects I&apos;ve built &amp; launched, below.
+              Previously working in bio tech, UX research, health tech, and ed tech.
             </p>
           </div>
         </div>
