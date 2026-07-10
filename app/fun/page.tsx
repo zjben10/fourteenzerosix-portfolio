@@ -1,9 +1,16 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { pottery, potteryYears, type PotteryPiece } from "@/lib/pottery";
+import {
+  potteryNewToOld,
+  potteryCategories,
+  type PotteryPiece,
+  type PotteryCategory,
+} from "@/lib/pottery";
 
-const ALL = "all";
+function pieceCount(n: number) {
+  return `${n} ${n === 1 ? "piece" : "pieces"}`;
+}
 
 function ImageCell({ piece }: { piece: PotteryPiece }) {
   return (
@@ -43,33 +50,39 @@ function ImageCell({ piece }: { piece: PotteryPiece }) {
       </div>
 
       {/* Label */}
-      <div className="mt-2.5">
+      <div className="mt-2.5 flex items-baseline justify-between gap-2">
         <p
           className="text-sm font-medium leading-snug"
           style={{ color: "var(--brand-dark)" }}
         >
           {piece.title}
         </p>
-        {piece.type && (
-          <p
-            className="text-[10px] tracking-[0.12em] uppercase mt-0.5"
-            style={{ color: "rgba(26,23,20,0.4)" }}
-          >
-            {piece.type}
-          </p>
-        )}
+        <span
+          className="text-[10px] tracking-[0.12em] uppercase shrink-0"
+          style={{ color: "rgba(26,23,20,0.35)" }}
+        >
+          {piece.year}
+        </span>
       </div>
     </div>
   );
 }
 
 export default function FunPage() {
-  const [activeYear, setActiveYear] = useState<string>(ALL);
+  // Both categories on by default (show everything)
+  const [active, setActive] = useState<Set<PotteryCategory>>(
+    () => new Set(potteryCategories.map((c) => c.label))
+  );
 
-  const filtered =
-    activeYear === ALL
-      ? pottery
-      : pottery.filter((p) => p.year === activeYear);
+  const toggle = (label: PotteryCategory) =>
+    setActive((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+
+  const filtered = potteryNewToOld.filter((p) => active.has(p.category));
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "var(--brand-cream)" }}>
@@ -89,7 +102,7 @@ export default function FunPage() {
             className="text-xs tracking-[0.25em] uppercase font-medium"
             style={{ color: "var(--brand-terracotta)" }}
           >
-            fourteenzerosix
+            Zoei Benzon
           </Link>
           <Link
             href="/"
@@ -112,73 +125,59 @@ export default function FunPage() {
         </div>
       </header>
 
-      {/* ── Hero — full-bleed image placeholder ── */}
-      <div
-        className="w-full flex items-center justify-center"
-        style={{
-          minHeight: "75vh",
-          paddingTop: "64px", /* clear fixed nav */
-          backgroundColor: "rgba(26,23,20,0.04)",
-          borderBottom: "1px dashed rgba(26,23,20,0.12)",
-        }}
-      >
-        <div className="text-center">
-          <svg
-            width="48"
-            height="48"
-            viewBox="0 0 40 40"
-            fill="none"
-            className="mx-auto mb-3 opacity-20"
-          >
-            <rect x="4" y="8" width="32" height="24" rx="2" stroke="#1A1714" strokeWidth="1.5" />
-            <circle cx="14" cy="17" r="3" stroke="#1A1714" strokeWidth="1.5" />
-            <path d="M4 28l8-6 6 5 6-8 12 9" stroke="#1A1714" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <p
-            className="text-xs tracking-[0.2em] uppercase"
-            style={{ color: "rgba(26,23,20,0.25)" }}
-          >
-            Hero image
-          </p>
-        </div>
-      </div>
-
       {/* ── Gallery ── */}
-      <section className="py-16 px-6 md:px-12">
+      <section className="pt-28 md:pt-32 pb-16 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
 
-          {/* Year toggles */}
-          <div className="flex flex-wrap gap-2 mb-12">
-            {/* All */}
-            <button
-              onClick={() => setActiveYear(ALL)}
-              className="text-xs tracking-[0.15em] uppercase font-medium px-4 py-2 rounded-full transition-all duration-200"
-              style={
-                activeYear === ALL
-                  ? { backgroundColor: "var(--brand-sage)", color: "rgba(242,238,230,0.95)", border: "1px solid var(--brand-sage)" }
-                  : { backgroundColor: "transparent", color: "rgba(26,23,20,0.4)", border: "1px solid rgba(26,23,20,0.15)" }
-              }
-            >
-              All
-            </button>
+          {/* Title */}
+          <h1
+            className="font-bold tracking-tight mb-2"
+            style={{ fontSize: "clamp(2.25rem, 5.5vw, 4rem)", color: "var(--brand-dark)" }}
+          >
+            Pottery
+          </h1>
+          <p
+            className="text-xs tracking-[0.2em] uppercase mb-8"
+            style={{ color: "rgba(26,23,20,0.4)" }}
+          >
+            {pieceCount(filtered.length)} · handmade ceramics
+          </p>
 
-            {potteryYears.map((year) => (
-              <button
-                key={year}
-                onClick={() => setActiveYear(year)}
-                className="text-xs tracking-[0.15em] uppercase font-medium px-4 py-2 rounded-full transition-all duration-200"
-                style={
-                  activeYear === year
-                    ? { backgroundColor: "var(--brand-sage)", color: "rgba(242,238,230,0.95)", border: "1px solid var(--brand-sage)" }
-                    : { backgroundColor: "transparent", color: "rgba(26,23,20,0.4)", border: "1px solid rgba(26,23,20,0.15)" }
-                }
-              >
-                {year}
-              </button>
-            ))}
+          {/* Category toggles */}
+          <div
+            className="flex flex-wrap gap-2.5 mb-12"
+            style={{ borderTop: "1px solid rgba(26,23,20,0.1)", paddingTop: "2rem" }}
+          >
+            {potteryCategories.map(({ label, emoji }) => {
+              const on = active.has(label);
+              return (
+                <button
+                  key={label}
+                  onClick={() => toggle(label)}
+                  aria-pressed={on}
+                  className="inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 border transition-colors duration-200"
+                  style={
+                    on
+                      ? {
+                          backgroundColor: "var(--brand-sage)",
+                          color: "var(--brand-cream)",
+                          borderColor: "var(--brand-sage)",
+                        }
+                      : {
+                          backgroundColor: "transparent",
+                          color: "rgba(26,23,20,0.55)",
+                          borderColor: "rgba(26,23,20,0.15)",
+                        }
+                  }
+                >
+                  <span aria-hidden="true">{emoji}</span>
+                  {label}
+                </button>
+              );
+            })}
           </div>
 
-          {/* 4-column image grid */}
+          {/* Grid — newest first */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {filtered.map((piece) => (
               <ImageCell key={piece.id} piece={piece} />
@@ -190,7 +189,7 @@ export default function FunPage() {
               className="text-sm py-16 text-center"
               style={{ color: "rgba(26,23,20,0.3)" }}
             >
-              Nothing here yet.
+              Pick a category to see pieces.
             </p>
           )}
         </div>
@@ -206,7 +205,7 @@ export default function FunPage() {
             className="text-xs tracking-[0.25em] uppercase font-medium"
             style={{ color: "var(--brand-terracotta)" }}
           >
-            fourteenzerosix studios
+            Zoei Benzon
           </span>
           <Link
             href="/"
