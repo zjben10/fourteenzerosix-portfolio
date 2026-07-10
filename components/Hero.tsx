@@ -27,17 +27,18 @@ export default function Hero() {
           >
             Strategic marketing across brand, content, and digital.
           </p>
-          {/* Green arrow: sage = forward direction / progress in UX color theory */}
           <a
             href="#work"
             className="inline-flex items-center gap-3 text-sm tracking-[0.1em] uppercase font-medium group"
             style={{ color: "var(--brand-dark)" }}
           >
-            View Work
+            View work
             <span
-              className="inline-block w-8 h-px transition-all duration-300 group-hover:w-12"
-              style={{ backgroundColor: "var(--brand-sage)" }}
-            />
+              className="inline-block transition-transform duration-300 group-hover:translate-y-1"
+              aria-hidden="true"
+            >
+              👇
+            </span>
           </a>
         </div>
       </div>
