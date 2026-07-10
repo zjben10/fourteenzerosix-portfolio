@@ -1,7 +1,6 @@
 "use client";
 
 const socials = [
-  { label: "Instagram", href: "https://www.instagram.com/zjbceramics" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/zoeibenzon/" },
 ];
 
@@ -16,16 +15,10 @@ export default function Footer() {
         {/* Left */}
         <div>
           <p
-            className="text-xs tracking-[0.25em] uppercase font-medium mb-2"
+            className="text-xs tracking-[0.25em] uppercase font-medium"
             style={{ color: "var(--brand-terracotta)" }}
           >
             fourteenzerosix studios
-          </p>
-          <p
-            className="text-2xl md:text-3xl font-semibold"
-            style={{ color: "var(--brand-dark)", fontFamily: "var(--font-space-grotesk), sans-serif" }}
-          >
-            Let&apos;s work together.
           </p>
         </div>
 
