@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="flex items-start gap-5 md:gap-6">
           {imgError ? (
             <div
-              className="rounded-2xl object-cover shrink-0 flex items-center justify-center font-bold"
+              className="object-cover shrink-0 flex items-center justify-center font-bold"
               style={{
                 ...avatarSize,
                 backgroundColor: "var(--brand-sage)",
@@ -41,7 +41,7 @@ export default function Hero() {
               height={112}
               priority
               onError={() => setImgError(true)}
-              className="rounded-2xl object-cover shrink-0"
+              className="object-cover shrink-0"
               style={avatarSize}
             />
           )}
