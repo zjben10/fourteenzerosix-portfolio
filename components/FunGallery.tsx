@@ -120,15 +120,18 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
             })}
           </div>
 
-          {/* Grid — newest first */}
+          {/* Masonry — natural aspect ratios, newest first */}
           {filtered.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="columns-2 md:columns-4 gap-4 md:gap-6">
               {filtered.map((piece) => (
-                <div key={piece.id} className="group overflow-hidden" style={{ aspectRatio: "1" }}>
+                <div
+                  key={piece.id}
+                  className="mb-4 md:mb-6 break-inside-avoid overflow-hidden group"
+                >
                   <img
                     src={piece.image}
                     alt=""
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               ))}
