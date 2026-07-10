@@ -1,55 +1,50 @@
 "use client";
+import { useState } from "react";
 import type { MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const pills = [
-  {
-    label: "Work",
-    href: "/#work",
-    icon: (
-      <path d="M4 6.5h10M4 6.5v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6M6.5 6.5v-1a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1" />
-    ),
-  },
-  {
-    label: "Fun",
-    href: "/fun",
-    icon: (
-      <path d="M9 14.5A5.5 5.5 0 1 0 9 3.5a5.5 5.5 0 0 0 0 11ZM6.8 7.5h.01M11.2 7.5h.01M6.5 10.5s.9 1.2 2.5 1.2 2.5-1.2 2.5-1.2" />
-    ),
-  },
-  {
-    label: "Contact",
-    href: "/#contact",
-    icon: (
-      <path d="M3.5 5.5h11v7h-11v-7ZM3.5 6l5.5 4 5.5-4" />
-    ),
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/zoeibenzon/",
-    external: true,
-    icon: (
-      <path d="M5 7.5v4M5 5.5v.01M8 11.5v-4M8 9c0-1 .7-1.5 1.5-1.5S11 8 11 9v2.5M8 11.5H8" />
-    ),
-  },
+  { label: "Work", href: "/#work", emoji: "💻" },
+  { label: "Fun", href: "/fun", emoji: "🏺" },
 ];
 
+const avatarSize = { width: "clamp(72px, 12vw, 112px)", height: "clamp(72px, 12vw, 112px)" };
+
 export default function Hero() {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <section className="px-6 md:px-12 pt-28 md:pt-32 pb-10">
       <div className="max-w-7xl mx-auto w-full">
         {/* Avatar + intro */}
         <div className="flex items-start gap-5 md:gap-6">
-          <Image
-            src="/images/avatar.jpg"
-            alt="Zoei Benzon"
-            width={112}
-            height={112}
-            priority
-            className="rounded-2xl object-cover shrink-0"
-            style={{ width: "clamp(72px, 12vw, 112px)", height: "clamp(72px, 12vw, 112px)" }}
-          />
+          {imgError ? (
+            <div
+              className="rounded-2xl object-cover shrink-0 flex items-center justify-center font-bold"
+              style={{
+                ...avatarSize,
+                backgroundColor: "var(--brand-sage)",
+                color: "var(--brand-cream)",
+                fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+                fontFamily: "var(--font-space-grotesk), sans-serif",
+              }}
+              aria-label="Zoei Benzon"
+            >
+              ZB
+            </div>
+          ) : (
+            <Image
+              src="/images/avatar.jpg"
+              alt="Zoei Benzon"
+              width={112}
+              height={112}
+              priority
+              onError={() => setImgError(true)}
+              className="rounded-2xl object-cover shrink-0"
+              style={avatarSize}
+            />
+          )}
           <div>
             {/* Name */}
             <h1
@@ -84,66 +79,25 @@ export default function Hero() {
           className="mt-8 flex flex-wrap gap-2.5"
           style={{ borderTop: "1px solid rgba(26,23,20,0.1)", paddingTop: "2rem" }}
         >
-          {pills.map((pill) => {
-            const inner = (
-              <>
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  {pill.icon}
-                </svg>
-                {pill.label}
-              </>
-            );
-            const className =
-              "inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 border transition-colors duration-200";
-            const style = {
-              borderColor: "rgba(26,23,20,0.15)",
-              color: "rgba(26,23,20,0.7)",
-            };
-            const onEnter = (e: MouseEvent<HTMLElement>) => {
-              e.currentTarget.style.color = "var(--brand-sage)";
-              e.currentTarget.style.borderColor = "var(--brand-sage)";
-            };
-            const onLeave = (e: MouseEvent<HTMLElement>) => {
-              e.currentTarget.style.color = "rgba(26,23,20,0.7)";
-              e.currentTarget.style.borderColor = "rgba(26,23,20,0.15)";
-            };
-
-            return pill.external ? (
-              <a
-                key={pill.label}
-                href={pill.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={className}
-                style={style}
-                onMouseEnter={onEnter}
-                onMouseLeave={onLeave}
-              >
-                {inner}
-              </a>
-            ) : (
-              <Link
-                key={pill.label}
-                href={pill.href}
-                className={className}
-                style={style}
-                onMouseEnter={onEnter}
-                onMouseLeave={onLeave}
-              >
-                {inner}
-              </Link>
-            );
-          })}
+          {pills.map((pill) => (
+            <Link
+              key={pill.label}
+              href={pill.href}
+              className="inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 border transition-colors duration-200"
+              style={{ borderColor: "rgba(26,23,20,0.15)", color: "rgba(26,23,20,0.7)" }}
+              onMouseEnter={(e: MouseEvent<HTMLElement>) => {
+                e.currentTarget.style.color = "var(--brand-sage)";
+                e.currentTarget.style.borderColor = "var(--brand-sage)";
+              }}
+              onMouseLeave={(e: MouseEvent<HTMLElement>) => {
+                e.currentTarget.style.color = "rgba(26,23,20,0.7)";
+                e.currentTarget.style.borderColor = "rgba(26,23,20,0.15)";
+              }}
+            >
+              <span aria-hidden="true">{pill.emoji}</span>
+              {pill.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </section>
