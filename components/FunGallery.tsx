@@ -1,15 +1,12 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   potteryCategories,
   type PotteryPiece,
   type PotteryCategory,
 } from "@/lib/pottery";
-
-function pieceCount(n: number) {
-  return `${n} ${n === 1 ? "piece" : "pieces"}`;
-}
 
 export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
   // Both categories on by default (show everything)
@@ -83,7 +80,7 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
             className="text-xs tracking-[0.2em] uppercase mb-8"
             style={{ color: "rgba(26,23,20,0.4)" }}
           >
-            {pieceCount(filtered.length)} · handmade ceramics
+            handmade ceramics
           </p>
 
           {/* Category toggles */}
@@ -128,10 +125,13 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
                   key={piece.id}
                   className="mb-4 md:mb-6 break-inside-avoid overflow-hidden group"
                 >
-                  <img
+                  <Image
                     src={piece.image}
                     alt=""
-                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                    width={piece.width}
+                    height={piece.height}
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="block w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               ))}
