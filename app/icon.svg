@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#5D7A55" />
+  <text
+    x="32"
+    y="46"
+    fill="#F2EEE6"
+    font-family="'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
+    font-size="42"
+    font-weight="700"
+    text-anchor="middle"
+  >Z</text>
+</svg>
