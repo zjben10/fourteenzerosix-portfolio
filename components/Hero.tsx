@@ -55,7 +55,7 @@ export default function Hero() {
                 color: "var(--brand-dark)",
               }}
             >
-              Zoei Benzon
+              Hey, I&apos;m Zoei <span aria-hidden="true">👋</span>
             </h1>
 
             {/* Descriptor */}
@@ -69,7 +69,7 @@ export default function Hero() {
               className="text-base md:text-lg leading-relaxed max-w-xl"
               style={{ color: "rgba(26,23,20,0.4)" }}
             >
-              Previously working in bio tech, UX research, health tech, and ed tech.
+              Previously worked in biotechnology, UX research, healthcare, and education industries.
             </p>
           </div>
         </div>
