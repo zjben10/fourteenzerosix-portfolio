@@ -17,7 +17,6 @@ export default function Hero() {
           <h1
             className="font-bold leading-[0.95] tracking-tight mb-4"
             style={{
-              fontFamily: "var(--font-space-grotesk), sans-serif",
               fontSize: "clamp(2.25rem, 5.5vw, 4rem)",
               color: "var(--brand-dark)",
             }}
