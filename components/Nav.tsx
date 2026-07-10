@@ -20,7 +20,8 @@ export default function Nav() {
         borderBottom: scrolled ? "1px solid rgba(26,23,20,0.08)" : "none",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+      <div className="px-6 md:px-12">
+        <div className="max-w-7xl mx-auto h-16 flex items-center justify-between">
         <Link
           href="/"
           className="text-xs tracking-[0.25em] uppercase font-medium"
@@ -48,6 +49,7 @@ export default function Nav() {
             Contact
           </a>
         </nav>
+        </div>
       </div>
     </header>
   );
