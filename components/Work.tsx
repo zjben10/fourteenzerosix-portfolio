@@ -72,17 +72,11 @@ export default function Work() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 md:mb-20">
-          <p
-            className="text-xs tracking-[0.3em] uppercase font-medium mb-4"
-            style={{ color: "var(--brand-terracotta)" }}
-          >
-            Selected Work
-          </p>
           <h2
             className="text-3xl md:text-5xl font-semibold leading-tight"
             style={{ color: "rgba(242,238,230,0.95)" }}
           >
-            Projects I&apos;ve built &amp; launched.
+            Featured projects
           </h2>
         </div>
 
