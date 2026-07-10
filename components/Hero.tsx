@@ -36,7 +36,7 @@ export default function Hero() {
             className="text-base md:text-lg leading-relaxed max-w-xl"
             style={{ color: "rgba(26,23,20,0.4)" }}
           >
-            Previously worked in biotechnology, UX research, healthcare, and education industries.
+            I&apos;ve previously worked in biotechnology, UX research, healthcare, and education.
           </p>
         </div>
 
