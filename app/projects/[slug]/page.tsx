@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { projects, getProjectBySlug } from "@/lib/projects";
+import { getProjectGallery } from "@/lib/projectGallery.server";
 import PasswordGate from "@/components/PasswordGate";
 
 export async function generateStaticParams() {
@@ -31,6 +33,8 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project || project.externalUrl || project.hidden) notFound();
+
+  const gallery = getProjectGallery(slug);
 
   const projectContent = (
     <>
@@ -246,6 +250,35 @@ export default async function ProjectPage({
             </section>
           </div>
         </div>
+
+        {/* ── Gallery ── */}
+        {gallery.length > 0 && (
+          <section className="mt-16 md:mt-24">
+            <p
+              className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              Gallery
+            </p>
+            <div className="columns-2 md:columns-3 gap-4 md:gap-6">
+              {gallery.map((img) => (
+                <div
+                  key={img.src}
+                  className="mb-4 md:mb-6 break-inside-avoid overflow-hidden rounded-sm"
+                >
+                  <Image
+                    src={img.src}
+                    alt=""
+                    width={img.width}
+                    height={img.height}
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="block w-full h-auto"
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <footer
