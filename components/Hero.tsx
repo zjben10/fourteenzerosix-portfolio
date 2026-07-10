@@ -1,46 +1,69 @@
+"use client";
+import type { MouseEvent } from "react";
+import Link from "next/link";
+
+const pills = [
+  { label: "Work", href: "/#work", emoji: "💻" },
+  { label: "Fun", href: "/fun", emoji: "🏺" },
+];
+
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col justify-end pb-20 px-6 md:px-12 pt-32">
+    <section className="px-6 md:px-12 pt-28 md:pt-32 pb-10">
       <div className="max-w-7xl mx-auto w-full">
-        {/* Name */}
-        <h1
-          className="font-bold leading-[0.9] tracking-tight mb-10 md:mb-14"
-          style={{
-            fontFamily: "var(--font-space-grotesk), sans-serif",
-            fontSize: "clamp(3rem, 8.5vw, 8rem)",
-            color: "var(--brand-dark)",
-          }}
-        >
-          Zoei
-          <br />
-          Benzon
-        </h1>
+        {/* Intro */}
+        <div>
+          {/* Name */}
+          <h1
+            className="font-bold leading-[0.95] tracking-tight mb-4"
+            style={{
+              fontSize: "clamp(2.25rem, 5.5vw, 4rem)",
+              color: "var(--brand-dark)",
+            }}
+          >
+            Hey, I&apos;m Zoei <span aria-hidden="true">👋</span>
+          </h1>
 
-        {/* Divider + descriptor */}
-        <div
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6"
-          style={{ borderTop: "1px solid rgba(26,23,20,0.15)", paddingTop: "2rem" }}
-        >
+          {/* Descriptor */}
           <p
-            className="text-sm md:text-base leading-relaxed max-w-sm"
-            style={{ color: "rgba(26,23,20,0.55)" }}
+            className="text-base md:text-lg leading-relaxed max-w-xl mb-1.5"
+            style={{ color: "rgba(26,23,20,0.7)" }}
           >
-            Strategic marketing across brand, content, and digital.
+            Strategic marketing across demand gen, brand, and field marketing.
           </p>
-          <a
-            href="#work"
-            className="inline-flex items-center gap-3 text-sm tracking-[0.1em] uppercase font-medium group"
-            style={{ color: "var(--brand-dark)" }}
+          <p
+            className="text-base md:text-lg leading-relaxed max-w-xl"
+            style={{ color: "rgba(26,23,20,0.4)" }}
           >
-            View work
-            <span
-              className="inline-block transition-transform duration-300 group-hover:translate-y-1"
-              aria-hidden="true"
-            >
-              👇
-            </span>
-          </a>
+            I&apos;ve previously worked in biotechnology, UX research, healthcare, and education.
+          </p>
         </div>
+
+        {/* Pill nav */}
+        <nav
+          className="mt-8 flex flex-wrap gap-2.5"
+          style={{ borderTop: "1px solid rgba(26,23,20,0.1)", paddingTop: "2rem" }}
+        >
+          {pills.map((pill) => (
+            <Link
+              key={pill.label}
+              href={pill.href}
+              className="inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 border transition-colors duration-200"
+              style={{ borderColor: "rgba(26,23,20,0.15)", color: "rgba(26,23,20,0.7)" }}
+              onMouseEnter={(e: MouseEvent<HTMLElement>) => {
+                e.currentTarget.style.color = "var(--brand-sage)";
+                e.currentTarget.style.borderColor = "var(--brand-sage)";
+              }}
+              onMouseLeave={(e: MouseEvent<HTMLElement>) => {
+                e.currentTarget.style.color = "rgba(26,23,20,0.7)";
+                e.currentTarget.style.borderColor = "rgba(26,23,20,0.15)";
+              }}
+            >
+              <span aria-hidden="true">{pill.emoji}</span>
+              {pill.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </section>
   );

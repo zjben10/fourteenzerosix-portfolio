@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { projects, getProjectBySlug } from "@/lib/projects";
+import { getProjectGallery } from "@/lib/projectGallery.server";
 import PasswordGate from "@/components/PasswordGate";
 
 export async function generateStaticParams() {
@@ -31,6 +33,8 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project || project.externalUrl || project.hidden) notFound();
+
+  const gallery = getProjectGallery(slug);
 
   const projectContent = (
     <>
@@ -246,6 +250,35 @@ export default async function ProjectPage({
             </section>
           </div>
         </div>
+
+        {/* ── Gallery ── */}
+        {gallery.length > 0 && (
+          <section className="mt-16 md:mt-24">
+            <p
+              className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              Gallery
+            </p>
+            <div className="columns-2 md:columns-3 gap-4 md:gap-6">
+              {gallery.map((img) => (
+                <div
+                  key={img.src}
+                  className="mb-4 md:mb-6 break-inside-avoid overflow-hidden rounded-sm"
+                >
+                  <Image
+                    src={img.src}
+                    alt=""
+                    width={img.width}
+                    height={img.height}
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="block w-full h-auto"
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <footer
@@ -253,12 +286,18 @@ export default async function ProjectPage({
         style={{ borderTop: "1px solid rgba(26,23,20,0.1)" }}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <span
-            className="text-xs tracking-[0.25em] uppercase font-medium"
-            style={{ color: "var(--brand-terracotta)" }}
+          <a
+            href="https://www.linkedin.com/in/zoeibenzon/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hover-sage inline-flex"
+            style={{ color: "rgba(26,23,20,0.45)" }}
           >
-            fourteenzerosix studios
-          </span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+            </svg>
+          </a>
           <Link
             href="/#work"
             className="hover-sage inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium"
@@ -297,7 +336,7 @@ export default async function ProjectPage({
             className="text-xs tracking-[0.25em] uppercase font-medium"
             style={{ color: "var(--brand-terracotta)" }}
           >
-            fourteenzerosix
+            Zoei Benzon
           </Link>
           {/* Green hover: sage = navigate / proceed */}
           <Link

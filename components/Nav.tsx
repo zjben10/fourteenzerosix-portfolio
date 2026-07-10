@@ -26,7 +26,7 @@ export default function Nav() {
           className="text-xs tracking-[0.25em] uppercase font-medium"
           style={{ color: "var(--brand-terracotta)" }}
         >
-          fourteenzerosix
+          Zoei Benzon
         </Link>
         <nav className="flex gap-8">
           <a
