@@ -286,12 +286,18 @@ export default async function ProjectPage({
         style={{ borderTop: "1px solid rgba(26,23,20,0.1)" }}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <span
-            className="text-xs tracking-[0.25em] uppercase font-medium"
-            style={{ color: "var(--brand-terracotta)" }}
+          <a
+            href="https://www.linkedin.com/in/zoeibenzon/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hover-sage inline-flex"
+            style={{ color: "rgba(26,23,20,0.45)" }}
           >
-            fourteenzerosix studios
-          </span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+            </svg>
+          </a>
           <Link
             href="/#work"
             className="hover-sage inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium"
@@ -330,7 +336,7 @@ export default async function ProjectPage({
             className="text-xs tracking-[0.25em] uppercase font-medium"
             style={{ color: "var(--brand-terracotta)" }}
           >
-            fourteenzerosix
+            Zoei Benzon
           </Link>
           {/* Green hover: sage = navigate / proceed */}
           <Link
