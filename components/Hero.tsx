@@ -35,7 +35,7 @@ export default function Hero() {
             </div>
           ) : (
             <Image
-              src="/images/avatar.jpg"
+              src="/images/Zoei_1.JPG"
               alt="Zoei Benzon"
               width={112}
               height={112}
