@@ -29,7 +29,7 @@ export default function Hero() {
             className="text-base md:text-lg leading-relaxed max-w-xl mb-1.5"
             style={{ color: "rgba(26,23,20,0.7)" }}
           >
-            Strategic marketing across demand gen, brand, and field marketing.
+            10+ years in B2B SaaS across demand generation, brand, and field marketing.
           </p>
           <p
             className="text-base md:text-lg leading-relaxed max-w-xl"
