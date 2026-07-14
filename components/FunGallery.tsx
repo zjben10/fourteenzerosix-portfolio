@@ -31,7 +31,7 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
       <header
         className="fixed top-0 left-0 right-0 z-50"
         style={{
-          backgroundColor: "rgba(242,238,230,0.92)",
+          backgroundColor: "rgba(242,238,230,0.9)",
           backdropFilter: "blur(12px)",
           borderBottom: "1px solid rgba(26,23,20,0.08)",
         }}
@@ -44,12 +44,11 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
           >
             Zoei Benzon
           </Link>
+          {/* Green hover: sage = navigate / proceed */}
           <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-200"
-            style={{ color: "rgba(26,23,20,0.45)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-sage)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(26,23,20,0.45)")}
+            href="/#work"
+            className="hover-sage inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium"
+            style={{ color: "rgba(26,23,20,0.5)" }}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -60,7 +59,7 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
                 strokeLinejoin="round"
               />
             </svg>
-            Back
+            Back to work
           </Link>
         </div>
       </header>
