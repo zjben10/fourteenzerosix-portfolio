@@ -284,7 +284,7 @@ export default async function ProjectPage({
                     className="text-base leading-relaxed max-w-2xl"
                     style={{ color: "rgba(26,23,20,0.7)" }}
                   >
-                    The internal tool I built to run event strategy across 25+ annual
+                    The internal tool I built as a prototype to run event strategy across 25+ annual
                     tradeshows and conferences. Every event the team is tracking for 2026 is
                     scored against a six-criteria Roebling rubric — strategic fit, ICP
                     coverage and composition, pipeline potential, quality of interaction, and
