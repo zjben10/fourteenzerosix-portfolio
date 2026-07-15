@@ -258,7 +258,7 @@ export default async function ProjectPage({
               className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
               style={{ color: "var(--brand-sage)" }}
             >
-              Events
+              AI Tools
             </p>
             <Link
               href={`/projects/${project.slug}/events`}

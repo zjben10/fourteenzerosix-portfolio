@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import { getProjectBySlug } from "@/lib/projects";
-import PasswordGate from "@/components/PasswordGate";
 import EventsTracker from "@/components/EventsTracker";
 
 const dmSans = DM_Sans({
@@ -72,9 +71,7 @@ export default async function EventsTrackerPage({
     </div>
   );
 
-  return project.password ? (
-    <PasswordGate password={project.password}>{tracker}</PasswordGate>
-  ) : (
-    tracker
-  );
+  // No separate gate here — the only password is entering the Roebling
+  // portfolio (the case study). The tracker is only linked from there.
+  return tracker;
 }
