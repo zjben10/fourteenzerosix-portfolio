@@ -48,6 +48,7 @@ export const projects: Project[] = [
     ],
     tools: ["PostHog", "Attio", "Clay", "FullEnrich", "Notion"],
     password: "capitalprojects",
+    heroImage: "/images/Roebling%20Logo%20Lockup%20ZJB%20Portfolio.png",
   },
   {
     id: 2,
