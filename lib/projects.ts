@@ -48,7 +48,6 @@ export const projects: Project[] = [
     ],
     tools: ["PostHog", "Attio", "Clay", "FullEnrich", "Notion"],
     password: "capitalprojects",
-    hidden: true, // temporarily hidden
   },
   {
     id: 2,
