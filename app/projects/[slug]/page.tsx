@@ -251,6 +251,81 @@ export default async function ProjectPage({
           </div>
         </div>
 
+        {/* ── Events (Roebling GTM) ── */}
+        {project.slug === "roebling-gtm" && (
+          <section className="mt-16 md:mt-24">
+            <p
+              className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              Events
+            </p>
+            <Link
+              href={`/projects/${project.slug}/events`}
+              className="group block rounded-sm transition-colors"
+              style={{
+                border: "1px solid rgba(26,23,20,0.12)",
+                backgroundColor: "rgba(26,23,20,0.02)",
+              }}
+            >
+              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 p-8 md:p-10">
+                <div className="flex-1">
+                  <h3
+                    className="font-bold leading-tight mb-3"
+                    style={{
+                      fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+                      color: "var(--brand-dark)",
+                      fontFamily: "var(--font-space-grotesk), sans-serif",
+                    }}
+                  >
+                    Roebling Events Tracker
+                  </h3>
+                  <p
+                    className="text-base leading-relaxed max-w-2xl"
+                    style={{ color: "rgba(26,23,20,0.7)" }}
+                  >
+                    The internal tool I built to run event strategy across 25+ annual
+                    tradeshows and conferences. Every event the team is tracking for 2026 is
+                    scored against a six-criteria Roebling rubric — strategic fit, ICP
+                    coverage and composition, pipeline potential, quality of interaction, and
+                    cost — so go / no-go calls stay consistent. Submit, score, review, and
+                    schedule, all in one place.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {["Rubric scoring", "Review queue", "Scheduling"].map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs px-3 py-1.5 rounded-full"
+                        style={{
+                          backgroundColor: "rgba(26,23,20,0.07)",
+                          color: "rgba(26,23,20,0.65)",
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium flex-shrink-0 transition-opacity group-hover:opacity-70"
+                  style={{ color: "var(--brand-sage)" }}
+                >
+                  Open the tracker
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M3 7h8M7 3l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          </section>
+        )}
+
         {/* ── Gallery ── */}
         {gallery.length > 0 && (
           <section className="mt-16 md:mt-24">
