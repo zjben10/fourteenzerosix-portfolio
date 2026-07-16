@@ -326,6 +326,79 @@ export default async function ProjectPage({
           </section>
         )}
 
+        {/* ── Featured Project (Roebling GTM) ── */}
+        {project.slug === "roebling-gtm" && (
+          <section className="mt-16 md:mt-24">
+            <p
+              className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              Featured Project
+            </p>
+            <div
+              className="rounded-sm p-8 md:p-10"
+              style={{
+                border: "1px solid rgba(26,23,20,0.12)",
+                backgroundColor: "rgba(26,23,20,0.02)",
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4 flex-wrap">
+                <h3
+                  className="font-bold leading-tight"
+                  style={{
+                    fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+                    color: "var(--brand-dark)",
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                  }}
+                >
+                  Better with Bio · Brenntag
+                </h3>
+                <span
+                  className="text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(26,23,20,0.07)",
+                    color: "rgba(26,23,20,0.55)",
+                  }}
+                >
+                  Sunset in rebrand
+                </span>
+              </div>
+              <p
+                className="text-base leading-relaxed max-w-3xl"
+                style={{ color: "rgba(26,23,20,0.7)" }}
+              >
+                {"Managed Synonym (now Roebling)'s largest co-marketing opportunity with the world's largest chemical distributor, Brenntag. I spent my first six months embedded with Brenntag's global marketing team, owning the positioning, messaging, and communications for the Better with Bio program end to end and building the program landing page alongside them. The program was later sunset when the company repositioned and rebranded from Synonym to Roebling, moving away from the 'bio' framing."}
+              </p>
+              <p
+                className="text-[10px] tracking-[0.3em] uppercase font-medium mt-8 mb-4"
+                style={{ color: "var(--brand-terracotta)" }}
+              >
+                Key Results
+              </p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "Owned co-branded positioning and messaging with the global marketing org of the category's largest distributor.",
+                  "Shipped the program landing page and communications framework.",
+                  "Program sunset in the company rebrand (Synonym → Roebling).",
+                ].map((r) => (
+                  <li key={r} className="flex items-start gap-3">
+                    <span
+                      className="mt-2 flex-shrink-0 w-1 h-1 rounded-full"
+                      style={{ backgroundColor: "var(--brand-sage)" }}
+                    />
+                    <p
+                      className="text-base leading-relaxed"
+                      style={{ color: "rgba(26,23,20,0.75)" }}
+                    >
+                      {r}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         {/* ── Gallery ── */}
         {gallery.length > 0 && (
           <section className="mt-16 md:mt-24">
