@@ -395,6 +395,25 @@ export default async function ProjectPage({
                   </li>
                 ))}
               </ul>
+
+              <figure className="mt-8 mb-0">
+                <div
+                  className="overflow-hidden rounded-sm"
+                  style={{ border: "1px solid rgba(26,23,20,0.1)" }}
+                >
+                  <img
+                    src="/images/roebling-bwb-landing.png"
+                    alt="Better with Bio landing page — Brenntag and Synonym"
+                    className="block w-full h-auto"
+                  />
+                </div>
+                <figcaption
+                  className="text-xs mt-3"
+                  style={{ color: "rgba(26,23,20,0.45)" }}
+                >
+                  The Better with Bio program landing page, built with Brenntag.
+                </figcaption>
+              </figure>
             </div>
           </section>
         )}
