@@ -61,7 +61,7 @@ export const RUBRIC: RubricCriterion[] = [
   {
     key: "icpCoverage",
     label: "ICP Coverage",
-    desc: "How many target personas attend — process engineers, technical founders, CapEx managers, capital stakeholders.",
+    desc: "How many target personas attend: process engineers, technical founders, CapEx managers, capital stakeholders.",
   },
   {
     key: "icpComposition",
@@ -71,7 +71,7 @@ export const RUBRIC: RubricCriterion[] = [
   {
     key: "fuelEngine",
     label: "Fuel & Engine Fit",
-    desc: "Can we make content and drive pipeline — speaking, demos, case studies, follow-up meetings?",
+    desc: "Can we make content and drive pipeline: speaking, demos, case studies, follow-up meetings?",
   },
   {
     key: "quality",
@@ -189,7 +189,7 @@ export function dateRange(a?: string, b?: string) {
 
 export function costText(e: TrackedEvent) {
   const raw = e.regCost || e.sponsorCost || "";
-  if (!raw) return "—";
+  if (!raw) return "–";
   const n = parseFloat(raw);
   if (!isNaN(n) && String(raw).trim() === String(n)) return "$" + n.toLocaleString();
   return raw.length > 24 ? raw.slice(0, 22) + "…" : raw;
@@ -211,8 +211,8 @@ export function regionFromLoc(loc: string) {
 
 // ── Rubric estimator ────────────────────────────────────────────────────
 // A deterministic, transparent stand-in for the Claude-scored prototype.
-// It reads the same signals the evaluator prompt described — region, event
-// type, ICP keywords, cross-vertical reach — and returns a 1–5 per criterion
+// It reads the same signals the evaluator prompt described: region, event
+// type, ICP keywords, cross-vertical reach, returning a 1-5 per criterion
 // that a reviewer then adjusts. It never inflates; the reviewer owns the call.
 export type EventFacts = {
   name: string;
@@ -304,7 +304,7 @@ export function estimateScores(
     (region === "US hub"
       ? "US hub keeps cost efficient. "
       : region === "International"
-      ? "International — justify with client meetings or event-stacking. "
+      ? "International, so justify with client meetings or event-stacking. "
       : "") +
     (matchedVerticals.length
       ? `Reaches ${matchedVerticals.slice(0, 3).join(", ")}. `
