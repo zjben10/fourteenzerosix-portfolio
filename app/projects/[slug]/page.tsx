@@ -367,7 +367,7 @@ export default async function ProjectPage({
                 className="text-base leading-relaxed max-w-3xl"
                 style={{ color: "rgba(26,23,20,0.7)" }}
               >
-                {"Managed Synonym (now Roebling)'s largest co-marketing opportunity with the world's largest chemical distributor, Brenntag. I spent my first six months embedded with Brenntag's global marketing team, owning the positioning, messaging, and communications for the Better with Bio program end to end and building the program landing page alongside their global marketing team across Europe, North America, and APAC regions. The program was later sunset when the company repositioned and rebranded from Synonym to Roebling, moving away from the 'bio' framing."}
+                {"Managed Synonym (now Roebling)'s largest co-marketing opportunity with the world's largest chemical distributor, Brenntag. I spent my first six months embedded with Brenntag's team, owning the positioning, messaging, and communications for the Better with Bio program end to end and building the program landing page alongside their global marketing team across Europe, North America, and APAC regions. The program was later sunset when the company repositioned and rebranded from Synonym to Roebling, moving away from the 'bio' framing."}
               </p>
               <p
                 className="text-[10px] tracking-[0.3em] uppercase font-medium mt-8 mb-4"
