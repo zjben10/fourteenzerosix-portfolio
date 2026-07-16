@@ -32,10 +32,6 @@ export const projects: Project[] = [
       "First marketing hire at Roebling, building the company's entire marketing function from zero and leading the Synonym-to-Roebling rebrand ahead of its July 2025 self-service launch.",
     metric: "",
     keyOutcomes: [
-      "Managed Synonym (now Roebling)'s largest co-marketing opportunity with the world's largest chemical distributor, Brenntag — the Better with Bio program. Spent my first six months embedded with Brenntag's global marketing team, owning the positioning, messaging, and communications end to end and building the program landing page alongside them. The program was later sunset when the company repositioned and rebranded from Synonym to Roebling, moving away from the 'bio' framing.",
-      "Owned co-branded positioning and messaging with the global marketing org of the category's largest distributor.",
-      "Shipped the program landing page and communications framework.",
-      "Program sunset in the company rebrand (Synonym → Roebling).",
       "Led the end-to-end rebrand from Synonym to Roebling, including the .co to .com domain migration, brand guidelines, and brand voice framework. Supported 8 pre-self-service deals and $300K in revenue in the first months post-rebrand.",
       "Met Q1 Early Access Program goals with 100 participants.",
       "Owned end-to-end event strategy across 25+ annual tradeshows and conferences, including target account selection, pre-event outreach, on-site execution, and post-event conversion. Created the Steel in the Ground dinner series to push late-stage and early-stage prospects down the funnel.",
