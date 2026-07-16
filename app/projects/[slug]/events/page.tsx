@@ -1,20 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DM_Sans, DM_Serif_Display } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import { getProjectBySlug } from "@/lib/projects";
 import EventsTracker from "@/components/EventsTracker";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-dm-sans",
-});
-
-const dmSerif = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-dm-serif",
-});
+// Inter for body/headings; Geist Mono as the technical accent (Aptos Mono
+// is first in the CSS stack in the component, so a self-hosted Aptos Mono
+// would take over automatically).
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 // Only the Roebling GTM project carries the events tracker.
 const EVENTS_SLUG = "roebling-gtm";
@@ -26,7 +20,7 @@ export function generateStaticParams() {
 export const metadata = {
   title: "Roebling Events Tracker | Zoei Benzon",
   description:
-    "Internal tool built for Roebling's event function — every 2026 event scored against the Roebling go/no-go rubric.",
+    "Internal tool built for Roebling's event function: every 2026 event scored against the Roebling go/no-go rubric.",
 };
 
 export default async function EventsTrackerPage({
@@ -40,8 +34,8 @@ export default async function EventsTrackerPage({
 
   const tracker = (
     <div
-      className={`${dmSans.variable} ${dmSerif.variable}`}
-      style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+      className={`${inter.variable} ${geistMono.variable}`}
+      style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
     >
       <EventsTracker />
       <Link
@@ -55,9 +49,9 @@ export default async function EventsTrackerPage({
           alignItems: "center",
           gap: 8,
           padding: "9px 16px",
-          borderRadius: 999,
-          background: "rgba(40,45,42,0.92)",
-          color: "#f7f9f8",
+          borderRadius: 10,
+          background: "rgba(35,35,35,0.92)",
+          color: "#ffffff",
           fontSize: 12,
           fontWeight: 600,
           letterSpacing: "0.02em",

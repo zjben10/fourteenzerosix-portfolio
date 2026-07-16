@@ -124,21 +124,21 @@ export type VerdictColors = {
 
 export function verdictColors(v?: string): VerdictColors {
   if (v === "Strong Pursue")
-    return { bg: "#a56435", fg: "#fff", dot: "#a56435", soft: "#f5e9df", softFg: "#8a4f29" };
+    return { bg: "#2ac33c", fg: "#0f3d17", dot: "#2ac33c", soft: "#e4f7e8", softFg: "#1a7d2a" };
   if (v === "Selective Pursue")
-    return { bg: "#eef1ec", fg: "#4a6146", dot: "#688662", soft: "#eef1ec", softFg: "#4a6146" };
+    return { bg: "#1e90ff", fg: "#ffffff", dot: "#1e90ff", soft: "#e7f2ff", softFg: "#1268c9" };
   if (v === "Monitor")
-    return { bg: "#f3ede4", fg: "#8a5a34", dot: "#c47c4a", soft: "#f3ede4", softFg: "#8a5a34" };
-  return { bg: "#ecebe8", fg: "#8a857e", dot: "#b3aca3", soft: "#ecebe8", softFg: "#8a857e" };
+    return { bg: "#ff882d", fg: "#3a1c05", dot: "#ff882d", soft: "#fff0e2", softFg: "#b3560f" };
+  return { bg: "#e5e5e5", fg: "#5a5a5a", dot: "#909090", soft: "#ededed", softFg: "#6a6a6a" };
 }
 
 export function statusMeta(s: EventStatus) {
   const m: Record<string, { label: string; bg: string; fg: string }> = {
-    submitted: { label: "Submitted", bg: "#eef1ec", fg: "#4a6146" },
-    in_review: { label: "In review", bg: "#f5e9df", fg: "#8a4f29" },
-    considering: { label: "Considering", bg: "#f3ede4", fg: "#8a5a34" },
-    scheduled: { label: "Scheduled", bg: "#e5ede3", fg: "#42603c" },
-    skip: { label: "Skipped", bg: "#ecebe8", fg: "#8a857e" },
+    submitted: { label: "Submitted", bg: "#e7f2ff", fg: "#1268c9" },
+    in_review: { label: "In review", bg: "#fff0e2", fg: "#b3560f" },
+    considering: { label: "Considering", bg: "#ededed", fg: "#5a5a5a" },
+    scheduled: { label: "Scheduled", bg: "#e4f7e8", fg: "#1a7d2a" },
+    skip: { label: "Skipped", bg: "#ededed", fg: "#8a8a8a" },
   };
   return m[s] || m.submitted;
 }
@@ -152,7 +152,7 @@ export function initials(name: string) {
   );
 }
 
-const AVATAR_PALETTE = ["#a56435", "#688662", "#6f5950", "#8a5a34", "#566554", "#c47c4a"];
+const AVATAR_PALETTE = ["#1e90ff", "#1a7d2a", "#c96a1f", "#5a5a5a", "#c0304f", "#232323"];
 
 export function avatarColor(name: string) {
   let s = 0;

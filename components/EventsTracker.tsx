@@ -25,7 +25,7 @@ import {
   type ScoreDraft,
 } from "@/lib/roeblingEvents";
 
-const SERIF = "var(--font-dm-serif), Georgia, serif";
+const MONO = '"Aptos Mono", var(--font-mono), ui-monospace, SFMono-Regular, monospace';
 type CSS = React.CSSProperties;
 
 type View =
@@ -108,10 +108,10 @@ function avatarStyle(name: string, size = 26, opts?: { stack?: boolean; plain?: 
 function regionStyle(r: string): CSS {
   const c =
     r === "US hub"
-      ? { bg: "#e5ede3", fg: "#42603c" }
+      ? { bg: "#e4f7e8", fg: "#1a7d2a" }
       : r === "International"
-      ? { bg: "#f5e9df", fg: "#8a4f29" }
-      : { bg: "#f0ece5", fg: "#6f6a63" };
+      ? { bg: "#e7f2ff", fg: "#0f74d4" }
+      : { bg: "#ededed", fg: "#6a6a6a" };
   return {
     display: "inline-flex",
     marginTop: 4,
@@ -130,8 +130,8 @@ function moreStyle(size = 26): CSS {
     width: size,
     height: size,
     borderRadius: "50%",
-    background: "#e0d9cf",
-    color: "#6f5950",
+    background: "#d6d6d6",
+    color: "#5a5a5a",
     fontSize: size * 0.36,
     fontWeight: 600,
     display: "flex",
@@ -162,12 +162,12 @@ const cardStyle: CSS = {
 
 const selectStyle: CSS = {
   padding: "9px 12px",
-  background: "#f6f2ec",
+  background: "#f2f2f2",
   border: "1px solid rgba(35,35,35,0.08)",
   borderRadius: 6,
   fontSize: 12.5,
   fontWeight: 500,
-  color: "#4a453f",
+  color: "#333333",
   cursor: "pointer",
 };
 
@@ -177,14 +177,14 @@ const labelStyle: CSS = {
   fontWeight: 600,
   letterSpacing: "0.06em",
   textTransform: "uppercase",
-  color: "#6f6a63",
+  color: "#6a6a6a",
   marginBottom: 7,
 };
 
 const inputStyle: CSS = {
   width: "100%",
   padding: "11px 13px",
-  background: "#f6f2ec",
+  background: "#f2f2f2",
   border: "1px solid rgba(35,35,35,0.1)",
   borderRadius: 7,
   fontSize: 14,
@@ -194,8 +194,8 @@ const stepBtnStyle: CSS = {
   width: 28,
   height: 28,
   borderRadius: 6,
-  background: "#f3ede4",
-  color: "#6f5950",
+  background: "#ededed",
+  color: "#5a5a5a",
   fontSize: 16,
   fontWeight: 600,
   lineHeight: 1,
@@ -207,6 +207,13 @@ const stepBtnStyle: CSS = {
 // ─────────────────────────────────────────────────────────────────────────
 export default function EventsTracker() {
   const [loaded, setLoaded] = useState(false);
+  const [logoOk, setLogoOk] = useState(true);
+  const logoRef = useRef<HTMLImageElement>(null);
+  // Catch a broken logo that errored before hydration attached onError.
+  useEffect(() => {
+    const img = logoRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setLogoOk(false);
+  }, []);
   const [view, setView] = useState<View>("dashboard");
   const [isReviewer, setIsReviewer] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -510,7 +517,7 @@ export default function EventsTracker() {
         height: "100dvh",
         width: "100%",
         overflow: "hidden",
-        background: "#ebe6df",
+        background: "#eaeaea",
         color: "#232323",
       }}
     >
@@ -518,19 +525,20 @@ export default function EventsTracker() {
         .rt-scroll::-webkit-scrollbar{width:10px;height:10px;}
         .rt-scroll::-webkit-scrollbar-thumb{background:rgba(35,35,35,0.16);border-radius:5px;}
         .rt-row{transition:background 140ms;}
-        .rt-row-brown:hover{background:rgba(165,100,53,0.04);}
-        .rt-row-green:hover{background:rgba(104,134,98,0.05);}
+        .rt-row-brown:hover{background:rgba(30,144,255,0.04);}
+        .rt-row-green:hover{background:rgba(42,195,60,0.05);}
         .rt-primary{transition:background 140ms;}
-        .rt-primary:hover{background:#8a4f29 !important;}
-        .rt-ghost:hover{background:#f6f2ec !important;}
+        .rt-primary:hover{background:#0f74d4 !important;}
+        .rt-ghost:hover{background:#f2f2f2 !important;}
         .rt-fade{animation:rtFade 320ms cubic-bezier(0.22,0.61,0.36,1);}
         @keyframes rtFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
         @keyframes rtSpin{to{transform:rotate(360deg);}}
         @keyframes rtToast{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
         /* Visible keyboard focus (a11y): mouse clicks stay clean, keyboard shows a ring. */
-        [data-rt] :focus-visible{outline:2px solid #a56435;outline-offset:2px;border-radius:5px;}
+        [data-rt] :focus-visible{outline:2px solid #1e90ff;outline-offset:2px;border-radius:5px;}
         [data-rt] :focus:not(:focus-visible){outline:none;}
-        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:rgba(165,100,53,0.55);}
+        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:rgba(30,144,255,0.55);}
+        [data-rt] [style*="uppercase"]{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;}
         @media (prefers-reduced-motion: reduce){
           .rt-fade{animation:none;}
           [data-rt] *{transition:none !important;}
@@ -558,7 +566,7 @@ export default function EventsTracker() {
           width: 248,
           minWidth: 248,
           height: "100%",
-          background: "#282d2a",
+          background: "#232323",
           color: "#f7f9f8",
           display: "flex",
           flexDirection: "column",
@@ -566,16 +574,27 @@ export default function EventsTracker() {
         }}
       >
         <div style={{ padding: "0 8px 4px" }}>
-          <div style={{ fontSize: 23, fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1 }}>
-            roebling
-          </div>
+          {logoOk ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              ref={logoRef}
+              src="/images/roebling-logo-white.png"
+              alt="Roebling"
+              onError={() => setLogoOk(false)}
+              style={{ height: 24, width: "auto", display: "block", borderRadius: 4 }}
+            />
+          ) : (
+            <div style={{ fontSize: 23, fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1 }}>
+              roebling
+            </div>
+          )}
           <div
             style={{
               fontSize: 10.5,
               fontWeight: 500,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "#a56435",
+              color: "#1e90ff",
               marginTop: 7,
             }}
           >
@@ -589,7 +608,7 @@ export default function EventsTracker() {
           style={{
             margin: "26px 4px 22px",
             padding: "13px 16px",
-            background: "#a56435",
+            background: "#1e90ff",
             color: "#f7f9f8",
             border: "none",
             cursor: "pointer",
@@ -627,7 +646,7 @@ export default function EventsTracker() {
                   fontSize: 13.5,
                   fontWeight: active ? 600 : 500,
                   transition: "background 140ms,color 140ms",
-                  background: active ? "rgba(165,100,53,0.9)" : "transparent",
+                  background: active ? "rgba(30,144,255,0.9)" : "transparent",
                   color: active ? "#f7f9f8" : "rgba(247,249,248,0.72)",
                 }}
               >
@@ -635,7 +654,7 @@ export default function EventsTracker() {
                 {showBadge && (
                   <span
                     style={{
-                      background: active ? "rgba(247,249,248,0.25)" : "#a56435",
+                      background: active ? "rgba(247,249,248,0.25)" : "#1e90ff",
                       color: "#f7f9f8",
                       fontSize: 11,
                       fontWeight: 600,
@@ -699,7 +718,7 @@ export default function EventsTracker() {
                     fontSize: 11.5,
                     fontWeight: 600,
                     transition: "all 140ms",
-                    background: on ? "#a56435" : "transparent",
+                    background: on ? "#1e90ff" : "transparent",
                     color: on ? "#f7f9f8" : "rgba(247,249,248,0.6)",
                   }}
                 >
@@ -714,7 +733,7 @@ export default function EventsTracker() {
                 width: 34,
                 height: 34,
                 borderRadius: "50%",
-                background: "#a56435",
+                background: "#1e90ff",
                 color: "#f7f9f8",
                 fontSize: 13,
                 fontWeight: 600,
@@ -742,7 +761,7 @@ export default function EventsTracker() {
               alignItems: "center",
               justifyContent: "center",
               height: "100%",
-              color: "#6f6a63",
+              color: "#6a6a6a",
               fontSize: 14,
             }}
           >
@@ -750,13 +769,13 @@ export default function EventsTracker() {
           </div>
         )}
 
-        {loaded && view === "dashboard" && <Dashboard />}
-        {loaded && view === "all" && <AllEvents />}
-        {loaded && view === "detail" && <Detail />}
-        {loaded && view === "submit" && <Submit />}
-        {loaded && view === "review" && <Review />}
-        {loaded && view === "scheduled" && <Scheduled />}
-        {loaded && view === "rubric" && <Rubric />}
+        {loaded && view === "dashboard" && Dashboard()}
+        {loaded && view === "all" && AllEvents()}
+        {loaded && view === "detail" && Detail()}
+        {loaded && view === "submit" && Submit()}
+        {loaded && view === "review" && Review()}
+        {loaded && view === "scheduled" && Scheduled()}
+        {loaded && view === "rubric" && Rubric()}
 
         {toast && (
           <div
@@ -767,7 +786,7 @@ export default function EventsTracker() {
               bottom: 26,
               left: "50%",
               transform: "translateX(-50%)",
-              background: "#282d2a",
+              background: "#232323",
               color: "#f7f9f8",
               padding: "13px 22px",
               borderRadius: 8,
@@ -794,7 +813,7 @@ export default function EventsTracker() {
           fontWeight: 600,
           letterSpacing: "0.16em",
           textTransform: "uppercase",
-          color: "#6f5950",
+          color: "#5a5a5a",
         }}
       >
         {children}
@@ -830,16 +849,16 @@ export default function EventsTracker() {
             >
               <div>
                 <div style={{ fontSize: 13.5, fontWeight: 600, color: "#232323" }}>{cr.label}</div>
-                <div style={{ fontSize: 11.5, color: "#6f6a63", lineHeight: 1.35, marginTop: 3 }}>
+                <div style={{ fontSize: 11.5, color: "#6a6a6a", lineHeight: 1.35, marginTop: 3 }}>
                   {cr.desc}
                 </div>
               </div>
-              <div style={{ height: 9, background: "#f0ebe3", borderRadius: 5, overflow: "hidden" }}>
+              <div style={{ height: 9, background: "#e6e6e6", borderRadius: 5, overflow: "hidden" }}>
                 <div
                   style={{
                     height: "100%",
                     width: `${(sc / 5) * 100}%`,
-                    background: "#a56435",
+                    background: "#1e90ff",
                     borderRadius: 5,
                     transition: "width 240ms cubic-bezier(0.22,0.61,0.36,1)",
                   }}
@@ -868,7 +887,7 @@ export default function EventsTracker() {
                   </button>
                 </div>
               ) : (
-                <div style={{ fontSize: 14, fontWeight: 600, width: 40, textAlign: "right", color: "#6f5950" }}>
+                <div style={{ fontSize: 14, fontWeight: 600, width: 40, textAlign: "right", color: "#5a5a5a" }}>
                   {sc}/5
                 </div>
               )}
@@ -889,10 +908,10 @@ export default function EventsTracker() {
       ? Math.round(scored.reduce((a, e) => a + (e.total || 0), 0) / scored.length)
       : 0;
     const statCards = [
-      { label: "tracked", value: events.length, sub: "events in 2026", subColor: "#6f6a63" },
-      { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "#8a4f29" },
-      { label: "scheduled", value: scheduled.length, sub: "approved & planning", subColor: "#42603c" },
-      { label: "avg score", value: avg, sub: "out of 30", subColor: "#6f6a63" },
+      { label: "tracked", value: events.length, sub: "events in 2026", subColor: "#6a6a6a" },
+      { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "#0f74d4" },
+      { label: "scheduled", value: scheduled.length, sub: "approved & planning", subColor: "#1a7d2a" },
+      { label: "avg score", value: avg, sub: "out of 30", subColor: "#6a6a6a" },
     ];
     const dist = (["Strong Pursue", "Selective Pursue", "Monitor", "Skip"] as const).map((v) => {
       const count = scored.filter((e) => e.verdict === v).length;
@@ -917,7 +936,7 @@ export default function EventsTracker() {
         <h1 style={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0", lineHeight: 1.05 }}>
           {isReviewer ? "good morning, Zoei" : "the events, at a glance"}
         </h1>
-        <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 620 }}>
+        <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 620 }}>
           every event the team is tracking for 2026, scored against the Roebling rubric so go / no-go
           decisions stay consistent.
         </p>
@@ -931,12 +950,12 @@ export default function EventsTracker() {
                   fontWeight: 600,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "#6f6a63",
+                  color: "#6a6a6a",
                 }}
               >
                 {s.label}
               </div>
-              <div style={{ fontFamily: SERIF, fontSize: 42, lineHeight: 1, marginTop: 12, color: "#232323" }}>
+              <div style={{ fontFamily: MONO, fontSize: 42, lineHeight: 1, marginTop: 12, color: "#232323" }}>
                 {s.value}
               </div>
               <div style={{ fontSize: 12.5, color: s.subColor, marginTop: 8 }}>{s.sub}</div>
@@ -952,7 +971,7 @@ export default function EventsTracker() {
               </h2>
               <button
                 onClick={() => goView("review")}
-                style={{ fontSize: 12.5, fontWeight: 600, color: "#a56435", background: "none", border: "none", cursor: "pointer" }}
+                style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
               >
                 open queue →
               </button>
@@ -993,11 +1012,11 @@ export default function EventsTracker() {
                       >
                         {e.name}
                       </div>
-                      <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 2 }}>
+                      <div style={{ fontSize: 12, color: "#6a6a6a", marginTop: 2 }}>
                         {dateRange(e.start, e.end)} · {e.location}
                       </div>
                     </div>
-                    <div style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
+                    <div style={e.scored ? chip(c.soft, c.softFg) : chip("#f2f2f2", "#6a6a6a")}>
                       {e.scored ? (e.total || 0) + "/30" : "score it"}
                     </div>
                   </button>
@@ -1007,7 +1026,7 @@ export default function EventsTracker() {
                 <div
                   style={{
                     padding: "22px 4px 26px",
-                    color: "#6f6a63",
+                    color: "#6a6a6a",
                     fontSize: 13.5,
                     borderTop: "1px solid rgba(35,35,35,0.07)",
                   }}
@@ -1022,7 +1041,7 @@ export default function EventsTracker() {
             <h2 style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>
               rubric verdicts
             </h2>
-            <div style={{ fontSize: 12.5, color: "#6f6a63", marginTop: 4 }}>
+            <div style={{ fontSize: 12.5, color: "#6a6a6a", marginTop: 4 }}>
               across {scored.length} scored events
             </div>
             <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 16 }}>
@@ -1041,9 +1060,9 @@ export default function EventsTracker() {
                       <span style={{ width: 9, height: 9, borderRadius: "50%", background: v.dot, display: "inline-block" }} />
                       <span style={{ fontWeight: 600, color: "#232323" }}>{v.label}</span>
                     </span>
-                    <span style={{ color: "#6f6a63", fontWeight: 600 }}>{v.count}</span>
+                    <span style={{ color: "#6a6a6a", fontWeight: 600 }}>{v.count}</span>
                   </div>
-                  <div style={{ height: 8, background: "#f0ebe3", borderRadius: 5, overflow: "hidden" }}>
+                  <div style={{ height: 8, background: "#e6e6e6", borderRadius: 5, overflow: "hidden" }}>
                     <div style={{ height: "100%", width: `${v.pct}%`, background: v.dot, borderRadius: 5 }} />
                   </div>
                 </div>
@@ -1060,7 +1079,7 @@ export default function EventsTracker() {
               </h2>
               <button
                 onClick={() => goView("scheduled")}
-                style={{ fontSize: 12.5, fontWeight: 600, color: "#a56435", background: "none", border: "none", cursor: "pointer" }}
+                style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
               >
                 see all →
               </button>
@@ -1093,12 +1112,12 @@ export default function EventsTracker() {
                           fontWeight: 600,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
-                          color: "#a56435",
+                          color: "#1e90ff",
                         }}
                       >
                         {fmtMonth(e.start)}
                       </div>
-                      <div style={{ fontFamily: SERIF, fontSize: 24, lineHeight: 1, color: "#232323" }}>
+                      <div style={{ fontFamily: MONO, fontSize: 24, lineHeight: 1, color: "#232323" }}>
                         {fmtDay(e.start)}
                       </div>
                     </div>
@@ -1115,7 +1134,7 @@ export default function EventsTracker() {
                       >
                         {e.name}
                       </div>
-                      <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 2 }}>{e.location}</div>
+                      <div style={{ fontSize: 12, color: "#6a6a6a", marginTop: 2 }}>{e.location}</div>
                     </div>
                     <div style={{ display: "flex" }}>
                       {g.arr.map((p) => (
@@ -1130,7 +1149,7 @@ export default function EventsTracker() {
             </div>
           </div>
 
-          <div style={{ background: "#282d2a", borderRadius: 10, padding: 26, color: "#f7f9f8" }}>
+          <div style={{ background: "#232323", borderRadius: 10, padding: 26, color: "#f7f9f8" }}>
             <h2 style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", margin: 0, color: "#f7f9f8" }}>
               who&apos;s out there
             </h2>
@@ -1193,7 +1212,7 @@ export default function EventsTracker() {
               all events
             </h1>
           </div>
-          <div style={{ fontSize: 13, color: "#6f6a63", paddingBottom: 4 }}>
+          <div style={{ fontSize: 13, color: "#6a6a6a", paddingBottom: 4 }}>
             {list.length} of {events.length} events
           </div>
         </div>
@@ -1223,7 +1242,7 @@ export default function EventsTracker() {
               style={{
                 width: "100%",
                 padding: "9px 12px 9px 34px",
-                background: "#f6f2ec",
+                background: "#f2f2f2",
                 border: "1px solid rgba(35,35,35,0.08)",
                 borderRadius: 6,
                 fontSize: 13.5,
@@ -1235,7 +1254,7 @@ export default function EventsTracker() {
                 left: 12,
                 top: "50%",
                 transform: "translateY(-50%)",
-                color: "#6f6a63",
+                color: "#6a6a6a",
                 fontSize: 13,
               }}
             >
@@ -1290,7 +1309,7 @@ export default function EventsTracker() {
               style={{
                 fontSize: 12.5,
                 fontWeight: 600,
-                color: "#a56435",
+                color: "#1e90ff",
                 padding: "8px 10px",
                 background: "none",
                 border: "none",
@@ -1309,13 +1328,13 @@ export default function EventsTracker() {
               gridTemplateColumns: gridCols,
               gap: 14,
               padding: "13px 22px",
-              background: "#f6f2ec",
+              background: "#f2f2f2",
               borderBottom: "1px solid rgba(35,35,35,0.08)",
               fontSize: 10.5,
               fontWeight: 600,
               letterSpacing: "0.09em",
               textTransform: "uppercase",
-              color: "#6f6a63",
+              color: "#6a6a6a",
             }}
           >
             <div>event</div>
@@ -1366,7 +1385,7 @@ export default function EventsTracker() {
                   <div
                     style={{
                       fontSize: 11.5,
-                      color: "#6f6a63",
+                      color: "#6a6a6a",
                       marginTop: 3,
                       whiteSpace: "nowrap",
                       overflow: "hidden",
@@ -1376,7 +1395,7 @@ export default function EventsTracker() {
                     {e.industry}
                   </div>
                 </div>
-                <div style={{ fontSize: 12.5, color: "#6f5950" }}>{dateRange(e.start, e.end)}</div>
+                <div style={{ fontSize: 12.5, color: "#5a5a5a" }}>{dateRange(e.start, e.end)}</div>
                 <div style={{ minWidth: 0 }}>
                   <div
                     style={{
@@ -1393,16 +1412,16 @@ export default function EventsTracker() {
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                   {vChips.map((v) => (
-                    <span key={v} style={chip("#f3ede4", "#8a5a34")}>
+                    <span key={v} style={chip("#ededed", "#5a5a5a")}>
                       {v}
                     </span>
                   ))}
                 </div>
-                <div style={{ fontSize: 15, fontWeight: 600, color: e.scored ? "#232323" : "#c3bdb4" }}>
+                <div style={{ fontSize: 15, fontWeight: 600, color: e.scored ? "#232323" : "#b0b0b0" }}>
                   {e.scored ? String(e.total) : "–"}
                 </div>
                 <div>
-                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
+                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f2f2f2", "#6a6a6a")}>
                     {e.scored ? e.verdict : "needs review"}
                   </span>
                 </div>
@@ -1418,7 +1437,7 @@ export default function EventsTracker() {
             );
           })}
           {list.length === 0 && (
-            <div style={{ padding: 48, textAlign: "center", color: "#6f6a63", fontSize: 14 }}>
+            <div style={{ padding: 48, textAlign: "center", color: "#6a6a6a", fontSize: 14 }}>
               no events match these filters.
             </div>
           )}
@@ -1434,11 +1453,11 @@ export default function EventsTracker() {
         <div className="rt-fade" style={{ maxWidth: 940, margin: "0 auto", padding: "30px 48px 72px" }}>
           <button
             onClick={() => setView("all")}
-            style={{ fontSize: 13, fontWeight: 600, color: "#6f5950", background: "none", border: "none", cursor: "pointer" }}
+            style={{ fontSize: 13, fontWeight: 600, color: "#5a5a5a", background: "none", border: "none", cursor: "pointer" }}
           >
             ← back
           </button>
-          <p style={{ color: "#6f6a63", marginTop: 24 }}>event not found.</p>
+          <p style={{ color: "#6a6a6a", marginTop: 24 }}>event not found.</p>
         </div>
       );
     }
@@ -1456,7 +1475,7 @@ export default function EventsTracker() {
           style={{
             fontSize: 13,
             fontWeight: 600,
-            color: "#6f5950",
+            color: "#5a5a5a",
             display: "flex",
             alignItems: "center",
             gap: 6,
@@ -1483,7 +1502,7 @@ export default function EventsTracker() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
               <span style={chip(sm.bg, sm.fg)}>{sm.label}</span>
               {(e.verticals || []).map((v) => (
-                <span key={v} style={chip("#f3ede4", "#8a5a34")}>
+                <span key={v} style={chip("#ededed", "#5a5a5a")}>
                   {v}
                 </span>
               ))}
@@ -1491,7 +1510,7 @@ export default function EventsTracker() {
             <h1 style={{ fontSize: 30, fontWeight: 600, letterSpacing: "-0.03em", margin: "14px 0 0", lineHeight: 1.08 }}>
               {e.name}
             </h1>
-            <div style={{ fontSize: 14, color: "#6f5950", marginTop: 10, display: "flex", gap: 18, flexWrap: "wrap" }}>
+            <div style={{ fontSize: 14, color: "#5a5a5a", marginTop: 10, display: "flex", gap: 18, flexWrap: "wrap" }}>
               <span>{dateRange(e.start, e.end)}</span>
               <span>·</span>
               <span>{e.location}</span>
@@ -1506,7 +1525,7 @@ export default function EventsTracker() {
                 style={{
                   fontSize: 13,
                   fontWeight: 600,
-                  color: "#a56435",
+                  color: "#1e90ff",
                   borderBottom: "1px solid currentColor",
                   display: "inline-block",
                   marginTop: 12,
@@ -1520,8 +1539,8 @@ export default function EventsTracker() {
           <div
             style={{
               textAlign: "right",
-              background: e.scored ? c.bg : "#f0ece5",
-              color: e.scored ? c.fg : "#6f6a63",
+              background: e.scored ? c.bg : "#ededed",
+              color: e.scored ? c.fg : "#6a6a6a",
               borderRadius: 10,
               padding: "18px 24px",
               minWidth: 180,
@@ -1533,7 +1552,7 @@ export default function EventsTracker() {
             <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: "-0.01em", marginTop: 8 }}>
               {e.scored ? e.verdict : "not scored"}
             </div>
-            <div style={{ fontFamily: SERIF, fontSize: 34, lineHeight: 1, marginTop: 8 }}>
+            <div style={{ fontFamily: MONO, fontSize: 34, lineHeight: 1, marginTop: 8 }}>
               {e.scored ? String(e.total) : "–"}
               <span style={{ fontSize: 16, opacity: 0.65 }}> / 30</span>
             </div>
@@ -1553,8 +1572,8 @@ export default function EventsTracker() {
                   cursor: "pointer",
                   fontSize: 12.5,
                   fontWeight: 600,
-                  background: editingScores ? "#a56435" : "#f3ede4",
-                  color: editingScores ? "#f7f9f8" : "#6f5950",
+                  background: editingScores ? "#1e90ff" : "#ededed",
+                  color: editingScores ? "#f7f9f8" : "#5a5a5a",
                 }}
               >
                 {editingScores ? "save scores" : "adjust scores"}
@@ -1563,8 +1582,8 @@ export default function EventsTracker() {
           </div>
 
           {!e.scored ? (
-            <div style={{ marginTop: 18, padding: 26, background: "#f6f2ec", borderRadius: 9, textAlign: "center" }}>
-              <div style={{ fontSize: 14.5, color: "#6f5950", maxWidth: 420, margin: isReviewer ? "0 auto 16px" : "0 auto" }}>
+            <div style={{ marginTop: 18, padding: 26, background: "#f2f2f2", borderRadius: 9, textAlign: "center" }}>
+              <div style={{ fontSize: 14.5, color: "#5a5a5a", maxWidth: 420, margin: isReviewer ? "0 auto 16px" : "0 auto" }}>
                 {isReviewer
                   ? "this event hasn’t been scored yet. run it through the rubric to get a verdict."
                   : "this event hasn’t been scored yet. a reviewer will run it through the rubric."}
@@ -1574,7 +1593,7 @@ export default function EventsTracker() {
                   onClick={scoreThis}
                   style={{
                     padding: "12px 26px",
-                    background: "#a56435",
+                    background: "#1e90ff",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -1605,11 +1624,11 @@ export default function EventsTracker() {
             <h3 style={{ fontSize: 14, fontWeight: 600, letterSpacing: "-0.01em", margin: "0 0 12px" }}>
               why we&apos;re looking at it
             </h3>
-            <p style={{ fontSize: 14, color: "#4a453f", lineHeight: 1.5, margin: 0 }}>
+            <p style={{ fontSize: 14, color: "#333333", lineHeight: 1.5, margin: 0 }}>
               {e.notes || "no notes were added for this event."}
             </p>
-            <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 16 }}>
-              submitted by <b style={{ color: "#6f5950" }}>{e.submitter}</b> · {e.submittedRole || "Attendee"}
+            <div style={{ fontSize: 12, color: "#6a6a6a", marginTop: 16 }}>
+              submitted by <b style={{ color: "#5a5a5a" }}>{e.submitter}</b> · {e.submittedRole || "Attendee"}
             </div>
           </div>
           <div style={{ ...cardStyle, padding: 24, boxShadow: "none" }}>
@@ -1622,7 +1641,7 @@ export default function EventsTracker() {
                     display: "flex",
                     alignItems: "center",
                     gap: 7,
-                    background: "#f6f2ec",
+                    background: "#f2f2f2",
                     borderRadius: 8,
                     padding: "4px 12px 4px 4px",
                   }}
@@ -1632,7 +1651,7 @@ export default function EventsTracker() {
                 </div>
               ))}
               {!(e.whosGoing || []).length && (
-                <span style={{ fontSize: 13, color: "#6f6a63" }}>no one assigned yet</span>
+                <span style={{ fontSize: 13, color: "#6a6a6a" }}>no one assigned yet</span>
               )}
             </div>
             <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
@@ -1647,7 +1666,7 @@ export default function EventsTracker() {
                 style={{
                   flex: 1,
                   padding: "8px 12px",
-                  background: "#f6f2ec",
+                  background: "#f2f2f2",
                   border: "1px solid rgba(35,35,35,0.08)",
                   borderRadius: 6,
                   fontSize: 13,
@@ -1657,7 +1676,7 @@ export default function EventsTracker() {
                 onClick={addPerson}
                 style={{
                   padding: "8px 16px",
-                  background: "#282d2a",
+                  background: "#232323",
                   color: "#f7f9f8",
                   border: "none",
                   cursor: "pointer",
@@ -1689,12 +1708,12 @@ export default function EventsTracker() {
                       fontWeight: 600,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
-                      color: "#6f6a63",
+                      color: "#6a6a6a",
                     }}
                   >
                     {x.l}
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 500, marginTop: 6, color: "#4a453f" }}>{x.v}</div>
+                  <div style={{ fontSize: 14, fontWeight: 500, marginTop: 6, color: "#333333" }}>{x.v}</div>
                 </div>
               ))}
             </div>
@@ -1708,7 +1727,7 @@ export default function EventsTracker() {
               className="rt-primary"
               style={{
                 padding: "13px 26px",
-                background: "#a56435",
+                background: "#1e90ff",
                 color: "#f7f9f8",
                 border: "none",
                 cursor: "pointer",
@@ -1725,7 +1744,7 @@ export default function EventsTracker() {
               style={{
                 padding: "13px 24px",
                 background: "#fff",
-                color: "#6f5950",
+                color: "#5a5a5a",
                 border: "1px solid rgba(35,35,35,0.16)",
                 cursor: "pointer",
                 borderRadius: 8,
@@ -1735,7 +1754,7 @@ export default function EventsTracker() {
             >
               mark as skip
             </button>
-            <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
+            <span style={{ fontSize: 12.5, color: "#6a6a6a" }}>
               reviewer decision moves this to the scheduled list
             </span>
           </div>
@@ -1748,7 +1767,7 @@ export default function EventsTracker() {
               style={{
                 padding: "12px 22px",
                 background: "#fff",
-                color: "#6f5950",
+                color: "#5a5a5a",
                 border: "1px solid rgba(35,35,35,0.16)",
                 cursor: "pointer",
                 borderRadius: 8,
@@ -1758,7 +1777,7 @@ export default function EventsTracker() {
             >
               move back to review
             </button>
-            <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
+            <span style={{ fontSize: 12.5, color: "#6a6a6a" }}>
               {e.status === "scheduled" ? "currently on the scheduled list" : "currently skipped"}
             </span>
           </div>
@@ -1778,7 +1797,7 @@ export default function EventsTracker() {
         <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>
           submit an event
         </h1>
-        <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 560 }}>
+        <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 560 }}>
           {isReviewer
             ? "add the details, then let the rubric score it. you can adjust every score before it goes to the review queue."
             : "add the details and send it to the marketing team, and they’ll score it against the rubric."}
@@ -1793,7 +1812,7 @@ export default function EventsTracker() {
             <div style={{ gridColumn: "1 / -1" }}>
               <label style={labelStyle}>
                 website{" "}
-                <span style={{ color: "#b3aca3", fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>
+                <span style={{ color: "#a0a0a0", fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>
                   · the rubric reads this to score
                 </span>
               </label>
@@ -1859,7 +1878,7 @@ export default function EventsTracker() {
                     display: "inline-flex",
                     alignItems: "center",
                     padding: "13px 26px",
-                    background: "#a56435",
+                    background: "#1e90ff",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -1885,7 +1904,7 @@ export default function EventsTracker() {
                   )}
                   {scoring ? "applying the rubric…" : d ? "re-score with the rubric" : "score with the rubric"}
                 </button>
-                <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
+                <span style={{ fontSize: 12.5, color: "#6a6a6a" }}>
                   {scoring
                     ? "reading the event and applying Roebling’s calibration"
                     : "the rubric reads the details and scores all six criteria"}
@@ -1898,7 +1917,7 @@ export default function EventsTracker() {
                   className="rt-primary"
                   style={{
                     padding: "13px 26px",
-                    background: "#a56435",
+                    background: "#1e90ff",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -1909,7 +1928,7 @@ export default function EventsTracker() {
                 >
                   send to review queue
                 </button>
-                <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
+                <span style={{ fontSize: 12.5, color: "#6a6a6a" }}>
                   the marketing team will score it against the rubric
                 </span>
               </>
@@ -1919,9 +1938,9 @@ export default function EventsTracker() {
             <div
               style={{
                 fontSize: 13,
-                color: "#a04a2f",
+                color: "#d13a4f",
                 marginTop: 14,
-                background: "#f7ece7",
+                background: "#fdeef0",
                 padding: "12px 14px",
                 borderRadius: 6,
               }}
@@ -1936,7 +1955,7 @@ export default function EventsTracker() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
               <div>
                 <h2 style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>the rubric says…</h2>
-                <div style={{ fontSize: 13, color: "#6f6a63", marginTop: 4 }}>
+                <div style={{ fontSize: 13, color: "#6a6a6a", marginTop: 4 }}>
                   adjust any score and the verdict recalculates live
                 </div>
               </div>
@@ -1947,7 +1966,7 @@ export default function EventsTracker() {
                 return (
                   <div style={{ textAlign: "right", background: c.bg, color: c.fg, borderRadius: 9, padding: "14px 20px" }}>
                     <div style={{ fontSize: 18, fontWeight: 600 }}>{v}</div>
-                    <div style={{ fontFamily: SERIF, fontSize: 30, lineHeight: 1, marginTop: 4 }}>
+                    <div style={{ fontFamily: MONO, fontSize: 30, lineHeight: 1, marginTop: 4 }}>
                       {total}
                       <span style={{ fontSize: 15, opacity: 0.65 }}> / 30</span>
                     </div>
@@ -1977,8 +1996,8 @@ export default function EventsTracker() {
                 <label style={labelStyle}>suggested action items</label>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 6 }}>
                   {d.actionItems.map((a, i) => (
-                    <div key={i} style={{ fontSize: 13.5, color: "#4a453f", display: "flex", gap: 8 }}>
-                      <span style={{ color: "#a56435" }}>·</span>
+                    <div key={i} style={{ fontSize: 13.5, color: "#333333", display: "flex", gap: 8 }}>
+                      <span style={{ color: "#1e90ff" }}>·</span>
                       <span>{a}</span>
                     </div>
                   ))}
@@ -1991,7 +2010,7 @@ export default function EventsTracker() {
                 className="rt-primary"
                 style={{
                   padding: "13px 28px",
-                  background: "#a56435",
+                  background: "#1e90ff",
                   color: "#f7f9f8",
                   border: "none",
                   cursor: "pointer",
@@ -2011,7 +2030,7 @@ export default function EventsTracker() {
                 style={{
                   padding: "13px 22px",
                   background: "#fff",
-                  color: "#6f5950",
+                  color: "#5a5a5a",
                   border: "1px solid rgba(35,35,35,0.16)",
                   cursor: "pointer",
                   borderRadius: 8,
@@ -2036,7 +2055,7 @@ export default function EventsTracker() {
       <div className="rt-fade" style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 48px 64px" }}>
         <SectionEyebrow>marketing review</SectionEyebrow>
         <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>review queue</h1>
-        <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 560 }}>
+        <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 560 }}>
           events waiting on a go / no-go. adjust the scores if you disagree, then approve to schedule or
           skip.
         </p>
@@ -2051,7 +2070,7 @@ export default function EventsTracker() {
                   <div style={{ flex: 1, minWidth: 260 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                       <span style={chip(sm.bg, sm.fg)}>{sm.label}</span>
-                      <span style={{ fontSize: 12, color: "#6f6a63" }}>from {e.submitter}</span>
+                      <span style={{ fontSize: 12, color: "#6a6a6a" }}>from {e.submitter}</span>
                     </div>
                     <button
                       onClick={() => open(e.id)}
@@ -2071,7 +2090,7 @@ export default function EventsTracker() {
                     >
                       {e.name}
                     </button>
-                    <div style={{ fontSize: 12.5, color: "#6f6a63", marginTop: 5 }}>
+                    <div style={{ fontSize: 12.5, color: "#6a6a6a", marginTop: 5 }}>
                       {dateRange(e.start, e.end)} · {e.location} · {e.industry}
                     </div>
                   </div>
@@ -2079,13 +2098,13 @@ export default function EventsTracker() {
                     {e.scored ? (
                       <>
                         <div style={chip(c.soft, c.softFg)}>{e.verdict}</div>
-                        <div style={{ fontFamily: SERIF, fontSize: 26, lineHeight: 1, marginTop: 8, color: "#232323" }}>
+                        <div style={{ fontFamily: MONO, fontSize: 26, lineHeight: 1, marginTop: 8, color: "#232323" }}>
                           {String(e.total)}
-                          <span style={{ fontSize: 13, color: "#6f6a63" }}> / 30</span>
+                          <span style={{ fontSize: 13, color: "#6a6a6a" }}> / 30</span>
                         </div>
                       </>
                     ) : (
-                      <span style={chip("#f6f2ec", "#6f6a63")}>needs scoring</span>
+                      <span style={chip("#f2f2f2", "#6a6a6a")}>needs scoring</span>
                     )}
                   </div>
                 </div>
@@ -2099,7 +2118,7 @@ export default function EventsTracker() {
                             fontWeight: 600,
                             letterSpacing: "0.04em",
                             textTransform: "uppercase",
-                            color: "#6f6a63",
+                            color: "#6a6a6a",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -2107,12 +2126,12 @@ export default function EventsTracker() {
                         >
                           {cr.label.split(" ")[0]}
                         </div>
-                        <div style={{ height: 6, background: "#f0ebe3", borderRadius: 3, marginTop: 5, overflow: "hidden" }}>
+                        <div style={{ height: 6, background: "#e6e6e6", borderRadius: 3, marginTop: 5, overflow: "hidden" }}>
                           <div
                             style={{
                               height: "100%",
                               width: `${((e.scores![cr.key] || 0) / 5) * 100}%`,
-                              background: "#a56435",
+                              background: "#1e90ff",
                               borderRadius: 3,
                             }}
                           />
@@ -2138,7 +2157,7 @@ export default function EventsTracker() {
                         className="rt-primary"
                         style={{
                           padding: "10px 20px",
-                          background: "#a56435",
+                          background: "#1e90ff",
                           color: "#f7f9f8",
                           border: "none",
                           cursor: "pointer",
@@ -2155,7 +2174,7 @@ export default function EventsTracker() {
                         style={{
                           padding: "10px 18px",
                           background: "#fff",
-                          color: "#6f5950",
+                          color: "#5a5a5a",
                           border: "1px solid rgba(35,35,35,0.16)",
                           cursor: "pointer",
                           borderRadius: 7,
@@ -2171,7 +2190,7 @@ export default function EventsTracker() {
                       onClick={() => open(e.id)}
                       style={{
                         padding: "10px 20px",
-                        background: "#282d2a",
+                        background: "#232323",
                         color: "#f7f9f8",
                         border: "none",
                         cursor: "pointer",
@@ -2187,7 +2206,7 @@ export default function EventsTracker() {
                     onClick={() => open(e.id)}
                     style={{
                       padding: "10px 18px",
-                      color: "#6f5950",
+                      color: "#5a5a5a",
                       fontSize: 12.5,
                       fontWeight: 600,
                       marginLeft: "auto",
@@ -2203,7 +2222,7 @@ export default function EventsTracker() {
             );
           })}
           {queue.length === 0 && (
-            <div style={{ ...cardStyle, padding: 56, textAlign: "center", color: "#6f6a63", fontSize: 14.5 }}>
+            <div style={{ ...cardStyle, padding: 56, textAlign: "center", color: "#6a6a6a", fontSize: 14.5 }}>
               the queue is clear. nothing waiting on review.
             </div>
           )}
@@ -2221,7 +2240,7 @@ export default function EventsTracker() {
       <div className="rt-fade" style={{ maxWidth: 1120, margin: "0 auto", padding: "40px 48px 64px" }}>
         <SectionEyebrow>confirmed</SectionEyebrow>
         <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>scheduled events</h1>
-        <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 560 }}>
+        <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 560 }}>
           {sch.length} events approved and in planning. tracking who&apos;s going, speaking, and what
           collateral they need.
         </p>
@@ -2257,12 +2276,12 @@ export default function EventsTracker() {
                       fontWeight: 600,
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
-                      color: "#a56435",
+                      color: "#1e90ff",
                     }}
                   >
                     {fmtMonth(e.start)}
                   </div>
-                  <div style={{ fontFamily: SERIF, fontSize: 26, lineHeight: 1 }}>{fmtDay(e.start)}</div>
+                  <div style={{ fontFamily: MONO, fontSize: 26, lineHeight: 1 }}>{fmtDay(e.start)}</div>
                 </div>
                 <div style={{ minWidth: 0 }}>
                   <div
@@ -2277,7 +2296,7 @@ export default function EventsTracker() {
                   >
                     {e.name}
                   </div>
-                  <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 3 }}>{e.location}</div>
+                  <div style={{ fontSize: 12, color: "#6a6a6a", marginTop: 3 }}>{e.location}</div>
                 </div>
                 <div style={{ display: "flex" }}>
                   {g.arr.map((p) => (
@@ -2287,17 +2306,17 @@ export default function EventsTracker() {
                   ))}
                   {g.more && <div style={moreStyle(26)}>{g.more}</div>}
                   {!(e.whosGoing || []).length && (
-                    <span style={{ fontSize: 12, color: "#b3aca3" }}>tbd</span>
+                    <span style={{ fontSize: 12, color: "#a0a0a0" }}>tbd</span>
                   )}
                 </div>
                 <div>
-                  <span style={speaks ? chip("#e5ede3", "#42603c") : chip("#f0ece5", "#6f6a63")}>
+                  <span style={speaks ? chip("#e4f7e8", "#1a7d2a") : chip("#ededed", "#6a6a6a")}>
                     {speaks ? "speaking" : "attending"}
                   </span>
                 </div>
-                <div style={{ fontSize: 13, color: "#6f5950" }}>{costText(e)}</div>
+                <div style={{ fontSize: 13, color: "#5a5a5a" }}>{costText(e)}</div>
                 <div>
-                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
+                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f2f2f2", "#6a6a6a")}>
                     {e.scored ? e.verdict : "–"}
                   </span>
                 </div>
@@ -2305,7 +2324,7 @@ export default function EventsTracker() {
             );
           })}
           {sch.length === 0 && (
-            <div style={{ padding: 48, textAlign: "center", color: "#6f6a63", fontSize: 14 }}>
+            <div style={{ padding: 48, textAlign: "center", color: "#6a6a6a", fontSize: 14 }}>
               nothing scheduled yet.
             </div>
           )}
@@ -2326,7 +2345,7 @@ export default function EventsTracker() {
       <div className="rt-fade" style={{ maxWidth: 900, margin: "0 auto", padding: "40px 48px 72px" }}>
         <SectionEyebrow>the model</SectionEyebrow>
         <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>rubric &amp; verticals</h1>
-        <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 600 }}>
+        <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 600 }}>
           {canEdit
             ? "the same six-criteria model the tracker applies. edit the definitions and verticals, and changes flow into every new score."
             : "the six-criteria model the tracker applies to every event. switch to the reviewer role to edit it."}
@@ -2344,8 +2363,8 @@ export default function EventsTracker() {
                     width: 26,
                     height: 26,
                     borderRadius: 6,
-                    background: "#f6f2ec",
-                    color: "#a56435",
+                    background: "#f2f2f2",
+                    color: "#1e90ff",
                     fontSize: 13,
                     fontWeight: 700,
                     display: "flex",
@@ -2367,7 +2386,7 @@ export default function EventsTracker() {
                         width: "100%",
                         marginTop: 8,
                         padding: "9px 12px",
-                        background: "#f6f2ec",
+                        background: "#f2f2f2",
                         border: "1px solid rgba(35,35,35,0.08)",
                         borderRadius: 6,
                         fontSize: 13,
@@ -2376,7 +2395,7 @@ export default function EventsTracker() {
                       }}
                     />
                   ) : (
-                    <div style={{ fontSize: 13, color: "#6f5950", lineHeight: 1.45, marginTop: 5 }}>{c.desc}</div>
+                    <div style={{ fontSize: 13, color: "#5a5a5a", lineHeight: 1.45, marginTop: 5 }}>{c.desc}</div>
                   )}
                 </div>
               </div>
@@ -2387,7 +2406,7 @@ export default function EventsTracker() {
         <div className="rt-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
           <div style={{ ...cardStyle, padding: 26, boxShadow: "none" }}>
             <h2 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 4px" }}>verticals</h2>
-            <div style={{ fontSize: 12.5, color: "#6f6a63" }}>weighted equally when scoring</div>
+            <div style={{ fontSize: 12.5, color: "#6a6a6a" }}>weighted equally when scoring</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
               {verticals.map((v) => (
                 <div
@@ -2396,7 +2415,7 @@ export default function EventsTracker() {
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
-                    background: "#f6f2ec",
+                    background: "#f2f2f2",
                     border: "1px solid rgba(35,35,35,0.08)",
                     borderRadius: 8,
                     padding: "6px 8px 6px 14px",
@@ -2413,7 +2432,7 @@ export default function EventsTracker() {
                         height: 18,
                         borderRadius: "50%",
                         background: "rgba(35,35,35,0.1)",
-                        color: "#6f5950",
+                        color: "#5a5a5a",
                         fontSize: 12,
                         lineHeight: 1,
                         display: "flex",
@@ -2441,7 +2460,7 @@ export default function EventsTracker() {
                   style={{
                     flex: 1,
                     padding: "8px 12px",
-                    background: "#f6f2ec",
+                    background: "#f2f2f2",
                     border: "1px solid rgba(35,35,35,0.08)",
                     borderRadius: 6,
                     fontSize: 13,
@@ -2451,7 +2470,7 @@ export default function EventsTracker() {
                   onClick={addVertical}
                   style={{
                     padding: "8px 16px",
-                    background: "#282d2a",
+                    background: "#232323",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -2464,12 +2483,12 @@ export default function EventsTracker() {
                 </button>
               </div>
             ) : (
-              <div style={{ fontSize: 12, color: "#b3aca3", marginTop: 16 }}>
+              <div style={{ fontSize: 12, color: "#a0a0a0", marginTop: 16 }}>
                 switch to the reviewer role to edit the rubric and verticals.
               </div>
             )}
           </div>
-          <div style={{ background: "#282d2a", borderRadius: 10, padding: 26, color: "#f7f9f8" }}>
+          <div style={{ background: "#232323", borderRadius: 10, padding: 26, color: "#f7f9f8" }}>
             <h2 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 16px", color: "#f7f9f8" }}>
               verdict thresholds
             </h2>
