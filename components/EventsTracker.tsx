@@ -111,7 +111,7 @@ function regionStyle(r: string): CSS {
       ? { bg: "#e5ede3", fg: "#42603c" }
       : r === "International"
       ? { bg: "#f5e9df", fg: "#8a4f29" }
-      : { bg: "#f0ece5", fg: "#8a857e" };
+      : { bg: "#f0ece5", fg: "#6f6a63" };
   return {
     display: "inline-flex",
     marginTop: 4,
@@ -157,7 +157,7 @@ const cardStyle: CSS = {
   background: "#fff",
   border: "1px solid rgba(35,35,35,0.08)",
   borderRadius: 10,
-  boxShadow: "0 1px 2px rgba(35,35,35,0.04),0 8px 22px rgba(35,35,35,0.05)",
+  boxShadow: "0 1px 2px rgba(35,35,35,0.05)",
 };
 
 const selectStyle: CSS = {
@@ -177,7 +177,7 @@ const labelStyle: CSS = {
   fontWeight: 600,
   letterSpacing: "0.06em",
   textTransform: "uppercase",
-  color: "#8a857e",
+  color: "#6f6a63",
   marginBottom: 7,
 };
 
@@ -370,6 +370,40 @@ export default function EventsTracker() {
     setView("review");
     flash("sent to the review queue");
   };
+  // Team members submit unscored; the marketing team scores it in review.
+  const submitUnscored = () => {
+    if (!form.name.trim()) {
+      setSubmitScoreErr("add an event name first.");
+      return;
+    }
+    const region = regionFromLoc(form.location);
+    const ev: TrackedEvent = {
+      id: "u" + Date.now(),
+      name: form.name.trim(),
+      start: form.start,
+      end: form.end,
+      website: form.website,
+      location: form.location || "—",
+      region,
+      type: form.type,
+      industry: form.industry || "—",
+      verticals: [],
+      submitter: "You",
+      submittedRole: "Attendee",
+      sponsorCost: "",
+      regCost: "",
+      notes: form.notes,
+      status: "submitted",
+      scored: false,
+      whosGoing: [],
+    };
+    saveEvents([ev, ...events]);
+    setForm(blankForm());
+    setScoreDraft(null);
+    setSubmitScoreErr("");
+    setView("review");
+    flash("submitted for review");
+  };
 
   // ── detail actions ──
   const toggleEdit = () => {
@@ -469,6 +503,7 @@ export default function EventsTracker() {
   // ─────────────────────────────────────────────────────────────────────
   return (
     <div
+      data-rt
       style={{
         display: "flex",
         height: "100dvh",
@@ -491,7 +526,14 @@ export default function EventsTracker() {
         @keyframes rtFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
         @keyframes rtSpin{to{transform:rotate(360deg);}}
         @keyframes rtToast{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
-        .rt-input:focus,.rt-input select:focus{outline:none;}
+        /* Visible keyboard focus (a11y): mouse clicks stay clean, keyboard shows a ring. */
+        [data-rt] :focus-visible{outline:2px solid #a56435;outline-offset:2px;border-radius:5px;}
+        [data-rt] :focus:not(:focus-visible){outline:none;}
+        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:rgba(165,100,53,0.55);}
+        @media (prefers-reduced-motion: reduce){
+          .rt-fade{animation:none;}
+          [data-rt] *{transition:none !important;}
+        }
       `}</style>
 
       {/* ── Sidebar ── */}
@@ -555,6 +597,7 @@ export default function EventsTracker() {
               <button
                 key={n.id}
                 onClick={() => goView(n.id)}
+                aria-current={active ? "page" : undefined}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -630,6 +673,7 @@ export default function EventsTracker() {
                 <button
                   key={role}
                   onClick={() => setIsReviewer(role === "reviewer")}
+                  aria-pressed={on}
                   style={{
                     flex: 1,
                     padding: "8px 6px",
@@ -682,7 +726,7 @@ export default function EventsTracker() {
               alignItems: "center",
               justifyContent: "center",
               height: "100%",
-              color: "#8a857e",
+              color: "#6f6a63",
               fontSize: 14,
             }}
           >
@@ -700,6 +744,8 @@ export default function EventsTracker() {
 
         {toast && (
           <div
+            role="status"
+            aria-live="polite"
             style={{
               position: "fixed",
               bottom: 26,
@@ -767,7 +813,7 @@ export default function EventsTracker() {
             >
               <div>
                 <div style={{ fontSize: 13.5, fontWeight: 600, color: "#232323" }}>{cr.label}</div>
-                <div style={{ fontSize: 11.5, color: "#8a857e", lineHeight: 1.35, marginTop: 3 }}>
+                <div style={{ fontSize: 11.5, color: "#6f6a63", lineHeight: 1.35, marginTop: 3 }}>
                   {cr.desc}
                 </div>
               </div>
@@ -784,12 +830,24 @@ export default function EventsTracker() {
               </div>
               {editing ? (
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <button style={{ ...stepBtnStyle, border: "none", cursor: "pointer" }} onClick={() => onDec(cr.key)}>
-                    −
+                  <button
+                    type="button"
+                    aria-label={`Decrease ${cr.label} score`}
+                    style={{ ...stepBtnStyle, border: "none", cursor: "pointer" }}
+                    onClick={() => onDec(cr.key)}
+                  >
+                    <span aria-hidden="true">−</span>
                   </button>
-                  <span style={{ fontSize: 15, fontWeight: 600, width: 16, textAlign: "center" }}>{sc}</span>
-                  <button style={{ ...stepBtnStyle, border: "none", cursor: "pointer" }} onClick={() => onInc(cr.key)}>
-                    +
+                  <span aria-label={`${cr.label}: ${sc} out of 5`} style={{ fontSize: 15, fontWeight: 600, width: 16, textAlign: "center" }}>
+                    {sc}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={`Increase ${cr.label} score`}
+                    style={{ ...stepBtnStyle, border: "none", cursor: "pointer" }}
+                    onClick={() => onInc(cr.key)}
+                  >
+                    <span aria-hidden="true">+</span>
                   </button>
                 </div>
               ) : (
@@ -814,10 +872,10 @@ export default function EventsTracker() {
       ? Math.round(scored.reduce((a, e) => a + (e.total || 0), 0) / scored.length)
       : 0;
     const statCards = [
-      { label: "tracked", value: events.length, sub: "events in 2026", subColor: "#8a857e" },
+      { label: "tracked", value: events.length, sub: "events in 2026", subColor: "#6f6a63" },
       { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "#8a4f29" },
       { label: "scheduled", value: scheduled.length, sub: "approved & planning", subColor: "#42603c" },
-      { label: "avg score", value: avg, sub: "out of 30", subColor: "#8a857e" },
+      { label: "avg score", value: avg, sub: "out of 30", subColor: "#6f6a63" },
     ];
     const dist = (["Strong Pursue", "Selective Pursue", "Monitor", "Skip"] as const).map((v) => {
       const count = scored.filter((e) => e.verdict === v).length;
@@ -856,7 +914,7 @@ export default function EventsTracker() {
                   fontWeight: 600,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "#8a857e",
+                  color: "#6f6a63",
                 }}
               >
                 {s.label}
@@ -918,11 +976,11 @@ export default function EventsTracker() {
                       >
                         {e.name}
                       </div>
-                      <div style={{ fontSize: 12, color: "#8a857e", marginTop: 2 }}>
+                      <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 2 }}>
                         {dateRange(e.start, e.end)} · {e.location}
                       </div>
                     </div>
-                    <div style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#8a857e")}>
+                    <div style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
                       {e.scored ? (e.total || 0) + "/30" : "score it"}
                     </div>
                   </button>
@@ -932,7 +990,7 @@ export default function EventsTracker() {
                 <div
                   style={{
                     padding: "22px 4px 26px",
-                    color: "#8a857e",
+                    color: "#6f6a63",
                     fontSize: 13.5,
                     borderTop: "1px solid rgba(35,35,35,0.07)",
                   }}
@@ -947,7 +1005,7 @@ export default function EventsTracker() {
             <h2 style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>
               rubric verdicts
             </h2>
-            <div style={{ fontSize: 12.5, color: "#8a857e", marginTop: 4 }}>
+            <div style={{ fontSize: 12.5, color: "#6f6a63", marginTop: 4 }}>
               across {scored.length} scored events
             </div>
             <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 16 }}>
@@ -966,7 +1024,7 @@ export default function EventsTracker() {
                       <span style={{ width: 9, height: 9, borderRadius: "50%", background: v.dot, display: "inline-block" }} />
                       <span style={{ fontWeight: 600, color: "#232323" }}>{v.label}</span>
                     </span>
-                    <span style={{ color: "#8a857e", fontWeight: 600 }}>{v.count}</span>
+                    <span style={{ color: "#6f6a63", fontWeight: 600 }}>{v.count}</span>
                   </div>
                   <div style={{ height: 8, background: "#f0ebe3", borderRadius: 5, overflow: "hidden" }}>
                     <div style={{ height: "100%", width: `${v.pct}%`, background: v.dot, borderRadius: 5 }} />
@@ -1040,7 +1098,7 @@ export default function EventsTracker() {
                       >
                         {e.name}
                       </div>
-                      <div style={{ fontSize: 12, color: "#8a857e", marginTop: 2 }}>{e.location}</div>
+                      <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 2 }}>{e.location}</div>
                     </div>
                     <div style={{ display: "flex" }}>
                       {g.arr.map((p) => (
@@ -1118,7 +1176,7 @@ export default function EventsTracker() {
               all events
             </h1>
           </div>
-          <div style={{ fontSize: 13, color: "#8a857e", paddingBottom: 4 }}>
+          <div style={{ fontSize: 13, color: "#6f6a63", paddingBottom: 4 }}>
             {list.length} of {events.length} events
           </div>
         </div>
@@ -1140,6 +1198,8 @@ export default function EventsTracker() {
         >
           <div style={{ position: "relative", flex: 1, minWidth: 200 }}>
             <input
+              type="search"
+              aria-label="Search events, cities, and notes"
               value={filters.search}
               onChange={(e) => setFilter("search", e.target.value)}
               placeholder="search events, cities, notes…"
@@ -1158,42 +1218,42 @@ export default function EventsTracker() {
                 left: 12,
                 top: "50%",
                 transform: "translateY(-50%)",
-                color: "#8a857e",
+                color: "#6f6a63",
                 fontSize: 13,
               }}
             >
               ⌕
             </span>
           </div>
-          <select value={filters.vertical} onChange={(e) => setFilter("vertical", e.target.value)} style={selectStyle}>
+          <select aria-label="Filter by vertical" value={filters.vertical} onChange={(e) => setFilter("vertical", e.target.value)} style={selectStyle}>
             {opts(["All", ...verticals]).map((o) => (
               <option key={o.value} value={o.value}>
                 {o.label}
               </option>
             ))}
           </select>
-          <select value={filters.verdict} onChange={(e) => setFilter("verdict", e.target.value)} style={selectStyle}>
+          <select aria-label="Filter by verdict" value={filters.verdict} onChange={(e) => setFilter("verdict", e.target.value)} style={selectStyle}>
             {opts(["All", "Strong Pursue", "Selective Pursue", "Monitor", "Skip"]).map((o) => (
               <option key={o.value} value={o.value}>
                 {o.label}
               </option>
             ))}
           </select>
-          <select value={filters.status} onChange={(e) => setFilter("status", e.target.value)} style={selectStyle}>
+          <select aria-label="Filter by status" value={filters.status} onChange={(e) => setFilter("status", e.target.value)} style={selectStyle}>
             {opts(["All", "Submitted", "In review", "Considering", "Scheduled", "Skipped"]).map((o) => (
               <option key={o.value} value={o.value}>
                 {o.label}
               </option>
             ))}
           </select>
-          <select value={filters.region} onChange={(e) => setFilter("region", e.target.value)} style={selectStyle}>
+          <select aria-label="Filter by region" value={filters.region} onChange={(e) => setFilter("region", e.target.value)} style={selectStyle}>
             {opts(["All", "US hub", "Other US", "International"]).map((o) => (
               <option key={o.value} value={o.value}>
                 {o.label}
               </option>
             ))}
           </select>
-          <select value={filters.sort} onChange={(e) => setFilter("sort", e.target.value)} style={selectStyle}>
+          <select aria-label="Sort events" value={filters.sort} onChange={(e) => setFilter("sort", e.target.value)} style={selectStyle}>
             <option value="date">sort: by date</option>
             <option value="score">sort: by score</option>
             <option value="name">sort: A–Z</option>
@@ -1238,7 +1298,7 @@ export default function EventsTracker() {
               fontWeight: 600,
               letterSpacing: "0.09em",
               textTransform: "uppercase",
-              color: "#8a857e",
+              color: "#6f6a63",
             }}
           >
             <div>event</div>
@@ -1289,7 +1349,7 @@ export default function EventsTracker() {
                   <div
                     style={{
                       fontSize: 11.5,
-                      color: "#8a857e",
+                      color: "#6f6a63",
                       marginTop: 3,
                       whiteSpace: "nowrap",
                       overflow: "hidden",
@@ -1325,7 +1385,7 @@ export default function EventsTracker() {
                   {e.scored ? String(e.total) : "—"}
                 </div>
                 <div>
-                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#8a857e")}>
+                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
                     {e.scored ? e.verdict : "needs review"}
                   </span>
                 </div>
@@ -1341,7 +1401,7 @@ export default function EventsTracker() {
             );
           })}
           {list.length === 0 && (
-            <div style={{ padding: 48, textAlign: "center", color: "#8a857e", fontSize: 14 }}>
+            <div style={{ padding: 48, textAlign: "center", color: "#6f6a63", fontSize: 14 }}>
               no events match these filters.
             </div>
           )}
@@ -1361,7 +1421,7 @@ export default function EventsTracker() {
           >
             ← back
           </button>
-          <p style={{ color: "#8a857e", marginTop: 24 }}>event not found.</p>
+          <p style={{ color: "#6f6a63", marginTop: 24 }}>event not found.</p>
         </div>
       );
     }
@@ -1444,7 +1504,7 @@ export default function EventsTracker() {
             style={{
               textAlign: "right",
               background: e.scored ? c.bg : "#f0ece5",
-              color: e.scored ? c.fg : "#8a857e",
+              color: e.scored ? c.fg : "#6f6a63",
               borderRadius: 10,
               padding: "18px 24px",
               minWidth: 180,
@@ -1466,7 +1526,7 @@ export default function EventsTracker() {
         <div style={{ ...cardStyle, padding: "26px 28px", marginTop: 26 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <h2 style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>the score card</h2>
-            {e.scored && (
+            {e.scored && isReviewer && (
               <button
                 onClick={toggleEdit}
                 style={{
@@ -1487,25 +1547,29 @@ export default function EventsTracker() {
 
           {!e.scored ? (
             <div style={{ marginTop: 18, padding: 26, background: "#f6f2ec", borderRadius: 9, textAlign: "center" }}>
-              <div style={{ fontSize: 14.5, color: "#6f5950", maxWidth: 420, margin: "0 auto 16px" }}>
-                this event hasn&apos;t been scored yet. run it through the rubric to get a verdict.
+              <div style={{ fontSize: 14.5, color: "#6f5950", maxWidth: 420, margin: isReviewer ? "0 auto 16px" : "0 auto" }}>
+                {isReviewer
+                  ? "this event hasn’t been scored yet. run it through the rubric to get a verdict."
+                  : "this event hasn’t been scored yet. a reviewer will run it through the rubric."}
               </div>
-              <button
-                onClick={scoreThis}
-                style={{
-                  padding: "12px 26px",
-                  background: "#a56435",
-                  color: "#f7f9f8",
-                  border: "none",
-                  cursor: "pointer",
-                  borderRadius: 8,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  opacity: detailScoring ? 0.7 : 1,
-                }}
-              >
-                {detailScoring ? "scoring…" : "score with the rubric"}
-              </button>
+              {isReviewer && (
+                <button
+                  onClick={scoreThis}
+                  style={{
+                    padding: "12px 26px",
+                    background: "#a56435",
+                    color: "#f7f9f8",
+                    border: "none",
+                    cursor: "pointer",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    opacity: detailScoring ? 0.7 : 1,
+                  }}
+                >
+                  {detailScoring ? "scoring…" : "score with the rubric"}
+                </button>
+              )}
             </div>
           ) : (
             e.scores && (
@@ -1527,7 +1591,7 @@ export default function EventsTracker() {
             <p style={{ fontSize: 14, color: "#4a453f", lineHeight: 1.5, margin: 0 }}>
               {e.notes || "no notes were added for this event."}
             </p>
-            <div style={{ fontSize: 12, color: "#8a857e", marginTop: 16 }}>
+            <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 16 }}>
               submitted by <b style={{ color: "#6f5950" }}>{e.submitter}</b> · {e.submittedRole || "Attendee"}
             </div>
           </div>
@@ -1551,11 +1615,12 @@ export default function EventsTracker() {
                 </div>
               ))}
               {!(e.whosGoing || []).length && (
-                <span style={{ fontSize: 13, color: "#8a857e" }}>no one assigned yet</span>
+                <span style={{ fontSize: 13, color: "#6f6a63" }}>no one assigned yet</span>
               )}
             </div>
             <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
               <input
+                aria-label="Add a person going to this event"
                 value={personInput}
                 onChange={(ev) => setPersonInput(ev.target.value)}
                 onKeyDown={(ev) => {
@@ -1607,7 +1672,7 @@ export default function EventsTracker() {
                       fontWeight: 600,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
-                      color: "#8a857e",
+                      color: "#6f6a63",
                     }}
                   >
                     {x.l}
@@ -1653,7 +1718,7 @@ export default function EventsTracker() {
             >
               mark as skip
             </button>
-            <span style={{ fontSize: 12.5, color: "#8a857e" }}>
+            <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
               reviewer decision moves this to the scheduled list
             </span>
           </div>
@@ -1676,7 +1741,7 @@ export default function EventsTracker() {
             >
               move back to review
             </button>
-            <span style={{ fontSize: 12.5, color: "#8a857e" }}>
+            <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
               {e.status === "scheduled" ? "currently on the scheduled list" : "currently skipped"}
             </span>
           </div>
@@ -1697,8 +1762,9 @@ export default function EventsTracker() {
           submit an event
         </h1>
         <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 560 }}>
-          add the details, then let the rubric score it. you can adjust every score before it goes to
-          the review queue.
+          {isReviewer
+            ? "add the details, then let the rubric score it. you can adjust every score before it goes to the review queue."
+            : "add the details and send it to the marketing team — they’ll score it against the rubric."}
         </p>
 
         <div style={{ ...cardStyle, padding: 28, marginTop: 26 }}>
@@ -1767,44 +1833,70 @@ export default function EventsTracker() {
               borderTop: "1px solid rgba(35,35,35,0.08)",
             }}
           >
-            <button
-              onClick={runScore}
-              className="rt-primary"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "13px 26px",
-                background: "#a56435",
-                color: "#f7f9f8",
-                border: "none",
-                cursor: "pointer",
-                borderRadius: 8,
-                fontSize: 13,
-                fontWeight: 600,
-                opacity: scoring ? 0.75 : 1,
-              }}
-            >
-              {scoring && (
-                <span
+            {isReviewer ? (
+              <>
+                <button
+                  onClick={runScore}
+                  className="rt-primary"
                   style={{
-                    width: 14,
-                    height: 14,
-                    border: "2px solid rgba(247,249,248,0.4)",
-                    borderTopColor: "#f7f9f8",
-                    borderRadius: "50%",
-                    display: "inline-block",
-                    animation: "rtSpin 0.7s linear infinite",
-                    marginRight: 8,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    padding: "13px 26px",
+                    background: "#a56435",
+                    color: "#f7f9f8",
+                    border: "none",
+                    cursor: "pointer",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    opacity: scoring ? 0.75 : 1,
                   }}
-                />
-              )}
-              {scoring ? "applying the rubric…" : d ? "re-score with the rubric" : "score with the rubric"}
-            </button>
-            <span style={{ fontSize: 12.5, color: "#8a857e" }}>
-              {scoring
-                ? "reading the event and applying Roebling’s calibration"
-                : "the rubric reads the details and scores all six criteria"}
-            </span>
+                >
+                  {scoring && (
+                    <span
+                      style={{
+                        width: 14,
+                        height: 14,
+                        border: "2px solid rgba(247,249,248,0.4)",
+                        borderTopColor: "#f7f9f8",
+                        borderRadius: "50%",
+                        display: "inline-block",
+                        animation: "rtSpin 0.7s linear infinite",
+                        marginRight: 8,
+                      }}
+                    />
+                  )}
+                  {scoring ? "applying the rubric…" : d ? "re-score with the rubric" : "score with the rubric"}
+                </button>
+                <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
+                  {scoring
+                    ? "reading the event and applying Roebling’s calibration"
+                    : "the rubric reads the details and scores all six criteria"}
+                </span>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={submitUnscored}
+                  className="rt-primary"
+                  style={{
+                    padding: "13px 26px",
+                    background: "#a56435",
+                    color: "#f7f9f8",
+                    border: "none",
+                    cursor: "pointer",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 600,
+                  }}
+                >
+                  send to review queue
+                </button>
+                <span style={{ fontSize: 12.5, color: "#6f6a63" }}>
+                  the marketing team will score it against the rubric
+                </span>
+              </>
+            )}
           </div>
           {submitScoreErr && (
             <div
@@ -1822,12 +1914,12 @@ export default function EventsTracker() {
           )}
         </div>
 
-        {d && (
+        {isReviewer && d && (
           <div className="rt-fade" style={{ ...cardStyle, padding: 28, marginTop: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
               <div>
                 <h2 style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>the rubric says…</h2>
-                <div style={{ fontSize: 13, color: "#8a857e", marginTop: 4 }}>
+                <div style={{ fontSize: 13, color: "#6f6a63", marginTop: 4 }}>
                   adjust any score — the verdict recalculates live
                 </div>
               </div>
@@ -1942,7 +2034,7 @@ export default function EventsTracker() {
                   <div style={{ flex: 1, minWidth: 260 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                       <span style={chip(sm.bg, sm.fg)}>{sm.label}</span>
-                      <span style={{ fontSize: 12, color: "#8a857e" }}>from {e.submitter}</span>
+                      <span style={{ fontSize: 12, color: "#6f6a63" }}>from {e.submitter}</span>
                     </div>
                     <button
                       onClick={() => open(e.id)}
@@ -1962,7 +2054,7 @@ export default function EventsTracker() {
                     >
                       {e.name}
                     </button>
-                    <div style={{ fontSize: 12.5, color: "#8a857e", marginTop: 5 }}>
+                    <div style={{ fontSize: 12.5, color: "#6f6a63", marginTop: 5 }}>
                       {dateRange(e.start, e.end)} · {e.location} · {e.industry}
                     </div>
                   </div>
@@ -1972,11 +2064,11 @@ export default function EventsTracker() {
                         <div style={chip(c.soft, c.softFg)}>{e.verdict}</div>
                         <div style={{ fontFamily: SERIF, fontSize: 26, lineHeight: 1, marginTop: 8, color: "#232323" }}>
                           {String(e.total)}
-                          <span style={{ fontSize: 13, color: "#8a857e" }}> / 30</span>
+                          <span style={{ fontSize: 13, color: "#6f6a63" }}> / 30</span>
                         </div>
                       </>
                     ) : (
-                      <span style={chip("#f6f2ec", "#8a857e")}>needs scoring</span>
+                      <span style={chip("#f6f2ec", "#6f6a63")}>needs scoring</span>
                     )}
                   </div>
                 </div>
@@ -1990,7 +2082,7 @@ export default function EventsTracker() {
                             fontWeight: 600,
                             letterSpacing: "0.04em",
                             textTransform: "uppercase",
-                            color: "#8a857e",
+                            color: "#6f6a63",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -2022,7 +2114,7 @@ export default function EventsTracker() {
                     flexWrap: "wrap",
                   }}
                 >
-                  {e.scored ? (
+                  {isReviewer && (e.scored ? (
                     <>
                       <button
                         onClick={() => moveStatus(e.id, "scheduled", "approved & scheduled")}
@@ -2073,7 +2165,7 @@ export default function EventsTracker() {
                     >
                       open to score
                     </button>
-                  )}
+                  ))}
                   <button
                     onClick={() => open(e.id)}
                     style={{
@@ -2094,7 +2186,7 @@ export default function EventsTracker() {
             );
           })}
           {queue.length === 0 && (
-            <div style={{ ...cardStyle, padding: 56, textAlign: "center", color: "#8a857e", fontSize: 14.5 }}>
+            <div style={{ ...cardStyle, padding: 56, textAlign: "center", color: "#6f6a63", fontSize: 14.5 }}>
               the queue is clear — nothing waiting on review.
             </div>
           )}
@@ -2168,7 +2260,7 @@ export default function EventsTracker() {
                   >
                     {e.name}
                   </div>
-                  <div style={{ fontSize: 12, color: "#8a857e", marginTop: 3 }}>{e.location}</div>
+                  <div style={{ fontSize: 12, color: "#6f6a63", marginTop: 3 }}>{e.location}</div>
                 </div>
                 <div style={{ display: "flex" }}>
                   {g.arr.map((p) => (
@@ -2182,13 +2274,13 @@ export default function EventsTracker() {
                   )}
                 </div>
                 <div>
-                  <span style={speaks ? chip("#e5ede3", "#42603c") : chip("#f0ece5", "#8a857e")}>
+                  <span style={speaks ? chip("#e5ede3", "#42603c") : chip("#f0ece5", "#6f6a63")}>
                     {speaks ? "speaking" : "attending"}
                   </span>
                 </div>
                 <div style={{ fontSize: 13, color: "#6f5950" }}>{costText(e)}</div>
                 <div>
-                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#8a857e")}>
+                  <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
                     {e.scored ? e.verdict : "—"}
                   </span>
                 </div>
@@ -2196,7 +2288,7 @@ export default function EventsTracker() {
             );
           })}
           {sch.length === 0 && (
-            <div style={{ padding: 48, textAlign: "center", color: "#8a857e", fontSize: 14 }}>
+            <div style={{ padding: 48, textAlign: "center", color: "#6f6a63", fontSize: 14 }}>
               nothing scheduled yet.
             </div>
           )}
@@ -2278,7 +2370,7 @@ export default function EventsTracker() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
           <div style={{ ...cardStyle, padding: 26, boxShadow: "none" }}>
             <h2 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 4px" }}>verticals</h2>
-            <div style={{ fontSize: 12.5, color: "#8a857e" }}>weighted equally when scoring</div>
+            <div style={{ fontSize: 12.5, color: "#6f6a63" }}>weighted equally when scoring</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
               {verticals.map((v) => (
                 <div
