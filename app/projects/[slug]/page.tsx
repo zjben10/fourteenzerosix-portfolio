@@ -42,7 +42,7 @@ export default async function ProjectPage({
         {/* ── Tag · Date ── */}
         <div className="flex items-center gap-3 mb-6">
           <span
-            className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-full border"
+            className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-md border"
             style={{
               borderColor: "var(--brand-terracotta)",
               color: "var(--brand-terracotta)",
@@ -237,7 +237,7 @@ export default async function ProjectPage({
                 {project.tools.map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs px-3 py-1.5 rounded-full"
+                    className="text-xs px-3 py-1.5 rounded-md"
                     style={{
                       backgroundColor: "rgba(26,23,20,0.07)",
                       color: "rgba(26,23,20,0.65)",
@@ -291,6 +291,30 @@ export default async function ProjectPage({
                     a conference while the marketing team can score, review, and provide next steps
                     all in one place.
                   </p>
+                  <div className="mt-6">
+                    <p
+                      className="text-[10px] tracking-[0.2em] uppercase font-medium mb-2.5"
+                      style={{ color: "rgba(26,23,20,0.4)" }}
+                    >
+                      Built with
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {["Claude Code", "Claude Design", "Next.js", "React", "TypeScript", "Vercel"].map(
+                        (t) => (
+                          <span
+                            key={t}
+                            className="text-xs px-3 py-1.5 rounded-md"
+                            style={{
+                              backgroundColor: "rgba(26,23,20,0.07)",
+                              color: "rgba(26,23,20,0.65)",
+                            }}
+                          >
+                            {t}
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <div
                   className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium flex-shrink-0 transition-opacity group-hover:opacity-70"
@@ -340,7 +364,7 @@ export default async function ProjectPage({
                   Better with Bio · Brenntag
                 </h3>
                 <span
-                  className="text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1 rounded-full"
+                  className="text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1 rounded-md"
                   style={{
                     backgroundColor: "rgba(26,23,20,0.07)",
                     color: "rgba(26,23,20,0.55)",
