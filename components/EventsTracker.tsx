@@ -320,7 +320,7 @@ export default function EventsTracker() {
     }
     setScoring(true);
     setSubmitScoreErr("");
-    // Deterministic rubric estimate — feels considered without a round-trip.
+    // Deterministic rubric estimate that feels considered without a round-trip.
     setTimeout(() => {
       setScoreDraft(estimateScores(form, verticals));
       setScoring(false);
@@ -345,10 +345,10 @@ export default function EventsTracker() {
       start: form.start,
       end: form.end,
       website: form.website,
-      location: form.location || "—",
+      location: form.location || "–",
       region,
       type: form.type,
-      industry: form.industry || "—",
+      industry: form.industry || "–",
       verticals: scoreDraft.verticals,
       submitter: isReviewer ? "Zoei" : "You",
       submittedRole: "Attendee",
@@ -383,10 +383,10 @@ export default function EventsTracker() {
       start: form.start,
       end: form.end,
       website: form.website,
-      location: form.location || "—",
+      location: form.location || "–",
       region,
       type: form.type,
-      industry: form.industry || "—",
+      industry: form.industry || "–",
       verticals: [],
       submitter: "You",
       submittedRole: "Attendee",
@@ -448,7 +448,7 @@ export default function EventsTracker() {
       );
       saveEvents(next);
       setDetailScoring(false);
-      flash("scored — verdict: " + verdictOf(total));
+      flash("scored, verdict: " + verdictOf(total));
     }, 550);
   };
   const addPerson = () => {
@@ -504,6 +504,7 @@ export default function EventsTracker() {
   return (
     <div
       data-rt
+      className="rt-root"
       style={{
         display: "flex",
         height: "100dvh",
@@ -534,10 +535,25 @@ export default function EventsTracker() {
           .rt-fade{animation:none;}
           [data-rt] *{transition:none !important;}
         }
+        @media (max-width: 768px){
+          [data-rt].rt-root{flex-direction:column !important;height:auto !important;min-height:100dvh;overflow:visible !important;}
+          [data-rt] .rt-main{overflow-y:visible !important;height:auto !important;}
+          [data-rt] .rt-sidebar{width:100% !important;min-width:0 !important;height:auto !important;padding:18px 16px 14px !important;}
+          [data-rt] .rt-nav{flex-direction:row !important;overflow-x:auto;gap:8px !important;padding-bottom:6px;}
+          [data-rt] .rt-nav button{width:auto !important;white-space:nowrap;flex:0 0 auto;}
+          [data-rt] .rt-me{display:none !important;}
+          [data-rt] .rt-grid-4{grid-template-columns:1fr 1fr !important;}
+          [data-rt] .rt-grid-2{grid-template-columns:1fr !important;}
+          [data-rt] .rt-scorebar{grid-template-columns:1fr auto !important;gap:12px !important;}
+          [data-rt] .rt-table{overflow-x:auto !important;overflow-y:hidden !important;-webkit-overflow-scrolling:touch;}
+          [data-rt] .rt-table > div, [data-rt] .rt-table > button{min-width:680px;}
+          [data-rt] .rt-fade{padding-left:18px !important;padding-right:18px !important;}
+        }
       `}</style>
 
       {/* ── Sidebar ── */}
       <aside
+        className="rt-sidebar"
         style={{
           width: 248,
           minWidth: 248,
@@ -589,7 +605,7 @@ export default function EventsTracker() {
           <span style={{ fontSize: 16, lineHeight: 1, marginTop: -1 }}>+</span> submit an event
         </button>
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <nav className="rt-nav" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {navItems.map((n) => {
             const active = view === n.id || (n.id === "all" && view === "detail");
             const showBadge = n.id === "review" && (n.badge || 0) > 0;
@@ -692,7 +708,7 @@ export default function EventsTracker() {
               );
             })}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 9, marginTop: 14, padding: "0 2px" }}>
+          <div className="rt-me" style={{ display: "flex", alignItems: "center", gap: 9, marginTop: 14, padding: "0 2px" }}>
             <div
               style={{
                 width: 34,
@@ -718,7 +734,7 @@ export default function EventsTracker() {
       </aside>
 
       {/* ── Main ── */}
-      <main className="rt-scroll" style={{ flex: 1, height: "100%", overflowY: "auto", position: "relative" }}>
+      <main className="rt-scroll rt-main" style={{ flex: 1, height: "100%", overflowY: "auto", position: "relative" }}>
         {!loaded && (
           <div
             style={{
@@ -804,6 +820,7 @@ export default function EventsTracker() {
           return (
             <div
               key={cr.key}
+              className="rt-scorebar"
               style={{
                 display: "grid",
                 gridTemplateColumns: "200px 1fr auto",
@@ -905,7 +922,7 @@ export default function EventsTracker() {
           decisions stay consistent.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 30 }}>
+        <div className="rt-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 30 }}>
           {statCards.map((s) => (
             <div key={s.label} style={{ ...cardStyle, padding: "20px 22px" }}>
               <div
@@ -927,7 +944,7 @@ export default function EventsTracker() {
           ))}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 22, marginTop: 24 }}>
+        <div className="rt-grid-2" style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 22, marginTop: 24 }}>
           <div style={{ ...cardStyle, padding: "26px 26px 12px" }}>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
               <h2 style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>
@@ -995,7 +1012,7 @@ export default function EventsTracker() {
                     borderTop: "1px solid rgba(35,35,35,0.07)",
                   }}
                 >
-                  nothing waiting — the queue is clear.
+                  nothing waiting. the queue is clear.
                 </div>
               )}
             </div>
@@ -1035,11 +1052,11 @@ export default function EventsTracker() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 22, marginTop: 22 }}>
+        <div className="rt-grid-2" style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 22, marginTop: 22 }}>
           <div style={{ ...cardStyle, padding: "26px 26px 14px" }}>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
               <h2 style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>
-                up next — scheduled
+                up next · scheduled
               </h2>
               <button
                 onClick={() => goView("scheduled")}
@@ -1285,7 +1302,7 @@ export default function EventsTracker() {
           )}
         </div>
 
-        <div style={{ ...cardStyle, marginTop: 16, overflow: "hidden", borderRadius: 9 }}>
+        <div className="rt-table" style={{ ...cardStyle, marginTop: 16, overflow: "hidden", borderRadius: 9 }}>
           <div
             style={{
               display: "grid",
@@ -1382,7 +1399,7 @@ export default function EventsTracker() {
                   ))}
                 </div>
                 <div style={{ fontSize: 15, fontWeight: 600, color: e.scored ? "#232323" : "#c3bdb4" }}>
-                  {e.scored ? String(e.total) : "—"}
+                  {e.scored ? String(e.total) : "–"}
                 </div>
                 <div>
                   <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
@@ -1430,7 +1447,7 @@ export default function EventsTracker() {
     const showActions =
       isReviewer && ["submitted", "in_review", "considering"].includes(e.status) && e.scored;
     const showReopen = isReviewer && (e.status === "scheduled" || e.status === "skip");
-    const speaks = e.speaking || (e.submittedRole === "Speaker" ? "Yes" : "—");
+    const speaks = e.speaking || (e.submittedRole === "Speaker" ? "Yes" : "–");
 
     return (
       <div className="rt-fade" style={{ maxWidth: 940, margin: "0 auto", padding: "30px 48px 72px" }}>
@@ -1583,7 +1600,7 @@ export default function EventsTracker() {
           )}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
+        <div className="rt-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
           <div style={{ ...cardStyle, padding: 24, boxShadow: "none" }}>
             <h3 style={{ fontSize: 14, fontWeight: 600, letterSpacing: "-0.01em", margin: "0 0 12px" }}>
               why we&apos;re looking at it
@@ -1658,12 +1675,12 @@ export default function EventsTracker() {
         {e.status === "scheduled" && (
           <div style={{ ...cardStyle, padding: 24, marginTop: 20, boxShadow: "none" }}>
             <h3 style={{ fontSize: 14, fontWeight: 600, letterSpacing: "-0.01em", margin: "0 0 16px" }}>logistics</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }}>
+            <div className="rt-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }}>
               {[
                 { l: "speaking", v: speaks },
-                { l: "registration", v: e.regStatus || "—" },
+                { l: "registration", v: e.regStatus || "–" },
                 { l: "est. cost", v: costText(e) },
-                { l: "collateral", v: e.collateral || "—" },
+                { l: "collateral", v: e.collateral || "–" },
               ].map((x) => (
                 <div key={x.l}>
                   <div
@@ -1764,11 +1781,11 @@ export default function EventsTracker() {
         <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 560 }}>
           {isReviewer
             ? "add the details, then let the rubric score it. you can adjust every score before it goes to the review queue."
-            : "add the details and send it to the marketing team — they’ll score it against the rubric."}
+            : "add the details and send it to the marketing team, and they’ll score it against the rubric."}
         </p>
 
         <div style={{ ...cardStyle, padding: 28, marginTop: 26 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+          <div className="rt-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
             <div style={{ gridColumn: "1 / -1" }}>
               <label style={labelStyle}>event name</label>
               <input value={form.name} onChange={bind("name")} placeholder="e.g. Reindustrialize 3.0" style={inputStyle} />
@@ -1777,7 +1794,7 @@ export default function EventsTracker() {
               <label style={labelStyle}>
                 website{" "}
                 <span style={{ color: "#b3aca3", fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>
-                  — the rubric reads this to score
+                  · the rubric reads this to score
                 </span>
               </label>
               <input value={form.website} onChange={bind("website")} placeholder="https://…" style={inputStyle} />
@@ -1817,7 +1834,7 @@ export default function EventsTracker() {
                 value={form.notes}
                 onChange={bind("notes")}
                 rows={3}
-                placeholder="context helps the rubric — audience, competitors, stacking, contacts in the region…"
+                placeholder="context helps the rubric: audience, competitors, stacking, contacts in the region…"
                 style={{ ...inputStyle, resize: "vertical", lineHeight: 1.45 }}
               />
             </div>
@@ -1920,7 +1937,7 @@ export default function EventsTracker() {
               <div>
                 <h2 style={{ fontSize: 19, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>the rubric says…</h2>
                 <div style={{ fontSize: 13, color: "#6f6a63", marginTop: 4 }}>
-                  adjust any score — the verdict recalculates live
+                  adjust any score and the verdict recalculates live
                 </div>
               </div>
               {(() => {
@@ -1961,7 +1978,7 @@ export default function EventsTracker() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 6 }}>
                   {d.actionItems.map((a, i) => (
                     <div key={i} style={{ fontSize: 13.5, color: "#4a453f", display: "flex", gap: 8 }}>
-                      <span style={{ color: "#a56435" }}>—</span>
+                      <span style={{ color: "#a56435" }}>·</span>
                       <span>{a}</span>
                     </div>
                   ))}
@@ -2187,7 +2204,7 @@ export default function EventsTracker() {
           })}
           {queue.length === 0 && (
             <div style={{ ...cardStyle, padding: 56, textAlign: "center", color: "#6f6a63", fontSize: 14.5 }}>
-              the queue is clear — nothing waiting on review.
+              the queue is clear. nothing waiting on review.
             </div>
           )}
         </div>
@@ -2209,7 +2226,7 @@ export default function EventsTracker() {
           collateral they need.
         </p>
 
-        <div style={{ ...cardStyle, marginTop: 26, overflow: "hidden", borderRadius: 9 }}>
+        <div className="rt-table" style={{ ...cardStyle, marginTop: 26, overflow: "hidden", borderRadius: 9 }}>
           {sch.map((e) => {
             const c = verdictColors(e.verdict);
             const g = goingAvatars(e.whosGoing, 3, 26);
@@ -2281,7 +2298,7 @@ export default function EventsTracker() {
                 <div style={{ fontSize: 13, color: "#6f5950" }}>{costText(e)}</div>
                 <div>
                   <span style={e.scored ? chip(c.soft, c.softFg) : chip("#f6f2ec", "#6f6a63")}>
-                    {e.scored ? e.verdict : "—"}
+                    {e.scored ? e.verdict : "–"}
                   </span>
                 </div>
               </button>
@@ -2311,7 +2328,7 @@ export default function EventsTracker() {
         <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>rubric &amp; verticals</h1>
         <p style={{ fontSize: 15, color: "#6f5950", margin: "9px 0 0", maxWidth: 600 }}>
           {canEdit
-            ? "the same six-criteria model the tracker applies. edit the definitions and verticals — changes flow into every new score."
+            ? "the same six-criteria model the tracker applies. edit the definitions and verticals, and changes flow into every new score."
             : "the six-criteria model the tracker applies to every event. switch to the reviewer role to edit it."}
         </p>
 
@@ -2367,7 +2384,7 @@ export default function EventsTracker() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
+        <div className="rt-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
           <div style={{ ...cardStyle, padding: 26, boxShadow: "none" }}>
             <h2 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 4px" }}>verticals</h2>
             <div style={{ fontSize: 12.5, color: "#6f6a63" }}>weighted equally when scoring</div>
