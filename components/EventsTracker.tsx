@@ -499,7 +499,7 @@ export default function EventsTracker() {
   const navItems: { id: View; label: string; badge?: number }[] = [
     { id: "dashboard", label: "overview" },
     { id: "all", label: "all events" },
-    { id: "review", label: "review queue", badge: reviewCount },
+    { id: "review", label: isReviewer ? "review queue" : "pending review", badge: reviewCount },
     { id: "scheduled", label: "scheduled" },
     { id: "rubric", label: "rubric & verticals" },
   ];
@@ -967,13 +967,13 @@ export default function EventsTracker() {
           <div style={{ ...cardStyle, padding: "26px 26px 12px" }}>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
               <h2 style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", margin: 0 }}>
-                needs your review
+                {isReviewer ? "needs your review" : "pending review"}
               </h2>
               <button
                 onClick={() => goView("review")}
                 style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
               >
-                open queue →
+                {isReviewer ? "open queue →" : "see all →"}
               </button>
             </div>
             <div style={{ marginTop: 16 }}>
@@ -1017,7 +1017,7 @@ export default function EventsTracker() {
                       </div>
                     </div>
                     <div style={e.scored ? chip(c.soft, c.softFg) : chip("#f2f2f2", "#6a6a6a")}>
-                      {e.scored ? (e.total || 0) + "/30" : "score it"}
+                      {e.scored ? (e.total || 0) + "/30" : isReviewer ? "score it" : "pending"}
                     </div>
                   </button>
                 );
@@ -2053,11 +2053,14 @@ export default function EventsTracker() {
       .sort((a, b) => (a.start || "9999").localeCompare(b.start || "9999"));
     return (
       <div className="rt-fade" style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 48px 64px" }}>
-        <SectionEyebrow>marketing review</SectionEyebrow>
-        <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>review queue</h1>
+        <SectionEyebrow>{isReviewer ? "marketing review" : "the pipeline"}</SectionEyebrow>
+        <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0" }}>
+          {isReviewer ? "review queue" : "pending review"}
+        </h1>
         <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 560 }}>
-          events waiting on a go / no-go. adjust the scores if you disagree, then approve to schedule or
-          skip.
+          {isReviewer
+            ? "events waiting on a go / no-go. adjust the scores if you disagree, then approve to schedule or skip."
+            : "events you and the team have submitted, waiting on the marketing team to review and schedule."}
         </p>
 
         <div style={{ marginTop: 26, display: "flex", flexDirection: "column", gap: 16 }}>
