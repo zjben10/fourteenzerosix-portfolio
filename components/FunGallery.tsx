@@ -65,8 +65,8 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
       </header>
 
       {/* ── Gallery ── */}
-      <section className="pt-28 md:pt-32 pb-16 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-28 md:pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
 
           {/* Title */}
           <h1
@@ -150,10 +150,10 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
 
       {/* ── Footer ── */}
       <footer
-        className="py-12 px-6 md:px-12 mt-8"
+        className="py-12 mt-8"
         style={{ borderTop: "1px solid rgba(26,23,20,0.08)" }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           <a
             href="https://www.linkedin.com/in/zoeibenzon/"
             target="_blank"
