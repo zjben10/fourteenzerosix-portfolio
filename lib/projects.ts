@@ -29,7 +29,7 @@ export const projects: Project[] = [
     client: "Roebling",
     tags: ["B2B", "GTM"],
     description:
-      "First marketing hire at Roebling, building the company's entire marketing function from zero and leading the Synonym-to-Roebling rebrand ahead of its July 2025 self-service launch.",
+      "Led marketing at Roebling, building the marketing function from 0 to 1 and led the Synonym to Roebling rebrand ahead of the July 2026 self-service launch.",
     metric: "",
     keyOutcomes: [
       "Led the end-to-end rebrand from Synonym to Roebling, including the .co to .com domain migration, brand guidelines, and brand voice framework. Supported 8 pre-self-service deals and $300K in revenue in the first months post-rebrand.",
@@ -44,7 +44,7 @@ export const projects: Project[] = [
       "Rebrand & brand systems",
       "CRO, demand gen & content",
       "Event strategy (25+ annual)",
-      "Marketing tech stack & team",
+      "Marketing engineering between systems",
     ],
     tools: [
       "PostHog",
