@@ -42,7 +42,7 @@ export default async function ProjectPage({
         {/* ── Tag · Date ── */}
         <div className="flex items-center gap-3 mb-6">
           <span
-            className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-full border"
+            className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-md border"
             style={{
               borderColor: "var(--brand-terracotta)",
               color: "var(--brand-terracotta)",
@@ -237,7 +237,7 @@ export default async function ProjectPage({
                 {project.tools.map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs px-3 py-1.5 rounded-full"
+                    className="text-xs px-3 py-1.5 rounded-md"
                     style={{
                       backgroundColor: "rgba(26,23,20,0.07)",
                       color: "rgba(26,23,20,0.65)",
@@ -250,6 +250,183 @@ export default async function ProjectPage({
             </section>
           </div>
         </div>
+
+        {/* ── Events (Roebling GTM) ── */}
+        {project.slug === "roebling-gtm" && (
+          <section className="mt-16 md:mt-24">
+            <p
+              className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              AI Tools
+            </p>
+            <Link
+              href={`/projects/${project.slug}/events`}
+              className="group block rounded-sm transition-colors"
+              style={{
+                border: "1px solid rgba(26,23,20,0.12)",
+                backgroundColor: "rgba(26,23,20,0.02)",
+              }}
+            >
+              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 p-8 md:p-10">
+                <div className="flex-1">
+                  <h3
+                    className="font-bold leading-tight mb-3"
+                    style={{
+                      fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+                      color: "var(--brand-dark)",
+                      fontFamily: "var(--font-space-grotesk), sans-serif",
+                    }}
+                  >
+                    Roebling Events Tracker
+                  </h3>
+                  <p
+                    className="text-base leading-relaxed max-w-2xl"
+                    style={{ color: "rgba(26,23,20,0.7)" }}
+                  >
+                    The internal tool I built as a prototype to run event strategy across 25+ annual
+                    tradeshows and conferences. Every event the team has interest in for 2026 is
+                    scored against a six-criteria Roebling rubric around strategic fit, ICP coverage,
+                    pipeline potential, quality of interaction, and cost. The broader team can submit
+                    a conference while the marketing team can score, review, and provide next steps
+                    all in one place.
+                  </p>
+                  <div className="mt-6">
+                    <p
+                      className="text-[10px] tracking-[0.2em] uppercase font-medium mb-2.5"
+                      style={{ color: "rgba(26,23,20,0.4)" }}
+                    >
+                      Built with
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {["Claude Code", "Claude Design", "Next.js", "React", "TypeScript", "Vercel"].map(
+                        (t) => (
+                          <span
+                            key={t}
+                            className="text-xs px-3 py-1.5 rounded-md"
+                            style={{
+                              backgroundColor: "rgba(26,23,20,0.07)",
+                              color: "rgba(26,23,20,0.65)",
+                            }}
+                          >
+                            {t}
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium flex-shrink-0 transition-opacity group-hover:opacity-70"
+                  style={{ color: "var(--brand-sage)" }}
+                >
+                  Open the tracker
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M3 7h8M7 3l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          </section>
+        )}
+
+        {/* ── Featured Project (Roebling GTM) ── */}
+        {project.slug === "roebling-gtm" && (
+          <section className="mt-16 md:mt-24">
+            <p
+              className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              Other Roebling related projects
+            </p>
+            <div
+              className="rounded-sm p-8 md:p-10"
+              style={{
+                border: "1px solid rgba(26,23,20,0.12)",
+                backgroundColor: "rgba(26,23,20,0.02)",
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4 flex-wrap">
+                <h3
+                  className="font-bold leading-tight"
+                  style={{
+                    fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+                    color: "var(--brand-dark)",
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                  }}
+                >
+                  Better with Bio · Brenntag
+                </h3>
+                <span
+                  className="text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1 rounded-md"
+                  style={{
+                    backgroundColor: "rgba(26,23,20,0.07)",
+                    color: "rgba(26,23,20,0.55)",
+                  }}
+                >
+                  Sunset in rebrand
+                </span>
+              </div>
+              <p
+                className="text-base leading-relaxed max-w-3xl"
+                style={{ color: "rgba(26,23,20,0.7)" }}
+              >
+                {"Managed Synonym (now Roebling)'s largest co-marketing opportunity with the world's largest chemical distributor, Brenntag. I spent my first six months embedded with Brenntag's team, owning the positioning, messaging, and communications for the Better with Bio program end to end and building the program landing page alongside their global marketing team across Europe, North America, and APAC regions. The program was later sunset when the company repositioned and rebranded from Synonym to Roebling, moving away from the 'bio' framing."}
+              </p>
+              <p
+                className="text-[10px] tracking-[0.3em] uppercase font-medium mt-8 mb-4"
+                style={{ color: "var(--brand-terracotta)" }}
+              >
+                Key Results
+              </p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "Owned co-branded positioning and messaging with the global marketing org of the category's largest distributor.",
+                  "Shipped the program landing page and communications framework.",
+                  "Program sunset in the company rebrand (Synonym → Roebling).",
+                ].map((r) => (
+                  <li key={r} className="flex items-start gap-3">
+                    <span
+                      className="mt-2 flex-shrink-0 w-1 h-1 rounded-full"
+                      style={{ backgroundColor: "var(--brand-sage)" }}
+                    />
+                    <p
+                      className="text-base leading-relaxed"
+                      style={{ color: "rgba(26,23,20,0.75)" }}
+                    >
+                      {r}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+
+              <figure className="mt-8 mb-0">
+                <div
+                  className="overflow-hidden rounded-sm"
+                  style={{ border: "1px solid rgba(26,23,20,0.1)" }}
+                >
+                  <img
+                    src="/images/roebling-bwb-landing.png"
+                    alt="Better with Bio landing page, Brenntag and Synonym"
+                    className="block w-full h-auto"
+                  />
+                </div>
+                <figcaption
+                  className="text-xs mt-3"
+                  style={{ color: "rgba(26,23,20,0.45)" }}
+                >
+                  The Better with Bio program landing page, built with Brenntag.
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+        )}
 
         {/* ── Gallery ── */}
         {gallery.length > 0 && (
