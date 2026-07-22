@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import {
   RUBRIC,
   DEFAULT_VERTICALS,
@@ -1534,6 +1535,30 @@ export default function EventsTracker() {
               >
                 visit event site →
               </a>
+            )}
+            {e.status === "scheduled" && (
+              <div style={{ marginTop: 16 }}>
+                <Link
+                  href={`/projects/roebling-gtm/events/pipeline?event=${e.id}`}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "10px 16px",
+                    background: "#232323",
+                    color: "#f7f9f8",
+                    borderRadius: 8,
+                    fontSize: 12.5,
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  open contact pipeline →
+                </Link>
+                <span style={{ fontSize: 12, color: "#6a6a6a", marginLeft: 10 }}>
+                  capture, sales follow-up &amp; marketing attribution for this event
+                </span>
+              </div>
             )}
           </div>
           <div
