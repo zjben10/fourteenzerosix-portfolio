@@ -624,6 +624,7 @@ export default function EventPipeline() {
         [data-pl] input:focus,[data-pl] select:focus,[data-pl] textarea:focus{border-color:rgba(30,144,255,0.55);}
         @media (prefers-reduced-motion: reduce){[data-pl] .pl-fade{animation:none;}[data-pl] *{transition:none !important;}}
         @media (max-width:820px){
+          [data-pl] .pl-crumb{padding:10px 16px 0 !important;}
           [data-pl] .pl-topgrid{flex-direction:column !important;align-items:stretch !important;padding:14px 16px !important;gap:14px !important;}
           [data-pl] .pl-topsub{padding:0 16px 12px !important;}
           [data-pl] .pl-main{padding:20px 16px 72px !important;}
@@ -691,6 +692,30 @@ export default function EventPipeline() {
   function TopBar() {
     return (
       <header style={{ background: "#232323", color: "#f7f9f8", borderBottom: "1px solid rgba(0,0,0,0.2)" }}>
+        <div
+          className="pl-crumb"
+          style={{
+            maxWidth: 1180,
+            margin: "0 auto",
+            padding: "10px 32px 0",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: 12,
+            color: "rgba(247,249,248,0.5)",
+            flexWrap: "wrap",
+          }}
+        >
+          <Link href="/projects/roebling-gtm" style={{ color: "rgba(247,249,248,0.7)", textDecoration: "none", fontWeight: 600 }}>
+            ← case study
+          </Link>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <Link href="/projects/roebling-gtm/events" style={{ color: "rgba(247,249,248,0.7)", textDecoration: "none", fontWeight: 600 }}>
+            events tracker
+          </Link>
+          <span style={{ opacity: 0.4 }}>›</span>
+          <span style={{ color: "#1e90ff", fontWeight: 600 }}>pipeline</span>
+        </div>
         <div
           className="pl-topgrid"
           style={{
@@ -790,18 +815,31 @@ export default function EventPipeline() {
                       aria-selected={on}
                       onClick={() => setRole(r)}
                       style={{
-                        padding: "8px 16px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 2,
+                        padding: "7px 15px",
                         border: "none",
                         cursor: "pointer",
                         borderRadius: 6,
-                        fontSize: 12.5,
-                        fontWeight: 600,
+                        lineHeight: 1.1,
                         transition: "all 140ms",
                         background: on ? "#1e90ff" : "transparent",
                         color: on ? "#f7f9f8" : "rgba(247,249,248,0.62)",
                       }}
                     >
-                      {ROLE_META[r].label}
+                      <span style={{ fontSize: 12.5, fontWeight: 600 }}>{ROLE_META[r].label}</span>
+                      <span
+                        style={{
+                          fontSize: 8.5,
+                          fontWeight: 600,
+                          letterSpacing: "0.06em",
+                          opacity: on ? 0.85 : 0.55,
+                        }}
+                      >
+                        {ROLE_META[r].stage}
+                      </span>
                     </button>
                   );
                 })}
