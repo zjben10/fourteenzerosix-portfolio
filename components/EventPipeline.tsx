@@ -620,7 +620,7 @@ export default function EventPipeline() {
         @keyframes plToast{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
         [data-pl] :focus-visible{outline:2px solid #1e90ff;outline-offset:2px;border-radius:5px;}
         [data-pl] [style*="uppercase"]{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;}
-        [data-pl] button{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;letter-spacing:0.01em;}
+        [data-pl] button{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;text-transform:uppercase;letter-spacing:0.06em;}
         [data-pl] input:focus,[data-pl] select:focus,[data-pl] textarea:focus{border-color:rgba(30,144,255,0.55);}
         @media (prefers-reduced-motion: reduce){[data-pl] .pl-fade{animation:none;}[data-pl] *{transition:none !important;}}
         @media (max-width:820px){
