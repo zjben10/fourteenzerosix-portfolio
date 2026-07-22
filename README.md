@@ -16,6 +16,6 @@ You'll find case studies, campaign work, side projects, and personal projects.
 
 ---
 
-© 2026 Zoei. All rights reserved. This code is shared for portfolio and 
+© 2026 Zoei Benzon. All rights reserved. This code is shared for portfolio and 
 demonstration purposes only. It may not be copied, modified, or 
 redistributed without permission.
