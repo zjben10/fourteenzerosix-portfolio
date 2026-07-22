@@ -1151,7 +1151,7 @@ export default function EventPipeline() {
       <div className="pl-fade">
         <SurfaceHeader
           ev={ev}
-          eyebrow="sales · copilot"
+          eyebrow="sales · follow-ups"
           title="Your follow-up list, with marketing's context attached"
           blurb="Only what's yours and actionable — booked and met. Each card carries the event, the campaign that sourced them, and everyone else you're touching at the same company. A sales-only tool structurally can't show that."
         />
