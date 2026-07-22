@@ -531,6 +531,7 @@ export default function EventsTracker() {
         .rt-primary{transition:background 140ms;}
         .rt-primary:hover{background:#0f74d4 !important;}
         .rt-ghost:hover{background:#f2f2f2 !important;}
+        .rt-pipeline-link:hover{background:rgba(30,144,255,0.22) !important;}
         .rt-fade{animation:rtFade 320ms cubic-bezier(0.22,0.61,0.36,1);}
         @keyframes rtFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
         @keyframes rtSpin{to{transform:rotate(360deg);}}
@@ -675,6 +676,35 @@ export default function EventsTracker() {
             );
           })}
         </nav>
+
+        <Link
+          href="/projects/roebling-gtm/events/pipeline"
+          className="rt-pipeline-link"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 8,
+            marginTop: 14,
+            padding: "12px 14px",
+            borderRadius: 8,
+            border: "1px solid rgba(30,144,255,0.4)",
+            background: "rgba(30,144,255,0.12)",
+            color: "#f7f9f8",
+            fontSize: 13.5,
+            fontWeight: 600,
+            textDecoration: "none",
+            transition: "background 140ms",
+          }}
+        >
+          <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <span>contact pipeline</span>
+            <span style={{ fontSize: 10.5, fontWeight: 500, color: "rgba(247,249,248,0.55)" }}>
+              BD · sales · marketing
+            </span>
+          </span>
+          <span style={{ fontSize: 15, color: "#1e90ff" }}>→</span>
+        </Link>
 
         <div
           style={{
