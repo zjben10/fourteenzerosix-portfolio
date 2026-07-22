@@ -624,15 +624,30 @@ export default function EventPipeline() {
         [data-pl] input:focus,[data-pl] select:focus,[data-pl] textarea:focus{border-color:rgba(30,144,255,0.55);}
         @media (prefers-reduced-motion: reduce){[data-pl] .pl-fade{animation:none;}[data-pl] *{transition:none !important;}}
         @media (max-width:820px){
-          [data-pl] .pl-topgrid{flex-direction:column !important;align-items:stretch !important;}
+          [data-pl] .pl-topgrid{flex-direction:column !important;align-items:stretch !important;padding:14px 16px !important;gap:14px !important;}
+          [data-pl] .pl-topsub{padding:0 16px 12px !important;}
+          [data-pl] .pl-main{padding:20px 16px 72px !important;}
           [data-pl] .pl-2col{grid-template-columns:1fr !important;}
-          [data-pl] .pl-addgrid{grid-template-columns:1fr 1fr !important;}
+          [data-pl] .pl-brandrow{flex-wrap:wrap !important;gap:12px !important;}
+          [data-pl] .pl-divider{display:none !important;}
+          [data-pl] .pl-eventwrap{flex:1 1 100% !important;}
+          [data-pl] .pl-eventselect{max-width:100% !important;width:100% !important;}
+          [data-pl] .pl-controls{width:100% !important;justify-content:space-between !important;align-items:flex-end !important;}
+          [data-pl] .pl-viewas-wrap{flex:1 !important;}
+          [data-pl] .pl-viewas{width:100% !important;}
+          [data-pl] .pl-viewas [role="tab"]{flex:1 !important;padding-left:0 !important;padding-right:0 !important;}
+        }
+        @media (max-width:560px){
+          [data-pl] .pl-addgrid{grid-template-columns:1fr !important;}
+          [data-pl] .pl-h1{font-size:23px !important;}
+          [data-pl] .pl-attrgrid{grid-template-columns:1fr 1fr !important;}
+          [data-pl] .pl-salesbtns > button{width:100% !important;}
         }
       `}</style>
 
       {TopBar()}
 
-      <main style={{ maxWidth: 1180, margin: "0 auto", padding: "28px 32px 80px" }}>
+      <main className="pl-main" style={{ maxWidth: 1180, margin: "0 auto", padding: "28px 32px 80px" }}>
         {!loaded && (
           <div style={{ padding: 80, textAlign: "center", color: "#6a6a6a", fontSize: 14 }}>
             loading the pipeline…
@@ -689,7 +704,7 @@ export default function EventPipeline() {
             flexWrap: "wrap",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16, minWidth: 0 }}>
+          <div className="pl-brandrow" style={{ display: "flex", alignItems: "center", gap: 16, minWidth: 0 }}>
             <div>
               <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1 }}>roebling</div>
               <div
@@ -705,8 +720,8 @@ export default function EventPipeline() {
                 event pipeline
               </div>
             </div>
-            <div style={{ height: 34, width: 1, background: "rgba(247,249,248,0.16)", flexShrink: 0 }} />
-            <div style={{ minWidth: 0 }}>
+            <div className="pl-divider" style={{ height: 34, width: 1, background: "rgba(247,249,248,0.16)", flexShrink: 0 }} />
+            <div className="pl-eventwrap" style={{ minWidth: 0 }}>
               <label
                 style={{
                   fontSize: 9.5,
@@ -720,6 +735,7 @@ export default function EventPipeline() {
               </label>
               <select
                 aria-label="Select event"
+                className="pl-eventselect"
                 value={eventId}
                 onChange={(e) => setEventId(e.target.value)}
                 style={{
@@ -745,8 +761,8 @@ export default function EventPipeline() {
             </div>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-            <div>
+          <div className="pl-controls" style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            <div className="pl-viewas-wrap">
               <div
                 style={{
                   fontSize: 9.5,
@@ -762,6 +778,7 @@ export default function EventPipeline() {
               <div
                 role="tablist"
                 aria-label="View as role"
+                className="pl-viewas"
                 style={{ display: "flex", background: "rgba(247,249,248,0.07)", borderRadius: 8, padding: 3 }}
               >
                 {(["bd", "sales", "marketing"] as Role[]).map((r) => {
@@ -810,6 +827,7 @@ export default function EventPipeline() {
           </div>
         </div>
         <div
+          className="pl-topsub"
           style={{
             maxWidth: 1180,
             margin: "0 auto",
@@ -859,7 +877,7 @@ export default function EventPipeline() {
     return (
       <div>
         <div style={eyebrowStyle}>{eyebrow}</div>
-        <h1 style={{ fontSize: 28, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0", lineHeight: 1.1 }}>
+        <h1 className="pl-h1" style={{ fontSize: 28, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0", lineHeight: 1.1 }}>
           {title}
         </h1>
         <p style={{ fontSize: 14.5, color: "#5a5a5a", margin: "10px 0 0", maxWidth: 640, lineHeight: 1.5 }}>{blurb}</p>
@@ -1010,7 +1028,7 @@ export default function EventPipeline() {
             </div>
           </div>
           <div style={{ marginTop: 14 }}>{FunnelBar(eventContacts)}</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10, marginTop: 20 }}>
+          <div className="pl-attrgrid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10, marginTop: 20 }}>
             {STATUS_ORDER.map((s) => (
               <div key={s} style={{ background: "#f7f7f7", borderRadius: 8, padding: "12px 14px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -1032,7 +1050,7 @@ export default function EventPipeline() {
               <MockTag label="display only" />
             </div>
             <p style={{ fontSize: 13, color: "#5a5a5a", lineHeight: 1.5, marginTop: 8 }}>
-              Next time the team asks &ldquo;is {ev.name.split(" ").slice(0, 2).join(" ")} worth it,&rdquo; the score can
+              Next time the team asks &ldquo;is {ev.name.split(" ").slice(0, 2).join(" ")}{" "}worth it,&rdquo; the score can
               be grounded in what actually happened — not a guess.
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 16, padding: "16px 18px", background: "#f7f7f7", borderRadius: 9 }}>
@@ -1277,7 +1295,7 @@ export default function EventPipeline() {
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap", alignItems: "center" }}>
+        <div className="pl-salesbtns" style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap", alignItems: "center" }}>
           {nexts.map((s) => {
             const opp = s === "opportunity";
             return (
