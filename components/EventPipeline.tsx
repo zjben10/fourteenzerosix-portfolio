@@ -199,7 +199,7 @@ function SingleAdd({
     <div style={{ ...cardStyle, padding: 22 }}>
       <h2 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.01em", margin: 0 }}>Add a contact</h2>
       <div style={{ fontSize: 12.5, color: "#6a6a6a", marginTop: 4 }}>
-        the BD person&apos;s repeated action — optimized for speed
+        the in-event capture step — optimized for speed
       </div>
       <div className="pl-addgrid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 16 }}>
         <div style={{ gridColumn: "1 / -1" }}>
@@ -633,16 +633,16 @@ export default function EventPipeline() {
           [data-pl] .pl-divider{display:none !important;}
           [data-pl] .pl-eventwrap{flex:1 1 100% !important;}
           [data-pl] .pl-eventselect{max-width:100% !important;width:100% !important;}
-          [data-pl] .pl-controls{width:100% !important;justify-content:space-between !important;align-items:flex-end !important;}
-          [data-pl] .pl-viewas-wrap{flex:1 !important;}
-          [data-pl] .pl-viewas{width:100% !important;}
-          [data-pl] .pl-viewas [role="tab"]{flex:1 !important;padding-left:0 !important;padding-right:0 !important;}
+          [data-pl] .pl-controls{width:100% !important;justify-content:space-between !important;align-items:flex-end !important;gap:10px !important;}
+          [data-pl] .pl-viewas [role="tab"]{padding:8px 12px !important;}
         }
         @media (max-width:560px){
           [data-pl] .pl-addgrid{grid-template-columns:1fr !important;}
           [data-pl] .pl-h1{font-size:23px !important;}
           [data-pl] .pl-attrgrid{grid-template-columns:1fr 1fr !important;}
           [data-pl] .pl-salesbtns > button{width:100% !important;}
+          [data-pl] .pl-viewas{flex-wrap:wrap !important;}
+          [data-pl] .pl-viewas [role="tab"]{font-size:11px !important;padding:8px 10px !important;}
         }
       `}</style>
 
@@ -815,31 +815,19 @@ export default function EventPipeline() {
                       aria-selected={on}
                       onClick={() => setRole(r)}
                       style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 2,
-                        padding: "7px 15px",
+                        padding: "8px 15px",
                         border: "none",
                         cursor: "pointer",
                         borderRadius: 6,
-                        lineHeight: 1.1,
+                        fontSize: 12.5,
+                        fontWeight: 600,
+                        whiteSpace: "nowrap",
                         transition: "all 140ms",
                         background: on ? "#1e90ff" : "transparent",
                         color: on ? "#f7f9f8" : "rgba(247,249,248,0.62)",
                       }}
                     >
-                      <span style={{ fontSize: 12.5, fontWeight: 600 }}>{ROLE_META[r].label}</span>
-                      <span
-                        style={{
-                          fontSize: 8.5,
-                          fontWeight: 600,
-                          letterSpacing: "0.06em",
-                          opacity: on ? 0.85 : 0.55,
-                        }}
-                      >
-                        {ROLE_META[r].stage}
-                      </span>
+                      {ROLE_META[r].label}
                     </button>
                   );
                 })}
@@ -942,7 +930,7 @@ export default function EventPipeline() {
       <div className="pl-fade">
         <SurfaceHeader
           ev={ev}
-          eyebrow="capture · BD"
+          eyebrow="in-event · capture"
           title="Log responders as they come in"
           blurb="The spreadsheet, replaced — same manual logging, but into a live record every view reads from. Add one, or paste a whole list to migrate an event's history in."
         />
@@ -1053,7 +1041,7 @@ export default function EventPipeline() {
       <div className="pl-fade">
         <SurfaceHeader
           ev={ev}
-          eyebrow="marketing"
+          eyebrow="marketing tracking"
           title="Nurture segments & attribution, off the same records"
           blurb="No re-keying, no export. The nurture list is a filter on status; attribution is a count of it. Both update the instant sales moves a contact."
         />
@@ -1189,7 +1177,7 @@ export default function EventPipeline() {
       <div className="pl-fade">
         <SurfaceHeader
           ev={ev}
-          eyebrow="sales · follow-ups"
+          eyebrow="follow-ups"
           title="Your follow-up list, with marketing's context attached"
           blurb="Only what's yours and actionable — booked and met. Each card carries the event, the campaign that sourced them, and everyone else you're touching at the same company. A sales-only tool structurally can't show that."
         />
@@ -1229,7 +1217,7 @@ export default function EventPipeline() {
           {myFollowUp.map((c) => SalesCard(c, ev))}
           {!myFollowUp.length && (
             <div style={{ ...cardStyle, padding: 44, textAlign: "center", color: "#6a6a6a", fontSize: 14 }}>
-              nothing booked or met for {repName(me).split(" ")[0]} on this event. try another rep, or switch to BD to
+              nothing booked or met for {repName(me).split(" ")[0]} on this event. try another rep, or switch to In-Event to
               log some.
             </div>
           )}
