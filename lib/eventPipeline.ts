@@ -12,20 +12,17 @@ import { seedEvents, type TrackedEvent } from "./roeblingEvents";
 // ── Roles (stubbed auth) ─────────────────────────────────────────────────
 export type Role = "bd" | "sales" | "marketing";
 
-export const ROLE_META: Record<Role, { label: string; stage: string; blurb: string }> = {
+export const ROLE_META: Record<Role, { label: string; blurb: string }> = {
   bd: {
-    label: "BD",
-    stage: "capture",
+    label: "In-Event",
     blurb: "captures responders as they come in — the intake step before sales",
   },
   sales: {
-    label: "Sales",
-    stage: "follow-ups",
+    label: "Follow-Ups",
     blurb: "works the follow-ups after capture — a personal list with marketing context attached",
   },
   marketing: {
-    label: "Marketing",
-    stage: "nurture",
+    label: "Marketing Tracking",
     blurb: "runs nurture segments and reads attribution off the same records",
   },
 };
