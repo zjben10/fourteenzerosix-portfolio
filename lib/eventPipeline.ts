@@ -15,11 +15,11 @@ export type Role = "bd" | "sales" | "marketing";
 export const ROLE_META: Record<Role, { label: string; blurb: string }> = {
   bd: {
     label: "BD",
-    blurb: "logs responders as they come in — the capture surface",
+    blurb: "captures responders as they come in — the intake step before sales",
   },
   sales: {
     label: "Sales",
-    blurb: "works a personal follow-up list with marketing context attached",
+    blurb: "works the follow-ups after capture — a personal list with marketing context attached",
   },
   marketing: {
     label: "Marketing",
