@@ -258,7 +258,7 @@ export default async function ProjectPage({
               className="text-[10px] tracking-[0.3em] uppercase font-medium mb-6"
               style={{ color: "var(--brand-sage)" }}
             >
-              AI Tools
+              AI Skills
             </p>
             <Link
               href={`/projects/${project.slug}/events`}
@@ -333,6 +333,77 @@ export default async function ProjectPage({
                 </div>
               </div>
             </Link>
+            <a
+              href="https://github.com/zjben10/marketing-portfolio-skills"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block rounded-sm transition-colors mt-4"
+              style={{
+                border: "1px solid rgba(26,23,20,0.12)",
+                backgroundColor: "rgba(26,23,20,0.02)",
+              }}
+            >
+              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 p-8 md:p-10">
+                <div className="flex-1">
+                  <h3
+                    className="font-bold leading-tight mb-3"
+                    style={{
+                      fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+                      color: "var(--brand-dark)",
+                      fontFamily: "var(--font-space-grotesk), sans-serif",
+                    }}
+                  >
+                    Marketing Ops Skills for Claude
+                  </h3>
+                  <p
+                    className="text-base leading-relaxed max-w-2xl"
+                    style={{ color: "rgba(26,23,20,0.7)" }}
+                  >
+                    A library of custom Claude skills I built to run outbound end-to-end — event
+                    scoring and prioritization, target account selection, and automated post-event
+                    follow-up — packaging the GTM, campaign planning, and content-pipeline workflows
+                    from running B2B SaaS marketing solo into reusable agent skills.
+                  </p>
+                  <div className="mt-6">
+                    <p
+                      className="text-[10px] tracking-[0.2em] uppercase font-medium mb-2.5"
+                      style={{ color: "rgba(26,23,20,0.4)" }}
+                    >
+                      Built with
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {["Claude Code", "Claude Skills", "Firecrawl", "Clay", "n8n"].map((t) => (
+                        <span
+                          key={t}
+                          className="text-xs px-3 py-1.5 rounded-md"
+                          style={{
+                            backgroundColor: "rgba(26,23,20,0.07)",
+                            color: "rgba(26,23,20,0.65)",
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium flex-shrink-0 transition-opacity group-hover:opacity-70"
+                  style={{ color: "var(--brand-sage)" }}
+                >
+                  View the repo
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M3 7h8M7 3l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
           </section>
         )}
 
