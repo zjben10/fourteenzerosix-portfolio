@@ -353,16 +353,16 @@ export default async function ProjectPage({
                       fontFamily: "var(--font-space-grotesk), sans-serif",
                     }}
                   >
-                    Marketing Ops Skills for Claude
+                    Marketing Engineering Skills for Claude
                   </h3>
                   <p
                     className="text-base leading-relaxed max-w-2xl"
                     style={{ color: "rgba(26,23,20,0.7)" }}
                   >
-                    A library of custom Claude skills I built to run outbound end-to-end — event
-                    scoring and prioritization, target account selection, and automated post-event
-                    follow-up — packaging the GTM, campaign planning, and content-pipeline workflows
-                    from running B2B SaaS marketing solo into reusable agent skills.
+                    A library of custom Claude skills built to connect the workflows between
+                    marketing and sales at Roebling. This repo is a work in progress as it relates to
+                    the business development and marketing team&apos;s workflow. Anything featured in
+                    the GitHub repo has been stripped to exclude any proprietary Roebling information.
                   </p>
                   <div className="mt-6">
                     <p
