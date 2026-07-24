@@ -56,7 +56,7 @@ export const projects: Project[] = [
       "Instantly",
       "n8n",
       "HeyReach",
-      "Firecrawler",
+      "Firecrawl",
     ],
     password: "capitalprojects",
     heroImage: "/images/Roebling%20Logo%20Lockup%20ZJB%20Portfolio.png",
