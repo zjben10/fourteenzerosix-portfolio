@@ -93,7 +93,15 @@ export default function Hero() {
                 color: "var(--brand-dark)",
               }}
             >
-              Hey, I&apos;m Zoei <span aria-hidden="true">👋</span>
+              Hey, I&apos;m Zoei{" "}
+              <Image
+                src="/images/croissant-zoei.png"
+                alt=""
+                width={500}
+                height={432}
+                aria-hidden="true"
+                className="inline-block w-12 md:w-16 h-auto align-middle"
+              />
             </h1>
 
             {/* Descriptor */}
