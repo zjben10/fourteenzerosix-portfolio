@@ -1,29 +1,9 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  potteryCategories,
-  type PotteryPiece,
-  type PotteryCategory,
-} from "@/lib/pottery";
+import { type PotteryPiece } from "@/lib/pottery";
 
 export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
-  // Both categories on by default (show everything)
-  const [active, setActive] = useState<Set<PotteryCategory>>(
-    () => new Set(potteryCategories.map((c) => c.label))
-  );
-
-  const toggle = (label: PotteryCategory) =>
-    setActive((prev) => {
-      const next = new Set(prev);
-      if (next.has(label)) next.delete(label);
-      else next.add(label);
-      return next;
-    });
-
-  const filtered = pieces.filter((p) => active.has(p.category));
-
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "var(--brand-cream)" }}>
 
@@ -82,44 +62,25 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
             handmade ceramics
           </p>
 
-          {/* Category toggles */}
-          <div
-            className="flex flex-wrap gap-2.5 mb-12"
-            style={{ borderTop: "1px solid rgba(26,23,20,0.1)", paddingTop: "2rem" }}
+          {/* Description */}
+          <p
+            className="max-w-2xl text-base md:text-lg leading-relaxed mb-12"
+            style={{
+              color: "rgba(26,23,20,0.7)",
+              borderTop: "1px solid rgba(26,23,20,0.1)",
+              paddingTop: "2rem",
+            }}
           >
-            {potteryCategories.map(({ label, emoji }) => {
-              const on = active.has(label);
-              return (
-                <button
-                  key={label}
-                  onClick={() => toggle(label)}
-                  aria-pressed={on}
-                  className="inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 border transition-colors duration-200"
-                  style={
-                    on
-                      ? {
-                          backgroundColor: "var(--brand-sage)",
-                          color: "var(--brand-cream)",
-                          borderColor: "var(--brand-sage)",
-                        }
-                      : {
-                          backgroundColor: "transparent",
-                          color: "rgba(26,23,20,0.55)",
-                          borderColor: "rgba(26,23,20,0.15)",
-                        }
-                  }
-                >
-                  <span aria-hidden="true">{emoji}</span>
-                  {label}
-                </button>
-              );
-            })}
-          </div>
+            I started pottery four years ago, and like ceramics, my style has
+            changed. Each curvilinear form has changed with an increased sense of
+            taste, uneven colors brought by happenstance, and when put in your
+            hands I hope its meaning changes over time.
+          </p>
 
           {/* Masonry — natural aspect ratios, newest first */}
-          {filtered.length > 0 ? (
+          {pieces.length > 0 ? (
             <div className="columns-2 md:columns-4 gap-4 md:gap-6">
-              {filtered.map((piece) => (
+              {pieces.map((piece) => (
                 <div
                   key={piece.id}
                   className="mb-4 md:mb-6 break-inside-avoid overflow-hidden group"
@@ -140,9 +101,7 @@ export default function FunGallery({ pieces }: { pieces: PotteryPiece[] }) {
               className="text-sm py-16 text-center"
               style={{ color: "rgba(26,23,20,0.3)" }}
             >
-              {pieces.length === 0
-                ? "Photos coming soon."
-                : "Pick a category to see pieces."}
+              Photos coming soon.
             </p>
           )}
         </div>
