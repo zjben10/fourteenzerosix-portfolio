@@ -27,7 +27,7 @@ export default function Hero() {
           {/* Descriptor */}
           <div className="space-y-4 max-w-2xl">
             <p
-              className="text-sm leading-relaxed"
+              className="text-base leading-relaxed"
               style={{ color: "rgba(26,23,20,0.7)" }}
             >
               I&apos;m a marketer who has spent the last 10 years in B2B SaaS in
@@ -36,7 +36,7 @@ export default function Hero() {
               industries.
             </p>
             <p
-              className="text-sm leading-relaxed"
+              className="text-base leading-relaxed"
               style={{ color: "rgba(26,23,20,0.7)" }}
             >
               My professional past lives have been driven by curiosity. I&apos;ve
@@ -46,7 +46,7 @@ export default function Hero() {
               rapid iteration.
             </p>
             <p
-              className="text-sm leading-relaxed"
+              className="text-base leading-relaxed"
               style={{ color: "rgba(26,23,20,0.7)" }}
             >
               I&apos;ve always been a creative at heart. As a part-time potter,
