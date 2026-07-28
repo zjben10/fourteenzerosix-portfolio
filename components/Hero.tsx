@@ -13,8 +13,12 @@ const pills = [
 function FilmFrame() {
   return (
     <figure
-      className="w-full max-w-md rounded-md overflow-hidden select-none"
-      style={{ backgroundColor: "var(--brand-dark)", padding: "0.85rem" }}
+      className="w-full max-w-md overflow-hidden select-none -rotate-2"
+      style={{
+        backgroundColor: "var(--brand-dark)",
+        padding: "0.85rem",
+        boxShadow: "0 18px 40px -18px rgba(26,23,20,0.45)",
+      }}
     >
       {/* Top sprocket row */}
       <div
@@ -59,17 +63,12 @@ function FilmFrame() {
         />
       </div>
 
-      {/* Bottom labels */}
-      <div className="flex items-center justify-between font-mono text-[11px] tracking-[0.25em] uppercase py-2">
-        <span style={{ color: "rgba(242,238,230,0.85)" }}>Zoei Benzon</span>
-        <span style={{ color: "rgba(242,238,230,0.5)" }}>Feb &rsquo;23</span>
-      </div>
-
       {/* Bottom sprocket row */}
       <div
         aria-hidden="true"
         style={{
           height: "10px",
+          marginTop: "0.85rem",
           backgroundImage:
             "repeating-linear-gradient(to right, rgba(0,0,0,0.6) 0 8px, transparent 8px 16px)",
         }}
@@ -100,7 +99,7 @@ export default function Hero() {
                 width={500}
                 height={432}
                 aria-hidden="true"
-                className="inline-block w-12 md:w-16 h-auto align-middle"
+                className="inline-block w-16 md:w-24 h-auto align-middle"
               />
             </h1>
 
