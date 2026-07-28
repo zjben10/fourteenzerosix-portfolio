@@ -25,18 +25,35 @@ export default function Hero() {
           </h1>
 
           {/* Descriptor */}
-          <p
-            className="text-base md:text-lg leading-relaxed max-w-xl mb-1.5"
-            style={{ color: "rgba(26,23,20,0.7)" }}
-          >
-            10+ years in B2B SaaS across demand generation, brand, and field marketing.
-          </p>
-          <p
-            className="text-base md:text-lg leading-relaxed max-w-xl"
-            style={{ color: "rgba(26,23,20,0.4)" }}
-          >
-            I&apos;ve previously worked in biotechnology, UX research, healthcare, and education.
-          </p>
+          <div className="space-y-4 max-w-2xl">
+            <p
+              className="text-base md:text-lg leading-relaxed"
+              style={{ color: "rgba(26,23,20,0.7)" }}
+            >
+              I&apos;m a marketer who has spent the last 10 years in B2B SaaS in
+              demand generation, brand, and field marketing. I&apos;ve previously
+              worked across biotechnology, UX research, healthcare, and education
+              industries.
+            </p>
+            <p
+              className="text-base md:text-lg leading-relaxed"
+              style={{ color: "rgba(26,23,20,0.7)" }}
+            >
+              My professional past lives have been driven by curiosity. I&apos;ve
+              been lucky to work in roles across the marketing org from growth,
+              product, customer, event, and marketing ops. In doing so, I&apos;ve
+              gained the systems-level knowledge to bring ideas to fruition and
+              rapid iteration.
+            </p>
+            <p
+              className="text-base md:text-lg leading-relaxed"
+              style={{ color: "rgba(26,23,20,0.7)" }}
+            >
+              I&apos;ve always been a creative at heart. As a part-time potter,
+              I&apos;m at the pottery studio on the side perfecting my craft for
+              the perfectly imperfect kyusu teapot.
+            </p>
+          </div>
         </div>
 
         {/* Pill nav */}
