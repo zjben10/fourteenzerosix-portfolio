@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: "Zoei Benzon | Gen Marketer",
   description: siteDescription,
   alternates: { canonical: "/" },
+  // Keep the site out of search results for now. Remove this block (and flip
+  // robots.ts back to allow-all) when you're ready to be indexed.
+  robots: { index: false, follow: false },
   openGraph: {
     type: "website",
     siteName: "Zoei Benzon",
