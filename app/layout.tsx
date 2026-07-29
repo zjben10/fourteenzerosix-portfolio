@@ -14,9 +14,30 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const siteDescription =
+  "Marketing portfolio of Zoei Benzon, fourteenzerosix studios";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.fourteenzerosixstudios.com"),
   title: "Zoei Benzon | Gen Marketer",
-  description: "Marketing portfolio of Zoei Benzon, fourteenzerosix studios",
+  description: siteDescription,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Zoei Benzon",
+    title: "Zoei Benzon | Gen Marketer",
+    description: siteDescription,
+    url: "/",
+    images: [
+      { url: "/icon.jpg", width: 1454, height: 1363, alt: "Zoei Benzon" },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Zoei Benzon | Gen Marketer",
+    description: siteDescription,
+    images: ["/icon.jpg"],
+  },
 };
 
 export default function RootLayout({
