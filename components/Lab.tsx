@@ -50,10 +50,7 @@ function ProjectCard({ project }: { project: AiProject }) {
     <article className="lab-card rounded-xl p-6 md:p-8 flex flex-col h-full">
       {/* Index · status */}
       <div className="flex items-start justify-between gap-4 mb-5">
-        <span
-          className="lab-index text-4xl md:text-5xl font-semibold leading-none tracking-tight"
-          style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
-        >
+        <span className="lab-index text-4xl md:text-5xl font-semibold leading-none tracking-tight">
           {String(project.id).padStart(2, "0")}
         </span>
         <span
@@ -72,10 +69,7 @@ function ProjectCard({ project }: { project: AiProject }) {
       {/* Title · tagline */}
       <h3
         className="text-xl md:text-2xl font-semibold leading-snug mb-2"
-        style={{
-          color: "rgba(242,238,230,0.96)",
-          fontFamily: "var(--font-space-grotesk), sans-serif",
-        }}
+        style={{ color: "rgba(242,238,230,0.98)" }}
       >
         {project.title}
       </h3>
@@ -88,7 +82,7 @@ function ProjectCard({ project }: { project: AiProject }) {
 
       <p
         className="text-sm leading-relaxed mb-6"
-        style={{ color: "rgba(242,238,230,0.62)" }}
+        style={{ color: "rgba(242,238,230,0.92)" }}
       >
         {project.description}
       </p>
@@ -100,8 +94,8 @@ function ProjectCard({ project }: { project: AiProject }) {
             key={tech}
             className="text-[10px] tracking-[0.06em] px-2.5 py-1 rounded-md border"
             style={{
-              borderColor: "rgba(242,238,230,0.14)",
-              color: "rgba(242,238,230,0.55)",
+              borderColor: "rgba(242,238,230,0.3)",
+              color: "rgba(242,238,230,0.92)",
             }}
           >
             {tech}
@@ -184,18 +178,17 @@ export default function Lab() {
             <span aria-hidden="true">🔧</span> AI Engineering
           </p>
           <h1
-            className="font-semibold leading-[0.98] tracking-tight mb-6"
+            className="font-bold leading-[0.98] tracking-tight mb-6"
             style={{
               fontSize: "clamp(2.5rem, 7vw, 5rem)",
-              color: "rgba(242,238,230,0.97)",
-              fontFamily: "var(--font-space-grotesk), sans-serif",
+              color: "rgba(242,238,230,0.98)",
             }}
           >
             The Lab
           </h1>
           <p
             className="text-base md:text-lg leading-relaxed max-w-2xl"
-            style={{ color: "rgba(242,238,230,0.6)" }}
+            style={{ color: "rgba(242,238,230,0.92)" }}
           >
             Where the marketing meets the machine. Small, shipped tools I&apos;ve
             built with Claude and code to make go-to-market work faster — each one
