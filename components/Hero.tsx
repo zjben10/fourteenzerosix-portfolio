@@ -6,6 +6,7 @@ import faviconPhoto from "@/app/icon.jpg";
 
 const pills = [
   { label: "Work", href: "/#work", emoji: "💻" },
+  { label: "The Lab", href: "/lab", emoji: "🤖" },
   { label: "Fun", href: "/fun", emoji: "🏺" },
 ];
 
