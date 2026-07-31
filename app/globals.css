@@ -45,23 +45,16 @@ body {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   AI Engineering "Lab" — a deliberately distinct, technical mode.
-   Deep ink canvas + blueprint dot-grid + monospace, set apart from
-   the warm editorial portfolio while keeping sage as the proceed
-   accent (see .hover-sage above).
+   AI Engineering "Lab" — a deliberately distinct mode. Deep ink
+   canvas set apart from the warm editorial portfolio while keeping
+   the portfolio type (Space Grotesk / Inter) and sage as the
+   proceed accent (see .hover-sage above).
    ────────────────────────────────────────────────────────────── */
 .lab-ink {
   --lab-bg: #0e0d0c;
   --lab-fg: #f2eee6;
   background-color: var(--lab-bg);
   color: var(--lab-fg);
-}
-
-/* Faint blueprint dot-grid */
-.lab-grid-bg {
-  background-image: radial-gradient(rgba(242, 238, 230, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
-  background-position: -1px -1px;
 }
 
 .lab-card {

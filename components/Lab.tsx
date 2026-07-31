@@ -50,11 +50,14 @@ function ProjectCard({ project }: { project: AiProject }) {
     <article className="lab-card rounded-xl p-6 md:p-8 flex flex-col h-full">
       {/* Index · status */}
       <div className="flex items-start justify-between gap-4 mb-5">
-        <span className="lab-index font-mono text-4xl md:text-5xl font-semibold leading-none tracking-tight">
+        <span
+          className="lab-index text-4xl md:text-5xl font-semibold leading-none tracking-tight"
+          style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+        >
           {String(project.id).padStart(2, "0")}
         </span>
         <span
-          className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.18em] uppercase pt-1"
+          className="inline-flex items-center gap-2 text-[10px] tracking-[0.18em] uppercase pt-1"
           style={{ color: statusColor[project.status] }}
         >
           <span
@@ -69,7 +72,10 @@ function ProjectCard({ project }: { project: AiProject }) {
       {/* Title · tagline */}
       <h3
         className="text-xl md:text-2xl font-semibold leading-snug mb-2"
-        style={{ color: "rgba(242,238,230,0.96)" }}
+        style={{
+          color: "rgba(242,238,230,0.96)",
+          fontFamily: "var(--font-space-grotesk), sans-serif",
+        }}
       >
         {project.title}
       </h3>
@@ -92,7 +98,7 @@ function ProjectCard({ project }: { project: AiProject }) {
         {project.stack.map((tech) => (
           <span
             key={tech}
-            className="font-mono text-[10px] tracking-[0.06em] px-2.5 py-1 rounded-md border"
+            className="text-[10px] tracking-[0.06em] px-2.5 py-1 rounded-md border"
             style={{
               borderColor: "rgba(242,238,230,0.14)",
               color: "rgba(242,238,230,0.55)",
@@ -138,20 +144,20 @@ function ProjectCard({ project }: { project: AiProject }) {
 
 export default function Lab() {
   return (
-    <div className="lab-ink lab-grid-bg min-h-screen flex flex-col">
+    <div className="lab-ink min-h-screen flex flex-col">
       {/* ── Nav ── */}
       <header className="sticky top-0 z-50" style={{ backgroundColor: "rgba(14,13,12,0.8)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(242,238,230,0.08)" }}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
           <Link
             href="/"
-            className="font-mono text-xs tracking-[0.25em] uppercase font-medium"
+            className="text-xs tracking-[0.25em] uppercase font-medium"
             style={{ color: "var(--brand-sage)" }}
           >
             Zoei Benzon
           </Link>
           <Link
             href="/#work"
-            className="hover-sage inline-flex items-center gap-2 font-mono text-xs tracking-[0.15em] uppercase font-medium"
+            className="hover-sage inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium"
             style={{ color: "rgba(242,238,230,0.5)" }}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -172,16 +178,17 @@ export default function Lab() {
         {/* ── Header ── */}
         <section className="max-w-7xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-14 md:pb-20">
           <p
-            className="font-mono text-[11px] tracking-[0.3em] uppercase mb-6"
+            className="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] uppercase mb-6"
             style={{ color: "var(--brand-sage)" }}
           >
-            {"// AI Engineering"}
+            <span aria-hidden="true">🔧</span> AI Engineering
           </p>
           <h1
             className="font-semibold leading-[0.98] tracking-tight mb-6"
             style={{
               fontSize: "clamp(2.5rem, 7vw, 5rem)",
               color: "rgba(242,238,230,0.97)",
+              fontFamily: "var(--font-space-grotesk), sans-serif",
             }}
           >
             The Lab
@@ -212,14 +219,14 @@ export default function Lab() {
         style={{ borderTop: "1px solid rgba(242,238,230,0.08)" }}
       >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <p className="font-mono text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(242,238,230,0.3)" }}>
+          <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "rgba(242,238,230,0.3)" }}>
             © {new Date().getFullYear()} Zoei Benzon
           </p>
           <a
             href="https://github.com/zjben10"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-sage inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.15em] uppercase"
+            className="hover-sage inline-flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase"
             style={{ color: "rgba(242,238,230,0.4)" }}
           >
             <GitHubMark />
