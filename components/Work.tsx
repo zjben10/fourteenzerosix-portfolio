@@ -80,6 +80,8 @@ export default function Work() {
           </h2>
         </div>
 
+        <LabEntry />
+
         <div>
           {projects.filter((project) => !project.hidden).map((project) =>
             project.externalUrl ? (
@@ -106,11 +108,16 @@ export default function Work() {
           )}
           <div style={rowStyle} />
         </div>
+      </div>
+    </section>
+  );
+}
 
-        {/* AI Marketing Engineering — leads into the distinct /lab page */}
+function LabEntry() {
+  return (
         <Link
           href="/lab"
-          className="lab-entry group block mt-12 md:mt-16 rounded-2xl border p-8 md:p-10"
+          className="lab-entry group block mb-12 md:mb-16 rounded-2xl border p-8 md:p-10"
           style={{ borderColor: "rgba(242,238,230,0.15)" }}
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -153,7 +160,5 @@ export default function Work() {
             </span>
           </div>
         </Link>
-      </div>
-    </section>
   );
 }
