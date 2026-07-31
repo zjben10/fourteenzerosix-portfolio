@@ -175,7 +175,7 @@ export default function Lab() {
             className="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] uppercase mb-6"
             style={{ color: "var(--brand-sage)" }}
           >
-            <span aria-hidden="true">🔧</span> AI Engineering
+            <span aria-hidden="true">🔧</span> AI Marketing Engineering
           </p>
           <h1
             className="font-bold leading-[0.98] tracking-tight mb-6"
