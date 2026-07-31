@@ -18,7 +18,7 @@ function RowContent({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] tracking-[0.12em] px-2.5 py-1 rounded-full border"
+              className="text-[10px] tracking-[0.12em] px-2.5 py-1 rounded-none border"
               style={{ borderColor: "rgba(242,238,230,0.2)", color: "rgba(242,238,230,0.5)" }}
             >
               {tag.toUpperCase()}
@@ -117,7 +117,7 @@ function LabEntry() {
   return (
         <Link
           href="/lab"
-          className="lab-entry group block mb-12 md:mb-16 rounded-2xl border p-8 md:p-10"
+          className="lab-entry group block mb-12 md:mb-16 rounded-none border p-8 md:p-10"
           style={{ borderColor: "rgba(242,238,230,0.15)" }}
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

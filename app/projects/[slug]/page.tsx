@@ -42,7 +42,7 @@ export default async function ProjectPage({
         {/* ── Tag · Date ── */}
         <div className="flex items-center gap-3 mb-6">
           <span
-            className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-md border"
+            className="text-[10px] tracking-[0.2em] uppercase font-medium px-2.5 py-1 rounded-none border"
             style={{
               borderColor: "var(--brand-terracotta)",
               color: "var(--brand-terracotta)",
@@ -72,7 +72,7 @@ export default async function ProjectPage({
 
         {/* ── Hero image / placeholder ── */}
         {project.heroImage ? (
-          <div className="w-full mb-16 md:mb-20 overflow-hidden rounded-sm">
+          <div className="w-full mb-16 md:mb-20 overflow-hidden rounded-none">
             <img
               src={project.heroImage}
               alt={`${project.title} hero`}
@@ -237,7 +237,7 @@ export default async function ProjectPage({
                 {project.tools.map((tool) => (
                   <span
                     key={tool}
-                    className="text-xs px-3 py-1.5 rounded-md"
+                    className="text-xs px-3 py-1.5 rounded-none"
                     style={{
                       backgroundColor: "rgba(26,23,20,0.07)",
                       color: "rgba(26,23,20,0.65)",
@@ -262,7 +262,7 @@ export default async function ProjectPage({
             </p>
             <Link
               href={`/projects/${project.slug}/events`}
-              className="group block rounded-sm transition-colors"
+              className="group block rounded-none transition-colors"
               style={{
                 border: "1px solid rgba(26,23,20,0.12)",
                 backgroundColor: "rgba(26,23,20,0.02)",
@@ -303,7 +303,7 @@ export default async function ProjectPage({
                         (t) => (
                           <span
                             key={t}
-                            className="text-xs px-3 py-1.5 rounded-md"
+                            className="text-xs px-3 py-1.5 rounded-none"
                             style={{
                               backgroundColor: "rgba(26,23,20,0.07)",
                               color: "rgba(26,23,20,0.65)",
@@ -337,7 +337,7 @@ export default async function ProjectPage({
               href="https://github.com/zjben10/marketing-portfolio-skills"
               target="_blank"
               rel="noopener noreferrer"
-              className="group block rounded-sm transition-colors mt-4"
+              className="group block rounded-none transition-colors mt-4"
               style={{
                 border: "1px solid rgba(26,23,20,0.12)",
                 backgroundColor: "rgba(26,23,20,0.02)",
@@ -375,7 +375,7 @@ export default async function ProjectPage({
                       {["Claude Code", "Claude Skills", "Firecrawl", "Clay", "n8n"].map((t) => (
                         <span
                           key={t}
-                          className="text-xs px-3 py-1.5 rounded-md"
+                          className="text-xs px-3 py-1.5 rounded-none"
                           style={{
                             backgroundColor: "rgba(26,23,20,0.07)",
                             color: "rgba(26,23,20,0.65)",
@@ -417,7 +417,7 @@ export default async function ProjectPage({
               Other Roebling related projects
             </p>
             <div
-              className="rounded-sm p-8 md:p-10"
+              className="rounded-none p-8 md:p-10"
               style={{
                 border: "1px solid rgba(26,23,20,0.12)",
                 backgroundColor: "rgba(26,23,20,0.02)",
@@ -435,7 +435,7 @@ export default async function ProjectPage({
                   Better with Bio · Brenntag
                 </h3>
                 <span
-                  className="text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1 rounded-md"
+                  className="text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1 rounded-none"
                   style={{
                     backgroundColor: "rgba(26,23,20,0.07)",
                     color: "rgba(26,23,20,0.55)",
@@ -479,7 +479,7 @@ export default async function ProjectPage({
 
               <figure className="mt-8 mb-0">
                 <div
-                  className="overflow-hidden rounded-sm"
+                  className="overflow-hidden rounded-none"
                   style={{ border: "1px solid rgba(26,23,20,0.1)" }}
                 >
                   <img
@@ -512,7 +512,7 @@ export default async function ProjectPage({
               {gallery.map((img) => (
                 <div
                   key={img.src}
-                  className="mb-4 md:mb-6 break-inside-avoid overflow-hidden rounded-sm"
+                  className="mb-4 md:mb-6 break-inside-avoid overflow-hidden rounded-none"
                 >
                   <Image
                     src={img.src}

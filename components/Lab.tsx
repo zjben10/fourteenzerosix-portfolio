@@ -47,7 +47,7 @@ function ArrowUpRight() {
 
 function ProjectCard({ project }: { project: AiProject }) {
   return (
-    <article className="lab-card rounded-xl p-6 md:p-8 flex flex-col h-full">
+    <article className="lab-card rounded-none p-6 md:p-8 flex flex-col h-full">
       {/* Index · status */}
       <div className="flex items-start justify-between gap-4 mb-5">
         <span className="lab-index text-4xl md:text-5xl font-semibold leading-none tracking-tight">
@@ -92,7 +92,7 @@ function ProjectCard({ project }: { project: AiProject }) {
         {project.stack.map((tech) => (
           <span
             key={tech}
-            className="text-[10px] tracking-[0.06em] px-2.5 py-1 rounded-md border"
+            className="text-[10px] tracking-[0.06em] px-2.5 py-1 rounded-none border"
             style={{
               borderColor: "rgba(242,238,230,0.3)",
               color: "rgba(242,238,230,0.92)",
@@ -110,7 +110,7 @@ function ProjectCard({ project }: { project: AiProject }) {
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="lab-btn lab-btn-live inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold"
+            className="lab-btn lab-btn-live inline-flex items-center gap-2 rounded-none px-4 py-2.5 text-sm font-semibold"
             aria-label={`Open the live ${project.title} site`}
           >
             <VercelMark />
@@ -123,7 +123,7 @@ function ProjectCard({ project }: { project: AiProject }) {
             href={project.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="lab-btn lab-btn-code inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold"
+            className="lab-btn lab-btn-code inline-flex items-center gap-2 rounded-none px-4 py-2.5 text-sm font-semibold"
             aria-label={`View the ${project.title} source on GitHub`}
           >
             <GitHubMark />
