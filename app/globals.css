@@ -43,3 +43,78 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ──────────────────────────────────────────────────────────────
+   AI Engineering "Lab" — a deliberately distinct, technical mode.
+   Deep ink canvas + blueprint dot-grid + monospace, set apart from
+   the warm editorial portfolio while keeping sage as the proceed
+   accent (see .hover-sage above).
+   ────────────────────────────────────────────────────────────── */
+.lab-ink {
+  --lab-bg: #0e0d0c;
+  --lab-fg: #f2eee6;
+  background-color: var(--lab-bg);
+  color: var(--lab-fg);
+}
+
+/* Faint blueprint dot-grid */
+.lab-grid-bg {
+  background-image: radial-gradient(rgba(242, 238, 230, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+.lab-card {
+  border: 1px solid rgba(242, 238, 230, 0.1);
+  background-color: rgba(242, 238, 230, 0.015);
+  transition: border-color 0.25s ease, background-color 0.25s ease,
+    transform 0.25s ease;
+}
+.lab-card:hover {
+  border-color: rgba(93, 122, 85, 0.55);
+  background-color: rgba(242, 238, 230, 0.035);
+  transform: translateY(-3px);
+}
+
+.lab-index {
+  color: rgba(242, 238, 230, 0.1);
+  transition: color 0.25s ease;
+}
+.lab-card:hover .lab-index {
+  color: rgba(93, 122, 85, 0.55);
+}
+
+/* Dual destination buttons */
+.lab-btn {
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, filter 0.2s ease;
+}
+.lab-btn-live {
+  background-color: var(--brand-sage);
+  color: #0e0d0c;
+  border: 1px solid var(--brand-sage);
+}
+.lab-btn-live:hover {
+  filter: brightness(1.12);
+}
+.lab-btn-code {
+  border: 1px solid rgba(242, 238, 230, 0.22);
+  color: rgba(242, 238, 230, 0.75);
+}
+.lab-btn-code:hover {
+  border-color: rgba(242, 238, 230, 0.55);
+  color: rgba(242, 238, 230, 0.98);
+}
+.lab-btn .lab-arrow {
+  transition: transform 0.2s ease;
+}
+.lab-btn:hover .lab-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Visible keyboard focus on the dark canvas */
+.lab-ink a:focus-visible {
+  outline: 2px solid var(--brand-sage);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
