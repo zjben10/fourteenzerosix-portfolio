@@ -109,7 +109,6 @@ body {
 .lab-ink a:focus-visible {
   outline: 2px solid var(--brand-sage);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 /* AI Marketing Engineering entry point inside the (dark) Work section */
