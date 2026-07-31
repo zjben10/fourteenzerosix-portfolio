@@ -106,6 +106,53 @@ export default function Work() {
           )}
           <div style={rowStyle} />
         </div>
+
+        {/* AI Marketing Engineering — leads into the distinct /lab page */}
+        <Link
+          href="/lab"
+          className="lab-entry group block mt-12 md:mt-16 rounded-2xl border p-8 md:p-10"
+          style={{ borderColor: "rgba(242,238,230,0.15)" }}
+        >
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <p
+                className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase mb-3"
+                style={{ color: "var(--brand-sage)" }}
+              >
+                <span aria-hidden="true">🔧</span> AI Marketing Engineering
+              </p>
+              <p
+                className="text-sm md:text-base leading-relaxed max-w-xl"
+                style={{ color: "rgba(242,238,230,0.75)" }}
+              >
+                Small, shipped tools I&apos;ve built with Claude and code to make
+                go-to-market work faster — each one deployed and open.
+              </p>
+            </div>
+            <span
+              className="inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              Enter the Lab
+              <svg
+                className="lab-entry-arrow"
+                width="16"
+                height="16"
+                viewBox="0 0 18 18"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 15L15 3M15 3H6M15 3V12"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </Link>
       </div>
     </section>
   );

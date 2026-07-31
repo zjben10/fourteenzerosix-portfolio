@@ -111,3 +111,18 @@ body {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* AI Marketing Engineering entry point inside the (dark) Work section */
+.lab-entry {
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.lab-entry:hover {
+  border-color: rgba(93, 122, 85, 0.6);
+  background-color: rgba(242, 238, 230, 0.03);
+}
+.lab-entry-arrow {
+  transition: transform 0.25s ease;
+}
+.lab-entry:hover .lab-entry-arrow {
+  transform: translate(3px, -3px);
+}
