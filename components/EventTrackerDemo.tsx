@@ -22,6 +22,18 @@ const demoConfig: TrackerConfig = {
   storageKey: DEMO_STORAGE_KEY,
   rubricCredit: "a consistent rubric",
   calibrationNote: "reading the event and applying the evaluator’s calibration",
+  pipelineHref: "/ai-projects/event-tracker/pipeline",
+  pipelineLabel: "sales follow-up",
+  pipelineSubtext: "booked & met, with marketing context",
+  pipelineDetailNote: "sales follow-up with marketing context for this event",
+  // Sage palette (the portfolio brand) instead of Roebling's blue. Swapping
+  // these four values re-themes the whole demo.
+  theme: {
+    accent: "#5D7A55",
+    accentDeep: "#47603F",
+    accentDeepAlt: "#3B5233",
+    accentSoft: "#E9EFE4",
+  },
   estimator: estimateScoresDemo,
 };
 
