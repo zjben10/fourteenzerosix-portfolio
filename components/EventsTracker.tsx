@@ -231,6 +231,9 @@ export type TrackerConfig = {
   rubricCredit: string;
   calibrationNote: string;
   pipelineHref?: string;
+  pipelineLabel: string;
+  pipelineSubtext: string;
+  pipelineDetailNote: string;
   theme: TrackerTheme;
   estimator: (facts: EventFacts, verticals: string[]) => ScoreDraft;
 };
@@ -256,6 +259,9 @@ const DEFAULT_CONFIG: TrackerConfig = {
   rubricCredit: "the Roebling rubric",
   calibrationNote: "reading the event and applying Roebling’s calibration",
   pipelineHref: "/projects/roebling-gtm/events/pipeline",
+  pipelineLabel: "contact pipeline",
+  pipelineSubtext: "BD · sales · marketing",
+  pipelineDetailNote: "capture, sales follow-up & marketing attribution for this event",
   theme: ROEBLING_THEME,
   estimator: estimateScores,
 };
@@ -761,9 +767,9 @@ export default function EventsTracker({
           }}
         >
           <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <span>contact pipeline</span>
+            <span>{config.pipelineLabel}</span>
             <span style={{ fontSize: 10.5, fontWeight: 500, color: "rgba(247,249,248,0.55)" }}>
-              BD · sales · marketing
+              {config.pipelineSubtext}
             </span>
           </span>
           <span style={{ fontSize: 15, color: "var(--tk-accent)" }}>→</span>
@@ -1647,10 +1653,10 @@ export default function EventsTracker({
                     textDecoration: "none",
                   }}
                 >
-                  open contact pipeline →
+                  open {config.pipelineLabel} →
                 </Link>
                 <span style={{ fontSize: 12, color: "#6a6a6a", marginLeft: 10 }}>
-                  capture, sales follow-up &amp; marketing attribution for this event
+                  {config.pipelineDetailNote}
                 </span>
               </div>
             )}

@@ -129,7 +129,7 @@ function MockTag({ label = "mock" }: { label?: string }) {
 
 const btnPrimary: CSS = {
   padding: "12px 18px",
-  background: "#1e90ff",
+  background: "var(--tk-accent)",
   color: "#f7f9f8",
   border: "none",
   cursor: "pointer",
@@ -489,25 +489,79 @@ function CrmCard({ c }: { c: Contact }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-export default function EventPipeline() {
+// ── Config surface (mirrors the tracker) ─────────────────────────────────
+// Defaults to the Roebling pipeline so the case-study route is unchanged; a
+// second route passes a de-branded config with its own events, seed contacts,
+// links, theme, and role set (e.g. sales-only).
+export type PipelineTheme = {
+  accent: string;
+  accentDeep: string;
+  accentDeepAlt: string;
+  accentSoft: string;
+};
+
+export type PipelineConfig = {
+  brandName: string;
+  subtitle: string;
+  caseStudyHref: string;
+  caseStudyLabel: string;
+  trackerHref: string;
+  storageKey: string;
+  events: TrackedEvent[];
+  demoEventId: string;
+  seedContacts: () => Contact[];
+  lookupEvent: (id: string) => TrackedEvent | undefined;
+  defaultRole: Role;
+  roles: Role[];
+  theme: PipelineTheme;
+};
+
+const ROEBLING_PIPELINE_THEME: PipelineTheme = {
+  accent: "#1e90ff",
+  accentDeep: "#1268c9",
+  accentDeepAlt: "#0f74d4",
+  accentSoft: "#e7f2ff",
+};
+
+const DEFAULT_PIPELINE_CONFIG: PipelineConfig = {
+  brandName: "roebling",
+  subtitle: "event pipeline",
+  caseStudyHref: "/projects/roebling-gtm",
+  caseStudyLabel: "← case study",
+  trackerHref: "/projects/roebling-gtm/events",
+  storageKey: STORAGE_KEY,
+  events: pipelineEvents(),
+  demoEventId: DEMO_EVENT_ID,
+  seedContacts: buildSeedContacts,
+  lookupEvent: eventById,
+  defaultRole: "bd",
+  roles: ["bd", "sales", "marketing"],
+  theme: ROEBLING_PIPELINE_THEME,
+};
+
+export default function EventPipeline({
+  config = DEFAULT_PIPELINE_CONFIG,
+}: {
+  config?: PipelineConfig;
+}) {
   const [loaded, setLoaded] = useState(false);
-  const [role, setRole] = useState<Role>("bd");
-  const [eventId, setEventId] = useState<string>(DEMO_EVENT_ID);
+  const [role, setRole] = useState<Role>(config.defaultRole);
+  const [eventId, setEventId] = useState<string>(config.demoEventId);
   const [salesUserId, setSalesUserId] = useState<string>("u_david");
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [toast, setToast] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const crm = useRef(new MockCrmClient());
 
-  const events = pipelineEvents();
+  const events = config.events;
 
   // ── load / persist ──
   useEffect(() => {
     let saved: Contact[] | null = null;
     try {
-      saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      saved = JSON.parse(localStorage.getItem(config.storageKey) || "null");
     } catch {}
-    setContacts(saved && saved.length ? saved : buildSeedContacts());
+    setContacts(saved && saved.length ? saved : config.seedContacts());
     // Deep-link support: a tracker event detail links in with ?event=<id>, so
     // the pipeline opens on that event rather than always the demo one.
     try {
@@ -522,7 +576,7 @@ export default function EventPipeline() {
   const persist = (next: Contact[]) => {
     setContacts(next);
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      localStorage.setItem(config.storageKey, JSON.stringify(next));
     } catch {}
   };
 
@@ -533,12 +587,12 @@ export default function EventPipeline() {
   };
 
   const reseed = () => {
-    persist(buildSeedContacts());
+    persist(config.seedContacts());
     flash("re-seeded the sample pipeline");
   };
 
   // ── derived ──
-  const event = eventById(eventId) as TrackedEvent | undefined;
+  const event = config.lookupEvent(eventId) as TrackedEvent | undefined;
   const eventContacts = useMemo(
     () => contacts.filter((c) => c.event_id === eventId),
     [contacts, eventId]
@@ -608,20 +662,24 @@ export default function EventPipeline() {
         background: "#eaeaea",
         color: "#232323",
         fontFamily: "var(--font-inter), system-ui, sans-serif",
-      }}
+        ["--tk-accent" as string]: config.theme.accent,
+        ["--tk-accent-deep" as string]: config.theme.accentDeep,
+        ["--tk-accent-deep-alt" as string]: config.theme.accentDeepAlt,
+        ["--tk-accent-soft" as string]: config.theme.accentSoft,
+      } as CSS}
     >
       <style>{`
         [data-pl] *{box-sizing:border-box;}
         [data-pl] .pl-primary{transition:background 140ms;}
-        [data-pl] .pl-primary:hover{background:#0f74d4 !important;}
+        [data-pl] .pl-primary:hover{background:var(--tk-accent-deep-alt) !important;}
         [data-pl] .pl-ghost:hover{background:#f2f2f2 !important;}
         [data-pl] .pl-fade{animation:plFade 320ms cubic-bezier(0.22,0.61,0.36,1);}
         @keyframes plFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
         @keyframes plToast{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
-        [data-pl] :focus-visible{outline:2px solid #1e90ff;outline-offset:2px;border-radius:5px;}
+        [data-pl] :focus-visible{outline:2px solid var(--tk-accent);outline-offset:2px;border-radius:5px;}
         [data-pl] [style*="uppercase"]{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;}
         [data-pl] button{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;text-transform:uppercase;letter-spacing:0.06em;}
-        [data-pl] input:focus,[data-pl] select:focus,[data-pl] textarea:focus{border-color:rgba(30,144,255,0.55);}
+        [data-pl] input:focus,[data-pl] select:focus,[data-pl] textarea:focus{border-color:color-mix(in srgb, var(--tk-accent) 55%, transparent);}
         @media (prefers-reduced-motion: reduce){[data-pl] .pl-fade{animation:none;}[data-pl] *{transition:none !important;}}
         @media (max-width:820px){
           [data-pl] .pl-crumb{padding:10px 16px 0 !important;}
@@ -706,15 +764,15 @@ export default function EventPipeline() {
             flexWrap: "wrap",
           }}
         >
-          <Link href="/projects/roebling-gtm" style={{ color: "rgba(247,249,248,0.7)", textDecoration: "none", fontWeight: 600 }}>
-            ← case study
+          <Link href={config.caseStudyHref} style={{ color: "rgba(247,249,248,0.7)", textDecoration: "none", fontWeight: 600 }}>
+            {config.caseStudyLabel}
           </Link>
           <span style={{ opacity: 0.4 }}>·</span>
-          <Link href="/projects/roebling-gtm/events" style={{ color: "rgba(247,249,248,0.7)", textDecoration: "none", fontWeight: 600 }}>
+          <Link href={config.trackerHref} style={{ color: "rgba(247,249,248,0.7)", textDecoration: "none", fontWeight: 600 }}>
             events tracker
           </Link>
           <span style={{ opacity: 0.4 }}>›</span>
-          <span style={{ color: "#1e90ff", fontWeight: 600 }}>pipeline</span>
+          <span style={{ color: "var(--tk-accent)", fontWeight: 600 }}>pipeline</span>
         </div>
         <div
           className="pl-topgrid"
@@ -731,18 +789,18 @@ export default function EventPipeline() {
         >
           <div className="pl-brandrow" style={{ display: "flex", alignItems: "center", gap: 16, minWidth: 0 }}>
             <div>
-              <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1 }}>roebling</div>
+              <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1 }}>{config.brandName}</div>
               <div
                 style={{
                   fontSize: 10,
                   fontWeight: 500,
                   letterSpacing: "0.26em",
                   textTransform: "uppercase",
-                  color: "#1e90ff",
+                  color: "var(--tk-accent)",
                   marginTop: 5,
                 }}
               >
-                event pipeline
+                {config.subtitle}
               </div>
             </div>
             <div className="pl-divider" style={{ height: 34, width: 1, background: "rgba(247,249,248,0.16)", flexShrink: 0 }} />
@@ -787,6 +845,7 @@ export default function EventPipeline() {
           </div>
 
           <div className="pl-controls" style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            {config.roles.length > 1 && (
             <div className="pl-viewas-wrap">
               <div
                 style={{
@@ -806,7 +865,7 @@ export default function EventPipeline() {
                 className="pl-viewas"
                 style={{ display: "flex", background: "rgba(247,249,248,0.07)", borderRadius: 8, padding: 3 }}
               >
-                {(["bd", "sales", "marketing"] as Role[]).map((r) => {
+                {config.roles.map((r) => {
                   const on = role === r;
                   return (
                     <button
@@ -823,7 +882,7 @@ export default function EventPipeline() {
                         fontWeight: 600,
                         whiteSpace: "nowrap",
                         transition: "all 140ms",
-                        background: on ? "#1e90ff" : "transparent",
+                        background: on ? "var(--tk-accent)" : "transparent",
                         color: on ? "#f7f9f8" : "rgba(247,249,248,0.62)",
                       }}
                     >
@@ -833,6 +892,7 @@ export default function EventPipeline() {
                 })}
               </div>
             </div>
+            )}
             <button
               onClick={reseed}
               className="pl-ghost"
@@ -917,7 +977,7 @@ export default function EventPipeline() {
   function BackToTracker() {
     return (
       <div style={{ marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(35,35,35,0.1)" }}>
-        <Link href="/projects/roebling-gtm/events" style={{ fontSize: 13, fontWeight: 600, color: "#1e90ff", textDecoration: "none" }}>
+        <Link href={config.trackerHref} style={{ fontSize: 13, fontWeight: 600, color: "var(--tk-accent)", textDecoration: "none" }}>
           ← back to the events tracker
         </Link>
       </div>
@@ -1137,8 +1197,8 @@ export default function EventPipeline() {
                       style={{
                         padding: "6px 12px",
                         background: "#fff",
-                        color: "#1268c9",
-                        border: "1px solid rgba(30,144,255,0.4)",
+                        color: "var(--tk-accent-deep)",
+                        border: "1px solid color-mix(in srgb, var(--tk-accent) 40%, transparent)",
                         borderRadius: 6,
                         fontSize: 11.5,
                         fontWeight: 600,
@@ -1197,12 +1257,12 @@ export default function EventPipeline() {
                     gap: 7,
                     padding: "6px 12px 6px 6px",
                     borderRadius: 20,
-                    border: on ? "1px solid #1e90ff" : "1px solid rgba(35,35,35,0.14)",
-                    background: on ? "#e7f2ff" : "#fff",
+                    border: on ? "1px solid var(--tk-accent)" : "1px solid rgba(35,35,35,0.14)",
+                    background: on ? "var(--tk-accent-soft)" : "#fff",
                     cursor: "pointer",
                     fontSize: 12.5,
                     fontWeight: 600,
-                    color: on ? "#1268c9" : "#5a5a5a",
+                    color: on ? "var(--tk-accent-deep)" : "#5a5a5a",
                   }}
                 >
                   <div style={avatarStyle(r.name, 22)}>{initials(r.name)}</div>
