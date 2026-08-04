@@ -52,4 +52,15 @@ export const aiProjects: AiProject[] = [
     liveUrl: "https://example.vercel.app",
     repoUrl: "https://github.com/zjben10",
   },
+  {
+    id: 4,
+    title: "Sales Copilot",
+    tagline: "A sales follow-up view with marketing's context built in",
+    description:
+      "Gives each sales rep a focused, actionable follow-up list of the people they booked or met, with marketing's context attached to every card. Each contact carries the event that sourced them, the campaign that brought them in, and everyone else the team is working at the same company. When a contact turns into an opportunity, it pushes to the CRM once, so marketing no longer has to re-enter it by hand.",
+    stack: ["Claude Code", "Next.js", "TypeScript", "Vercel"],
+    year: "2026",
+    status: "Live",
+    liveUrl: "https://sales-copilot-kappa-lime.vercel.app/",
+  },
 ];
