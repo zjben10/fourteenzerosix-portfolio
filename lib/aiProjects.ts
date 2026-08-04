@@ -26,7 +26,7 @@ export const aiProjects: AiProject[] = [
     stack: ["Claude Code", "Claude Skills", "TypeScript", "Firecrawl", "Vercel"],
     year: "2026",
     status: "Live",
-    liveUrl: "https://example.vercel.app",
+    liveUrl: "/ai-projects/event-tracker",
   },
   {
     id: 2,
