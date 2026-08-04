@@ -112,7 +112,7 @@ function regionStyle(r: string): CSS {
     r === "US hub"
       ? { bg: "#e4f7e8", fg: "#1a7d2a" }
       : r === "International"
-      ? { bg: "#e7f2ff", fg: "#0f74d4" }
+      ? { bg: "var(--tk-accent-soft)", fg: "var(--tk-accent-deep-alt)" }
       : { bg: "#ededed", fg: "#6a6a6a" };
   return {
     display: "inline-flex",
@@ -212,6 +212,13 @@ const stepBtnStyle: CSS = {
 // route can pass a de-branded config (its own brand, rubric, verticals, seed,
 // and estimator). When `pipelineHref` is omitted, the contact-pipeline links
 // are hidden entirely.
+export type TrackerTheme = {
+  accent: string; // primary accent (buttons, active nav, links)
+  accentDeep: string; // deeper accent for text on soft backgrounds
+  accentDeepAlt: string; // secondary deep accent (hover states)
+  accentSoft: string; // soft accent background
+};
+
 export type TrackerConfig = {
   brandName: string;
   brandLogo?: string;
@@ -224,7 +231,17 @@ export type TrackerConfig = {
   rubricCredit: string;
   calibrationNote: string;
   pipelineHref?: string;
+  theme: TrackerTheme;
   estimator: (facts: EventFacts, verticals: string[]) => ScoreDraft;
+};
+
+// The original Roebling blue, kept as the default so the case-study route is
+// unchanged. Each value maps 1:1 to the literal it replaces.
+const ROEBLING_THEME: TrackerTheme = {
+  accent: "#1e90ff",
+  accentDeep: "#1268c9",
+  accentDeepAlt: "#0f74d4",
+  accentSoft: "#e7f2ff",
 };
 
 const DEFAULT_CONFIG: TrackerConfig = {
@@ -239,6 +256,7 @@ const DEFAULT_CONFIG: TrackerConfig = {
   rubricCredit: "the Roebling rubric",
   calibrationNote: "reading the event and applying Roebling’s calibration",
   pipelineHref: "/projects/roebling-gtm/events/pipeline",
+  theme: ROEBLING_THEME,
   estimator: estimateScores,
 };
 
@@ -560,26 +578,30 @@ export default function EventsTracker({
         overflow: "hidden",
         background: "#eaeaea",
         color: "#232323",
-      }}
+        ["--tk-accent" as string]: config.theme.accent,
+        ["--tk-accent-deep" as string]: config.theme.accentDeep,
+        ["--tk-accent-deep-alt" as string]: config.theme.accentDeepAlt,
+        ["--tk-accent-soft" as string]: config.theme.accentSoft,
+      } as CSS}
     >
       <style>{`
         .rt-scroll::-webkit-scrollbar{width:10px;height:10px;}
         .rt-scroll::-webkit-scrollbar-thumb{background:rgba(35,35,35,0.16);border-radius:5px;}
         .rt-row{transition:background 140ms;}
-        .rt-row-brown:hover{background:rgba(30,144,255,0.04);}
+        .rt-row-brown:hover{background:color-mix(in srgb, var(--tk-accent) 4%, transparent);}
         .rt-row-green:hover{background:rgba(42,195,60,0.05);}
         .rt-primary{transition:background 140ms;}
-        .rt-primary:hover{background:#0f74d4 !important;}
+        .rt-primary:hover{background:var(--tk-accent-deep-alt) !important;}
         .rt-ghost:hover{background:#f2f2f2 !important;}
-        .rt-pipeline-link:hover{background:rgba(30,144,255,0.22) !important;}
+        .rt-pipeline-link:hover{background:color-mix(in srgb, var(--tk-accent) 22%, transparent) !important;}
         .rt-fade{animation:rtFade 320ms cubic-bezier(0.22,0.61,0.36,1);}
         @keyframes rtFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
         @keyframes rtSpin{to{transform:rotate(360deg);}}
         @keyframes rtToast{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
         /* Visible keyboard focus (a11y): mouse clicks stay clean, keyboard shows a ring. */
-        [data-rt] :focus-visible{outline:2px solid #1e90ff;outline-offset:2px;border-radius:5px;}
+        [data-rt] :focus-visible{outline:2px solid var(--tk-accent);outline-offset:2px;border-radius:5px;}
         [data-rt] :focus:not(:focus-visible){outline:none;}
-        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:rgba(30,144,255,0.55);}
+        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:color-mix(in srgb, var(--tk-accent) 55%, transparent);}
         [data-rt] [style*="uppercase"]{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;}
         @media (prefers-reduced-motion: reduce){
           .rt-fade{animation:none;}
@@ -636,7 +658,7 @@ export default function EventsTracker({
               fontWeight: 500,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "#1e90ff",
+              color: "var(--tk-accent)",
               marginTop: 7,
             }}
           >
@@ -650,7 +672,7 @@ export default function EventsTracker({
           style={{
             margin: "26px 4px 22px",
             padding: "13px 16px",
-            background: "#1e90ff",
+            background: "var(--tk-accent)",
             color: "#f7f9f8",
             border: "none",
             cursor: "pointer",
@@ -688,7 +710,7 @@ export default function EventsTracker({
                   fontSize: 13.5,
                   fontWeight: active ? 600 : 500,
                   transition: "background 140ms,color 140ms",
-                  background: active ? "rgba(30,144,255,0.9)" : "transparent",
+                  background: active ? "color-mix(in srgb, var(--tk-accent) 90%, transparent)" : "transparent",
                   color: active ? "#f7f9f8" : "rgba(247,249,248,0.72)",
                 }}
               >
@@ -696,7 +718,7 @@ export default function EventsTracker({
                 {showBadge && (
                   <span
                     style={{
-                      background: active ? "rgba(247,249,248,0.25)" : "#1e90ff",
+                      background: active ? "rgba(247,249,248,0.25)" : "var(--tk-accent)",
                       color: "#f7f9f8",
                       fontSize: 11,
                       fontWeight: 600,
@@ -729,8 +751,8 @@ export default function EventsTracker({
             marginTop: 14,
             padding: "12px 14px",
             borderRadius: 8,
-            border: "1px solid rgba(30,144,255,0.4)",
-            background: "rgba(30,144,255,0.12)",
+            border: "1px solid color-mix(in srgb, var(--tk-accent) 40%, transparent)",
+            background: "color-mix(in srgb, var(--tk-accent) 12%, transparent)",
             color: "#f7f9f8",
             fontSize: 13.5,
             fontWeight: 600,
@@ -744,7 +766,7 @@ export default function EventsTracker({
               BD · sales · marketing
             </span>
           </span>
-          <span style={{ fontSize: 15, color: "#1e90ff" }}>→</span>
+          <span style={{ fontSize: 15, color: "var(--tk-accent)" }}>→</span>
         </Link>
         )}
 
@@ -791,7 +813,7 @@ export default function EventsTracker({
                     fontSize: 11.5,
                     fontWeight: 600,
                     transition: "all 140ms",
-                    background: on ? "#1e90ff" : "transparent",
+                    background: on ? "var(--tk-accent)" : "transparent",
                     color: on ? "#f7f9f8" : "rgba(247,249,248,0.6)",
                   }}
                 >
@@ -806,7 +828,7 @@ export default function EventsTracker({
                 width: 34,
                 height: 34,
                 borderRadius: "50%",
-                background: "#1e90ff",
+                background: "var(--tk-accent)",
                 color: "#f7f9f8",
                 fontSize: 13,
                 fontWeight: 600,
@@ -931,7 +953,7 @@ export default function EventsTracker({
                   style={{
                     height: "100%",
                     width: `${(sc / 5) * 100}%`,
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     borderRadius: 5,
                     transition: "width 240ms cubic-bezier(0.22,0.61,0.36,1)",
                   }}
@@ -982,7 +1004,7 @@ export default function EventsTracker({
       : 0;
     const statCards = [
       { label: "tracked", value: events.length, sub: "events in 2026", subColor: "#6a6a6a" },
-      { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "#0f74d4" },
+      { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "var(--tk-accent-deep-alt)" },
       { label: "scheduled", value: scheduled.length, sub: "approved & planning", subColor: "#1a7d2a" },
       { label: "avg score", value: avg, sub: "out of 30", subColor: "#6a6a6a" },
     ];
@@ -1044,7 +1066,7 @@ export default function EventsTracker({
               </h2>
               <button
                 onClick={() => goView("review")}
-                style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
+                style={{ fontSize: 12.5, fontWeight: 600, color: "var(--tk-accent)", background: "none", border: "none", cursor: "pointer" }}
               >
                 {isReviewer ? "open queue →" : "see all →"}
               </button>
@@ -1152,7 +1174,7 @@ export default function EventsTracker({
               </h2>
               <button
                 onClick={() => goView("scheduled")}
-                style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
+                style={{ fontSize: 12.5, fontWeight: 600, color: "var(--tk-accent)", background: "none", border: "none", cursor: "pointer" }}
               >
                 see all →
               </button>
@@ -1185,7 +1207,7 @@ export default function EventsTracker({
                           fontWeight: 600,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
-                          color: "#1e90ff",
+                          color: "var(--tk-accent)",
                         }}
                       >
                         {fmtMonth(e.start)}
@@ -1382,7 +1404,7 @@ export default function EventsTracker({
               style={{
                 fontSize: 12.5,
                 fontWeight: 600,
-                color: "#1e90ff",
+                color: "var(--tk-accent)",
                 padding: "8px 10px",
                 background: "none",
                 border: "none",
@@ -1598,7 +1620,7 @@ export default function EventsTracker({
                 style={{
                   fontSize: 13,
                   fontWeight: 600,
-                  color: "#1e90ff",
+                  color: "var(--tk-accent)",
                   borderBottom: "1px solid currentColor",
                   display: "inline-block",
                   marginTop: 12,
@@ -1669,7 +1691,7 @@ export default function EventsTracker({
                   cursor: "pointer",
                   fontSize: 12.5,
                   fontWeight: 600,
-                  background: editingScores ? "#1e90ff" : "#ededed",
+                  background: editingScores ? "var(--tk-accent)" : "#ededed",
                   color: editingScores ? "#f7f9f8" : "#5a5a5a",
                 }}
               >
@@ -1690,7 +1712,7 @@ export default function EventsTracker({
                   onClick={scoreThis}
                   style={{
                     padding: "12px 26px",
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -1824,7 +1846,7 @@ export default function EventsTracker({
               className="rt-primary"
               style={{
                 padding: "13px 26px",
-                background: "#1e90ff",
+                background: "var(--tk-accent)",
                 color: "#f7f9f8",
                 border: "none",
                 cursor: "pointer",
@@ -1975,7 +1997,7 @@ export default function EventsTracker({
                     display: "inline-flex",
                     alignItems: "center",
                     padding: "13px 26px",
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -2014,7 +2036,7 @@ export default function EventsTracker({
                   className="rt-primary"
                   style={{
                     padding: "13px 26px",
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -2094,7 +2116,7 @@ export default function EventsTracker({
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 6 }}>
                   {d.actionItems.map((a, i) => (
                     <div key={i} style={{ fontSize: 13.5, color: "#333333", display: "flex", gap: 8 }}>
-                      <span style={{ color: "#1e90ff" }}>·</span>
+                      <span style={{ color: "var(--tk-accent)" }}>·</span>
                       <span>{a}</span>
                     </div>
                   ))}
@@ -2107,7 +2129,7 @@ export default function EventsTracker({
                 className="rt-primary"
                 style={{
                   padding: "13px 28px",
-                  background: "#1e90ff",
+                  background: "var(--tk-accent)",
                   color: "#f7f9f8",
                   border: "none",
                   cursor: "pointer",
@@ -2231,7 +2253,7 @@ export default function EventsTracker({
                             style={{
                               height: "100%",
                               width: `${((e.scores![cr.key] || 0) / 5) * 100}%`,
-                              background: "#1e90ff",
+                              background: "var(--tk-accent)",
                               borderRadius: 3,
                             }}
                           />
@@ -2257,7 +2279,7 @@ export default function EventsTracker({
                         className="rt-primary"
                         style={{
                           padding: "10px 20px",
-                          background: "#1e90ff",
+                          background: "var(--tk-accent)",
                           color: "#f7f9f8",
                           border: "none",
                           cursor: "pointer",
@@ -2376,7 +2398,7 @@ export default function EventsTracker({
                       fontWeight: 600,
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
-                      color: "#1e90ff",
+                      color: "var(--tk-accent)",
                     }}
                   >
                     {fmtMonth(e.start)}
@@ -2464,7 +2486,7 @@ export default function EventsTracker({
                     height: 26,
                     borderRadius: 6,
                     background: "#f2f2f2",
-                    color: "#1e90ff",
+                    color: "var(--tk-accent)",
                     fontSize: 13,
                     fontWeight: 700,
                     display: "flex",
