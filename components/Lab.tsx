@@ -249,19 +249,12 @@ export default function Lab() {
                 key={category.label}
                 className="lab-card rounded-none p-6 md:p-8"
               >
-                <div className="flex items-center gap-3 mb-5">
-                  <h3
-                    className="text-[13px] tracking-[0.14em] uppercase font-semibold"
-                    style={{ color: "rgba(242,238,230,0.92)" }}
-                  >
-                    {category.label}
-                  </h3>
-                  <span
-                    aria-hidden="true"
-                    className="flex-1 h-px"
-                    style={{ backgroundColor: "rgba(242,238,230,0.1)" }}
-                  />
-                </div>
+                <h3
+                  className="text-[13px] tracking-[0.14em] uppercase font-semibold mb-5"
+                  style={{ color: "rgba(242,238,230,0.92)" }}
+                >
+                  {category.label}
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {category.tools.map((tool) => (
                     <span
