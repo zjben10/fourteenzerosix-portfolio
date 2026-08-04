@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { aiProjects, type AiProject } from "@/lib/aiProjects";
+import { gtmStack } from "@/lib/gtmStack";
 
 const statusColor: Record<AiProject["status"], string> = {
   Live: "var(--brand-sage)",
@@ -197,10 +198,85 @@ export default function Lab() {
         </section>
 
         {/* ── Projects grid ── */}
-        <section className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
-          <div className="grid gap-5 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section className="max-w-7xl mx-auto px-6 md:px-12 pb-16 md:pb-24">
+          <p
+            className="text-[11px] tracking-[0.3em] uppercase mb-8"
+            style={{ color: "var(--brand-sage)" }}
+          >
+            01 / Projects
+          </p>
+          {/* Two live tools: a centered 2-up so they read as featured, not two
+              cards with an empty column beside them. More projects wrap into
+              the same grid. */}
+          <div className="grid gap-5 md:gap-6 sm:grid-cols-2 max-w-4xl">
             {aiProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </section>
+
+        {/* ── Stack ── */}
+        <section className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
+          <div className="mb-10 md:mb-12">
+            <p
+              className="text-[11px] tracking-[0.3em] uppercase mb-4"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              02 / Stack
+            </p>
+            <h2
+              className="font-bold leading-tight tracking-tight"
+              style={{
+                fontSize: "clamp(1.75rem, 4vw, 3rem)",
+                color: "rgba(242,238,230,0.98)",
+              }}
+            >
+              GTM Engineering Stack
+            </h2>
+            <p
+              className="text-sm md:text-base leading-relaxed max-w-2xl mt-4"
+              style={{ color: "rgba(242,238,230,0.7)" }}
+            >
+              The systems I wire together to run go-to-market: AI and automation
+              layered on top of the CRM, demand gen, and analytics tools that
+              actually move pipeline.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {gtmStack.map((category) => (
+              <div
+                key={category.label}
+                className="lab-card rounded-none p-6 md:p-8"
+              >
+                <div className="flex items-center gap-3 mb-5">
+                  <h3
+                    className="text-[13px] tracking-[0.14em] uppercase font-semibold"
+                    style={{ color: "rgba(242,238,230,0.92)" }}
+                  >
+                    {category.label}
+                  </h3>
+                  <span
+                    aria-hidden="true"
+                    className="flex-1 h-px"
+                    style={{ backgroundColor: "rgba(242,238,230,0.1)" }}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {category.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="text-[10px] tracking-[0.08em] uppercase px-2.5 py-1 rounded-none border"
+                      style={{
+                        borderColor: "rgba(242,238,230,0.3)",
+                        color: "rgba(242,238,230,0.92)",
+                      }}
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
