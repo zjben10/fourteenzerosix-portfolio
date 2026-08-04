@@ -19,15 +19,14 @@ export type AiProject = {
 export const aiProjects: AiProject[] = [
   {
     id: 1,
-    title: "Conference Scout",
+    title: "Event Tracker and Evaluator",
     tagline: "Claude skill that scores and prioritizes events for pipeline",
     description:
-      "A Claude skill that ingests a conference URL, scores it against an ICP rubric, and returns a sponsor / speak / attend / skip call with reasoning — the same engine behind Roebling's 25+ event pipeline.",
-    stack: ["Claude Skills", "TypeScript", "Firecrawl", "Vercel"],
+      "A Claude skill that ingests a conference URL, scores it against an ICP rubric, and returns a status update on whether you should sponsor or not.",
+    stack: ["Claude Code", "Claude Skills", "TypeScript", "Firecrawl", "Vercel"],
     year: "2026",
     status: "Live",
     liveUrl: "https://example.vercel.app",
-    repoUrl: "https://github.com/zjben10",
   },
   {
     id: 2,
