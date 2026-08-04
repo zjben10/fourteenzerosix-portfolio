@@ -116,7 +116,7 @@ export default function Work() {
 function LabEntry() {
   return (
         <Link
-          href="/lab"
+          href="/ai-projects"
           className="lab-entry group block mb-12 md:mb-16 rounded-none border p-8 md:p-10"
           style={{ borderColor: "rgba(242,238,230,0.15)" }}
         >
@@ -140,7 +140,7 @@ function LabEntry() {
               className="inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap"
               style={{ color: "var(--brand-sage)" }}
             >
-              Enter the Lab
+              See AI projects &amp; skills
               <svg
                 className="lab-entry-arrow"
                 width="16"
