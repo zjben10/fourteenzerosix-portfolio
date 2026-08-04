@@ -9,26 +9,35 @@ export type StackCategory = {
 export const gtmStack: StackCategory[] = [
   {
     label: "AI & Automation",
-    tools: ["Claude Code", "Claude Skills", "Claude API", "MCP", "n8n", "Firecrawl"],
+    tools: ["Claude Code", "Claude Skills", "n8n", "Firecrawl", "Zapier"],
   },
   {
     label: "CRM & GTM Data",
-    tools: ["HubSpot", "Attio", "Salesforce", "Clay", "FullEnrich"],
+    tools: [
+      "HubSpot",
+      "Attio",
+      "Salesforce",
+      "Pipedrive",
+      "Apollo",
+      "ZoomInfo",
+      "Clay",
+      "FullEnrich",
+    ],
   },
   {
     label: "Demand Gen & Outbound",
-    tools: ["Instantly", "HeyReach", "Klaviyo"],
+    tools: ["Instantly", "HeyReach"],
   },
   {
-    label: "Analytics & AEO",
-    tools: ["PostHog", "Google Analytics", "Profound", "Ahrefs"],
+    label: "Analytics & SEO/AEO",
+    tools: ["PostHog", "Google Analytics", "Profound", "Ahrefs", "AirOps"],
   },
   {
-    label: "Content & Design",
-    tools: ["Figma", "Canva", "Webflow", "Notion"],
+    label: "Program Management",
+    tools: ["Figma", "Webflow", "Framer", "Notion", "Asana"],
   },
   {
     label: "Web & Dev",
-    tools: ["Next.js", "React", "TypeScript", "Vercel", "GitHub"],
+    tools: ["Vercel", "GitHub", "AI-Assisted Development"],
   },
 ];
