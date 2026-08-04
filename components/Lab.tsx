@@ -179,13 +179,13 @@ export default function Lab() {
             <span aria-hidden="true">🔧</span> AI Marketing Engineering
           </p>
           <h1
-            className="font-bold leading-[0.98] tracking-tight mb-6"
+            className="font-bold leading-[1.02] tracking-tight mb-6"
             style={{
-              fontSize: "clamp(2.5rem, 7vw, 5rem)",
+              fontSize: "clamp(2.25rem, 6vw, 4.25rem)",
               color: "rgba(242,238,230,0.98)",
             }}
           >
-            The Lab
+            AI Related Projects and Skills
           </h1>
           <p
             className="text-base md:text-lg leading-relaxed max-w-2xl"
