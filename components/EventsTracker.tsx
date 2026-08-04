@@ -24,6 +24,7 @@ import {
   type EventStatus,
   type Scores,
   type ScoreDraft,
+  type EventFacts,
 } from "@/lib/roeblingEvents";
 
 const MONO = '"Aptos Mono", var(--font-mono), ui-monospace, SFMono-Regular, monospace';
@@ -206,7 +207,46 @@ const stepBtnStyle: CSS = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────
-export default function EventsTracker() {
+// Config surface: the tracker is brand-agnostic. It ships with the Roebling
+// setup as the default so the case-study route is unchanged, and a second
+// route can pass a de-branded config (its own brand, rubric, verticals, seed,
+// and estimator). When `pipelineHref` is omitted, the contact-pipeline links
+// are hidden entirely.
+export type TrackerConfig = {
+  brandName: string;
+  brandLogo?: string;
+  subtitle: string;
+  reviewerName: string;
+  seed: TrackedEvent[];
+  rubric: RubricCriterion[];
+  verticals: string[];
+  storageKey: string;
+  rubricCredit: string;
+  calibrationNote: string;
+  pipelineHref?: string;
+  estimator: (facts: EventFacts, verticals: string[]) => ScoreDraft;
+};
+
+const DEFAULT_CONFIG: TrackerConfig = {
+  brandName: "roebling",
+  brandLogo: "/images/roebling-logo-white.png",
+  subtitle: "events tracker",
+  reviewerName: "Zoei",
+  seed: seedEvents,
+  rubric: RUBRIC,
+  verticals: DEFAULT_VERTICALS,
+  storageKey: STORAGE_KEY,
+  rubricCredit: "the Roebling rubric",
+  calibrationNote: "reading the event and applying Roebling’s calibration",
+  pipelineHref: "/projects/roebling-gtm/events/pipeline",
+  estimator: estimateScores,
+};
+
+export default function EventsTracker({
+  config = DEFAULT_CONFIG,
+}: {
+  config?: TrackerConfig;
+}) {
   const [loaded, setLoaded] = useState(false);
   const [logoOk, setLogoOk] = useState(true);
   const logoRef = useRef<HTMLImageElement>(null);
@@ -219,8 +259,8 @@ export default function EventsTracker() {
   const [isReviewer, setIsReviewer] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [events, setEvents] = useState<TrackedEvent[]>([]);
-  const [verticals, setVerticals] = useState<string[]>(DEFAULT_VERTICALS.slice());
-  const [rubric, setRubric] = useState<RubricCriterion[]>(RUBRIC.map((c) => ({ ...c })));
+  const [verticals, setVerticals] = useState<string[]>(config.verticals.slice());
+  const [rubric, setRubric] = useState<RubricCriterion[]>(config.rubric.map((c) => ({ ...c })));
   const [filters, setFilters] = useState<Filters>({
     search: "",
     vertical: "All",
@@ -248,14 +288,14 @@ export default function EventsTracker() {
       rubric?: RubricCriterion[];
     } | null = null;
     try {
-      saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      saved = JSON.parse(localStorage.getItem(config.storageKey) || "null");
     } catch {}
     if (saved && saved.events && saved.events.length) {
       setEvents(saved.events);
-      setVerticals(saved.verticals || DEFAULT_VERTICALS.slice());
-      setRubric(saved.rubric || RUBRIC.map((c) => ({ ...c })));
+      setVerticals(saved.verticals || config.verticals.slice());
+      setRubric(saved.rubric || config.rubric.map((c) => ({ ...c })));
     } else {
-      setEvents(seedEvents.map((e) => ({ ...e })));
+      setEvents(config.seed.map((e) => ({ ...e })));
     }
     setLoaded(true);
   }, []);
@@ -267,7 +307,7 @@ export default function EventsTracker() {
   ) => {
     try {
       localStorage.setItem(
-        STORAGE_KEY,
+        config.storageKey,
         JSON.stringify({ events: nextEvents, verticals: nextVerticals, rubric: nextRubric })
       );
     } catch {}
@@ -330,7 +370,7 @@ export default function EventsTracker() {
     setSubmitScoreErr("");
     // Deterministic rubric estimate that feels considered without a round-trip.
     setTimeout(() => {
-      setScoreDraft(estimateScores(form, verticals));
+      setScoreDraft(config.estimator(form, verticals));
       setScoring(false);
     }, 550);
   };
@@ -358,7 +398,7 @@ export default function EventsTracker() {
       type: form.type,
       industry: form.industry || "–",
       verticals: scoreDraft.verticals,
-      submitter: isReviewer ? "Zoei" : "You",
+      submitter: isReviewer ? config.reviewerName : "You",
       submittedRole: "Attendee",
       sponsorCost: "",
       regCost: "",
@@ -437,7 +477,7 @@ export default function EventsTracker() {
     if (!e || detailScoring) return;
     setDetailScoring(true);
     setTimeout(() => {
-      const d = estimateScores(e, verticals);
+      const d = config.estimator(e, verticals);
       const total = totalOf(d.scores);
       const next = events.map((x) =>
         x.id === e.id
@@ -505,7 +545,7 @@ export default function EventsTracker() {
     { id: "rubric", label: "rubric & verticals" },
   ];
 
-  const meName = isReviewer ? "Zoei" : "Team member";
+  const meName = isReviewer ? config.reviewerName : "Team member";
   const meRoleLabel = isReviewer ? "marketing · reviewer" : "submits events";
 
   // ─────────────────────────────────────────────────────────────────────
@@ -576,18 +616,18 @@ export default function EventsTracker() {
         }}
       >
         <div style={{ padding: "0 8px 4px" }}>
-          {logoOk ? (
+          {logoOk && config.brandLogo ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               ref={logoRef}
-              src="/images/roebling-logo-white.png"
-              alt="Roebling"
+              src={config.brandLogo}
+              alt={config.brandName}
               onError={() => setLogoOk(false)}
               style={{ height: 24, width: "auto", display: "block", borderRadius: 4 }}
             />
           ) : (
             <div style={{ fontSize: 23, fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1 }}>
-              roebling
+              {config.brandName}
             </div>
           )}
           <div
@@ -600,7 +640,7 @@ export default function EventsTracker() {
               marginTop: 7,
             }}
           >
-            events tracker
+            {config.subtitle}
           </div>
         </div>
 
@@ -677,8 +717,9 @@ export default function EventsTracker() {
           })}
         </nav>
 
+        {config.pipelineHref && (
         <Link
-          href="/projects/roebling-gtm/events/pipeline"
+          href={config.pipelineHref}
           className="rt-pipeline-link"
           style={{
             display: "flex",
@@ -705,6 +746,7 @@ export default function EventsTracker() {
           </span>
           <span style={{ fontSize: 15, color: "#1e90ff" }}>→</span>
         </Link>
+        )}
 
         <div
           style={{
@@ -965,10 +1007,10 @@ export default function EventsTracker() {
       <div className="rt-fade" style={{ maxWidth: 1120, margin: "0 auto", padding: "40px 48px 64px" }}>
         <SectionEyebrow>overview</SectionEyebrow>
         <h1 style={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0", lineHeight: 1.05 }}>
-          {isReviewer ? "good morning, Zoei" : "the events, at a glance"}
+          {isReviewer ? `good morning, ${config.reviewerName}` : "the events, at a glance"}
         </h1>
         <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 620 }}>
-          every event the team is tracking for 2026, scored against the Roebling rubric so go / no-go
+          every event the team is tracking for 2026, scored against {config.rubricCredit} so go / no-go
           decisions stay consistent.
         </p>
 
@@ -1566,10 +1608,10 @@ export default function EventsTracker() {
                 visit event site →
               </a>
             )}
-            {e.status === "scheduled" && (
+            {config.pipelineHref && e.status === "scheduled" && (
               <div style={{ marginTop: 16 }}>
                 <Link
-                  href={`/projects/roebling-gtm/events/pipeline?event=${e.id}`}
+                  href={`${config.pipelineHref}?event=${e.id}`}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -1961,7 +2003,7 @@ export default function EventsTracker() {
                 </button>
                 <span style={{ fontSize: 12.5, color: "#6a6a6a" }}>
                   {scoring
-                    ? "reading the event and applying Roebling’s calibration"
+                    ? config.calibrationNote
                     : "the rubric reads the details and scores all six criteria"}
                 </span>
               </>
