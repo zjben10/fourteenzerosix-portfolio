@@ -615,18 +615,19 @@ export default function EventsTracker({
           [data-rt] *{transition:none !important;}
         }
         @media (max-width: 768px){
-          [data-rt].rt-root{flex-direction:column !important;height:auto !important;min-height:100dvh;overflow:visible !important;}
-          [data-rt] .rt-main{overflow-y:visible !important;height:auto !important;}
+          [data-rt].rt-root{flex-direction:column !important;height:auto !important;min-height:100dvh;overflow-x:clip !important;overflow-y:visible !important;}
+          [data-rt] .rt-main{overflow-x:clip !important;overflow-y:visible !important;height:auto !important;min-width:0 !important;}
           [data-rt] .rt-sidebar{width:100% !important;min-width:0 !important;height:auto !important;padding:18px 16px 14px !important;}
           [data-rt] .rt-nav{flex-direction:row !important;overflow-x:auto;gap:8px !important;padding-bottom:6px;}
           [data-rt] .rt-nav button{width:auto !important;white-space:nowrap;flex:0 0 auto;}
           [data-rt] .rt-me{display:none !important;}
-          [data-rt] .rt-grid-4{grid-template-columns:1fr 1fr !important;}
-          [data-rt] .rt-grid-2{grid-template-columns:1fr !important;}
+          [data-rt] .rt-grid-4{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;}
+          [data-rt] .rt-grid-2{grid-template-columns:minmax(0,1fr) !important;}
+          [data-rt] .rt-grid-2 > *, [data-rt] .rt-grid-4 > *{min-width:0 !important;}
           [data-rt] .rt-scorebar{grid-template-columns:1fr auto !important;gap:12px !important;}
           [data-rt] .rt-table{overflow-x:auto !important;overflow-y:hidden !important;-webkit-overflow-scrolling:touch;}
           [data-rt] .rt-table > div, [data-rt] .rt-table > button{min-width:680px;}
-          [data-rt] .rt-fade{padding-left:18px !important;padding-right:18px !important;}
+          [data-rt] .rt-fade{max-width:100% !important;padding-left:18px !important;padding-right:18px !important;}
         }
       `}</style>
 
