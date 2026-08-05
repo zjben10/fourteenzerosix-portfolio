@@ -20,7 +20,7 @@ const demoConfig: TrackerConfig = {
   rubric: demoRubric,
   verticals: demoVerticals,
   storageKey: DEMO_STORAGE_KEY,
-  rubricCredit: "a consistent rubric",
+  dashboardBlurb: "every event the team is tracking for 2026.",
   calibrationNote: "reading the event and applying the evaluator’s calibration",
   pipelineHref: "/ai-projects/event-tracker/pipeline",
   pipelineLabel: "contact pipeline",

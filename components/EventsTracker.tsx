@@ -228,7 +228,7 @@ export type TrackerConfig = {
   rubric: RubricCriterion[];
   verticals: string[];
   storageKey: string;
-  rubricCredit: string;
+  dashboardBlurb: string;
   calibrationNote: string;
   pipelineHref?: string;
   pipelineLabel: string;
@@ -256,7 +256,8 @@ const DEFAULT_CONFIG: TrackerConfig = {
   rubric: RUBRIC,
   verticals: DEFAULT_VERTICALS,
   storageKey: STORAGE_KEY,
-  rubricCredit: "the Roebling rubric",
+  dashboardBlurb:
+    "every event the team is tracking for 2026, scored against the Roebling rubric so go / no-go decisions stay consistent.",
   calibrationNote: "reading the event and applying Roebling’s calibration",
   pipelineHref: "/projects/roebling-gtm/events/pipeline",
   pipelineLabel: "contact pipeline",
@@ -1038,8 +1039,7 @@ export default function EventsTracker({
           {isReviewer ? `good morning, ${config.reviewerName}` : "the events, at a glance"}
         </h1>
         <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 620 }}>
-          every event the team is tracking for 2026, scored against {config.rubricCredit} so go / no-go
-          decisions stay consistent.
+          {config.dashboardBlurb}
         </p>
 
         <div className="rt-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 30 }}>
