@@ -23,9 +23,9 @@ const demoConfig: TrackerConfig = {
   rubricCredit: "a consistent rubric",
   calibrationNote: "reading the event and applying the evaluator’s calibration",
   pipelineHref: "/ai-projects/event-tracker/pipeline",
-  pipelineLabel: "sales follow-up",
-  pipelineSubtext: "booked & met, with marketing context",
-  pipelineDetailNote: "sales follow-up with marketing context for this event",
+  pipelineLabel: "contact pipeline",
+  pipelineSubtext: "add contacts · sales follow-up",
+  pipelineDetailNote: "add contacts and work the sales follow-up for this event",
   // Sage palette (the portfolio brand) instead of Roebling's blue. Swapping
   // these four values re-themes the whole demo.
   theme: {
