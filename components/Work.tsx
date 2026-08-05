@@ -18,7 +18,7 @@ function RowContent({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] tracking-[0.12em] px-2.5 py-1 rounded-full border"
+              className="text-[10px] tracking-[0.12em] px-2.5 py-1 rounded-none border"
               style={{ borderColor: "rgba(242,238,230,0.2)", color: "rgba(242,238,230,0.5)" }}
             >
               {tag.toUpperCase()}
@@ -80,6 +80,8 @@ export default function Work() {
           </h2>
         </div>
 
+        <LabEntry />
+
         <div>
           {projects.filter((project) => !project.hidden).map((project) =>
             project.externalUrl ? (
@@ -108,5 +110,55 @@ export default function Work() {
         </div>
       </div>
     </section>
+  );
+}
+
+function LabEntry() {
+  return (
+        <Link
+          href="/ai-projects"
+          className="lab-entry group block mb-12 md:mb-16 rounded-none border p-8 md:p-10"
+          style={{ borderColor: "rgba(242,238,230,0.15)" }}
+        >
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <p
+                className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase mb-3"
+                style={{ color: "var(--brand-sage)" }}
+              >
+                <span aria-hidden="true">🔧</span> AI Marketing Engineering
+              </p>
+              <p
+                className="text-sm md:text-base leading-relaxed max-w-xl"
+                style={{ color: "rgba(242,238,230,0.75)" }}
+              >
+                Shipped projects for previous roles using Claude that can make
+                go-to-market work faster.
+              </p>
+            </div>
+            <span
+              className="inline-flex items-center gap-2 text-sm font-semibold whitespace-nowrap"
+              style={{ color: "var(--brand-sage)" }}
+            >
+              See AI projects &amp; skills
+              <svg
+                className="lab-entry-arrow"
+                width="16"
+                height="16"
+                viewBox="0 0 18 18"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 15L15 3M15 3H6M15 3V12"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </Link>
   );
 }

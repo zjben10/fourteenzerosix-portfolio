@@ -24,6 +24,7 @@ import {
   type EventStatus,
   type Scores,
   type ScoreDraft,
+  type EventFacts,
 } from "@/lib/roeblingEvents";
 
 const MONO = '"Aptos Mono", var(--font-mono), ui-monospace, SFMono-Regular, monospace';
@@ -111,7 +112,7 @@ function regionStyle(r: string): CSS {
     r === "US hub"
       ? { bg: "#e4f7e8", fg: "#1a7d2a" }
       : r === "International"
-      ? { bg: "#e7f2ff", fg: "#0f74d4" }
+      ? { bg: "var(--tk-accent-soft)", fg: "var(--tk-accent-deep-alt)" }
       : { bg: "#ededed", fg: "#6a6a6a" };
   return {
     display: "inline-flex",
@@ -206,7 +207,71 @@ const stepBtnStyle: CSS = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────
-export default function EventsTracker() {
+// Config surface: the tracker is brand-agnostic. It ships with the Roebling
+// setup as the default so the case-study route is unchanged, and a second
+// route can pass a de-branded config (its own brand, rubric, verticals, seed,
+// and estimator). When `pipelineHref` is omitted, the contact-pipeline links
+// are hidden entirely.
+export type TrackerTheme = {
+  accent: string; // primary accent (buttons, active nav, links)
+  accentDeep: string; // deeper accent for text on soft backgrounds
+  accentDeepAlt: string; // secondary deep accent (hover states)
+  accentSoft: string; // soft accent background
+};
+
+export type TrackerConfig = {
+  brandName: string;
+  brandLogo?: string;
+  subtitle: string;
+  reviewerName: string;
+  seed: TrackedEvent[];
+  rubric: RubricCriterion[];
+  verticals: string[];
+  storageKey: string;
+  dashboardBlurb: string;
+  calibrationNote: string;
+  pipelineHref?: string;
+  pipelineLabel: string;
+  pipelineSubtext: string;
+  pipelineDetailNote: string;
+  theme: TrackerTheme;
+  estimator: (facts: EventFacts, verticals: string[]) => ScoreDraft;
+};
+
+// The original Roebling blue, kept as the default so the case-study route is
+// unchanged. Each value maps 1:1 to the literal it replaces.
+const ROEBLING_THEME: TrackerTheme = {
+  accent: "#1e90ff",
+  accentDeep: "#1268c9",
+  accentDeepAlt: "#0f74d4",
+  accentSoft: "#e7f2ff",
+};
+
+const DEFAULT_CONFIG: TrackerConfig = {
+  brandName: "roebling",
+  brandLogo: "/images/roebling-logo-white.png",
+  subtitle: "events tracker",
+  reviewerName: "Zoei",
+  seed: seedEvents,
+  rubric: RUBRIC,
+  verticals: DEFAULT_VERTICALS,
+  storageKey: STORAGE_KEY,
+  dashboardBlurb:
+    "every event the team is tracking for 2026, scored against the Roebling rubric so go / no-go decisions stay consistent.",
+  calibrationNote: "reading the event and applying Roebling’s calibration",
+  pipelineHref: "/projects/roebling-gtm/events/pipeline",
+  pipelineLabel: "contact pipeline",
+  pipelineSubtext: "BD · sales · marketing",
+  pipelineDetailNote: "capture, sales follow-up & marketing attribution for this event",
+  theme: ROEBLING_THEME,
+  estimator: estimateScores,
+};
+
+export default function EventsTracker({
+  config = DEFAULT_CONFIG,
+}: {
+  config?: TrackerConfig;
+}) {
   const [loaded, setLoaded] = useState(false);
   const [logoOk, setLogoOk] = useState(true);
   const logoRef = useRef<HTMLImageElement>(null);
@@ -219,8 +284,8 @@ export default function EventsTracker() {
   const [isReviewer, setIsReviewer] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [events, setEvents] = useState<TrackedEvent[]>([]);
-  const [verticals, setVerticals] = useState<string[]>(DEFAULT_VERTICALS.slice());
-  const [rubric, setRubric] = useState<RubricCriterion[]>(RUBRIC.map((c) => ({ ...c })));
+  const [verticals, setVerticals] = useState<string[]>(config.verticals.slice());
+  const [rubric, setRubric] = useState<RubricCriterion[]>(config.rubric.map((c) => ({ ...c })));
   const [filters, setFilters] = useState<Filters>({
     search: "",
     vertical: "All",
@@ -248,14 +313,14 @@ export default function EventsTracker() {
       rubric?: RubricCriterion[];
     } | null = null;
     try {
-      saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      saved = JSON.parse(localStorage.getItem(config.storageKey) || "null");
     } catch {}
     if (saved && saved.events && saved.events.length) {
       setEvents(saved.events);
-      setVerticals(saved.verticals || DEFAULT_VERTICALS.slice());
-      setRubric(saved.rubric || RUBRIC.map((c) => ({ ...c })));
+      setVerticals(saved.verticals || config.verticals.slice());
+      setRubric(saved.rubric || config.rubric.map((c) => ({ ...c })));
     } else {
-      setEvents(seedEvents.map((e) => ({ ...e })));
+      setEvents(config.seed.map((e) => ({ ...e })));
     }
     setLoaded(true);
   }, []);
@@ -267,7 +332,7 @@ export default function EventsTracker() {
   ) => {
     try {
       localStorage.setItem(
-        STORAGE_KEY,
+        config.storageKey,
         JSON.stringify({ events: nextEvents, verticals: nextVerticals, rubric: nextRubric })
       );
     } catch {}
@@ -330,7 +395,7 @@ export default function EventsTracker() {
     setSubmitScoreErr("");
     // Deterministic rubric estimate that feels considered without a round-trip.
     setTimeout(() => {
-      setScoreDraft(estimateScores(form, verticals));
+      setScoreDraft(config.estimator(form, verticals));
       setScoring(false);
     }, 550);
   };
@@ -358,7 +423,7 @@ export default function EventsTracker() {
       type: form.type,
       industry: form.industry || "–",
       verticals: scoreDraft.verticals,
-      submitter: isReviewer ? "Zoei" : "You",
+      submitter: isReviewer ? config.reviewerName : "You",
       submittedRole: "Attendee",
       sponsorCost: "",
       regCost: "",
@@ -437,7 +502,7 @@ export default function EventsTracker() {
     if (!e || detailScoring) return;
     setDetailScoring(true);
     setTimeout(() => {
-      const d = estimateScores(e, verticals);
+      const d = config.estimator(e, verticals);
       const total = totalOf(d.scores);
       const next = events.map((x) =>
         x.id === e.id
@@ -505,7 +570,7 @@ export default function EventsTracker() {
     { id: "rubric", label: "rubric & verticals" },
   ];
 
-  const meName = isReviewer ? "Zoei" : "Team member";
+  const meName = isReviewer ? config.reviewerName : "Team member";
   const meRoleLabel = isReviewer ? "marketing · reviewer" : "submits events";
 
   // ─────────────────────────────────────────────────────────────────────
@@ -520,26 +585,30 @@ export default function EventsTracker() {
         overflow: "hidden",
         background: "#eaeaea",
         color: "#232323",
-      }}
+        ["--tk-accent" as string]: config.theme.accent,
+        ["--tk-accent-deep" as string]: config.theme.accentDeep,
+        ["--tk-accent-deep-alt" as string]: config.theme.accentDeepAlt,
+        ["--tk-accent-soft" as string]: config.theme.accentSoft,
+      } as CSS}
     >
       <style>{`
         .rt-scroll::-webkit-scrollbar{width:10px;height:10px;}
         .rt-scroll::-webkit-scrollbar-thumb{background:rgba(35,35,35,0.16);border-radius:5px;}
         .rt-row{transition:background 140ms;}
-        .rt-row-brown:hover{background:rgba(30,144,255,0.04);}
+        .rt-row-brown:hover{background:color-mix(in srgb, var(--tk-accent) 4%, transparent);}
         .rt-row-green:hover{background:rgba(42,195,60,0.05);}
         .rt-primary{transition:background 140ms;}
-        .rt-primary:hover{background:#0f74d4 !important;}
+        .rt-primary:hover{background:var(--tk-accent-deep-alt) !important;}
         .rt-ghost:hover{background:#f2f2f2 !important;}
-        .rt-pipeline-link:hover{background:rgba(30,144,255,0.22) !important;}
+        .rt-pipeline-link:hover{background:color-mix(in srgb, var(--tk-accent) 22%, transparent) !important;}
         .rt-fade{animation:rtFade 320ms cubic-bezier(0.22,0.61,0.36,1);}
         @keyframes rtFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
         @keyframes rtSpin{to{transform:rotate(360deg);}}
         @keyframes rtToast{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
         /* Visible keyboard focus (a11y): mouse clicks stay clean, keyboard shows a ring. */
-        [data-rt] :focus-visible{outline:2px solid #1e90ff;outline-offset:2px;border-radius:5px;}
+        [data-rt] :focus-visible{outline:2px solid var(--tk-accent);outline-offset:2px;border-radius:5px;}
         [data-rt] :focus:not(:focus-visible){outline:none;}
-        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:rgba(30,144,255,0.55);}
+        [data-rt] input:focus,[data-rt] select:focus,[data-rt] textarea:focus{border-color:color-mix(in srgb, var(--tk-accent) 55%, transparent);}
         [data-rt] [style*="uppercase"]{font-family:"Aptos Mono",var(--font-mono),ui-monospace,SFMono-Regular,monospace;}
         @media (prefers-reduced-motion: reduce){
           .rt-fade{animation:none;}
@@ -576,18 +645,18 @@ export default function EventsTracker() {
         }}
       >
         <div style={{ padding: "0 8px 4px" }}>
-          {logoOk ? (
+          {logoOk && config.brandLogo ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               ref={logoRef}
-              src="/images/roebling-logo-white.png"
-              alt="Roebling"
+              src={config.brandLogo}
+              alt={config.brandName}
               onError={() => setLogoOk(false)}
               style={{ height: 24, width: "auto", display: "block", borderRadius: 4 }}
             />
           ) : (
             <div style={{ fontSize: 23, fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1 }}>
-              roebling
+              {config.brandName}
             </div>
           )}
           <div
@@ -596,11 +665,11 @@ export default function EventsTracker() {
               fontWeight: 500,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "#1e90ff",
+              color: "var(--tk-accent)",
               marginTop: 7,
             }}
           >
-            events tracker
+            {config.subtitle}
           </div>
         </div>
 
@@ -610,7 +679,7 @@ export default function EventsTracker() {
           style={{
             margin: "26px 4px 22px",
             padding: "13px 16px",
-            background: "#1e90ff",
+            background: "var(--tk-accent)",
             color: "#f7f9f8",
             border: "none",
             cursor: "pointer",
@@ -648,7 +717,7 @@ export default function EventsTracker() {
                   fontSize: 13.5,
                   fontWeight: active ? 600 : 500,
                   transition: "background 140ms,color 140ms",
-                  background: active ? "rgba(30,144,255,0.9)" : "transparent",
+                  background: active ? "color-mix(in srgb, var(--tk-accent) 90%, transparent)" : "transparent",
                   color: active ? "#f7f9f8" : "rgba(247,249,248,0.72)",
                 }}
               >
@@ -656,7 +725,7 @@ export default function EventsTracker() {
                 {showBadge && (
                   <span
                     style={{
-                      background: active ? "rgba(247,249,248,0.25)" : "#1e90ff",
+                      background: active ? "rgba(247,249,248,0.25)" : "var(--tk-accent)",
                       color: "#f7f9f8",
                       fontSize: 11,
                       fontWeight: 600,
@@ -677,8 +746,9 @@ export default function EventsTracker() {
           })}
         </nav>
 
+        {config.pipelineHref && (
         <Link
-          href="/projects/roebling-gtm/events/pipeline"
+          href={config.pipelineHref}
           className="rt-pipeline-link"
           style={{
             display: "flex",
@@ -688,8 +758,8 @@ export default function EventsTracker() {
             marginTop: 14,
             padding: "12px 14px",
             borderRadius: 8,
-            border: "1px solid rgba(30,144,255,0.4)",
-            background: "rgba(30,144,255,0.12)",
+            border: "1px solid color-mix(in srgb, var(--tk-accent) 40%, transparent)",
+            background: "color-mix(in srgb, var(--tk-accent) 12%, transparent)",
             color: "#f7f9f8",
             fontSize: 13.5,
             fontWeight: 600,
@@ -698,13 +768,14 @@ export default function EventsTracker() {
           }}
         >
           <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <span>contact pipeline</span>
+            <span>{config.pipelineLabel}</span>
             <span style={{ fontSize: 10.5, fontWeight: 500, color: "rgba(247,249,248,0.55)" }}>
-              BD · sales · marketing
+              {config.pipelineSubtext}
             </span>
           </span>
-          <span style={{ fontSize: 15, color: "#1e90ff" }}>→</span>
+          <span style={{ fontSize: 15, color: "var(--tk-accent)" }}>→</span>
         </Link>
+        )}
 
         <div
           style={{
@@ -749,7 +820,7 @@ export default function EventsTracker() {
                     fontSize: 11.5,
                     fontWeight: 600,
                     transition: "all 140ms",
-                    background: on ? "#1e90ff" : "transparent",
+                    background: on ? "var(--tk-accent)" : "transparent",
                     color: on ? "#f7f9f8" : "rgba(247,249,248,0.6)",
                   }}
                 >
@@ -764,7 +835,7 @@ export default function EventsTracker() {
                 width: 34,
                 height: 34,
                 borderRadius: "50%",
-                background: "#1e90ff",
+                background: "var(--tk-accent)",
                 color: "#f7f9f8",
                 fontSize: 13,
                 fontWeight: 600,
@@ -889,7 +960,7 @@ export default function EventsTracker() {
                   style={{
                     height: "100%",
                     width: `${(sc / 5) * 100}%`,
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     borderRadius: 5,
                     transition: "width 240ms cubic-bezier(0.22,0.61,0.36,1)",
                   }}
@@ -940,7 +1011,7 @@ export default function EventsTracker() {
       : 0;
     const statCards = [
       { label: "tracked", value: events.length, sub: "events in 2026", subColor: "#6a6a6a" },
-      { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "#0f74d4" },
+      { label: "in pipeline", value: pipeline.length, sub: "submitted or considering", subColor: "var(--tk-accent-deep-alt)" },
       { label: "scheduled", value: scheduled.length, sub: "approved & planning", subColor: "#1a7d2a" },
       { label: "avg score", value: avg, sub: "out of 30", subColor: "#6a6a6a" },
     ];
@@ -965,11 +1036,10 @@ export default function EventsTracker() {
       <div className="rt-fade" style={{ maxWidth: 1120, margin: "0 auto", padding: "40px 48px 64px" }}>
         <SectionEyebrow>overview</SectionEyebrow>
         <h1 style={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.03em", margin: "8px 0 0", lineHeight: 1.05 }}>
-          {isReviewer ? "good morning, Zoei" : "the events, at a glance"}
+          {isReviewer ? `good morning, ${config.reviewerName}` : "the events, at a glance"}
         </h1>
         <p style={{ fontSize: 15, color: "#5a5a5a", margin: "9px 0 0", maxWidth: 620 }}>
-          every event the team is tracking for 2026, scored against the Roebling rubric so go / no-go
-          decisions stay consistent.
+          {config.dashboardBlurb}
         </p>
 
         <div className="rt-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 30 }}>
@@ -1002,7 +1072,7 @@ export default function EventsTracker() {
               </h2>
               <button
                 onClick={() => goView("review")}
-                style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
+                style={{ fontSize: 12.5, fontWeight: 600, color: "var(--tk-accent)", background: "none", border: "none", cursor: "pointer" }}
               >
                 {isReviewer ? "open queue →" : "see all →"}
               </button>
@@ -1110,7 +1180,7 @@ export default function EventsTracker() {
               </h2>
               <button
                 onClick={() => goView("scheduled")}
-                style={{ fontSize: 12.5, fontWeight: 600, color: "#1e90ff", background: "none", border: "none", cursor: "pointer" }}
+                style={{ fontSize: 12.5, fontWeight: 600, color: "var(--tk-accent)", background: "none", border: "none", cursor: "pointer" }}
               >
                 see all →
               </button>
@@ -1143,7 +1213,7 @@ export default function EventsTracker() {
                           fontWeight: 600,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
-                          color: "#1e90ff",
+                          color: "var(--tk-accent)",
                         }}
                       >
                         {fmtMonth(e.start)}
@@ -1340,7 +1410,7 @@ export default function EventsTracker() {
               style={{
                 fontSize: 12.5,
                 fontWeight: 600,
-                color: "#1e90ff",
+                color: "var(--tk-accent)",
                 padding: "8px 10px",
                 background: "none",
                 border: "none",
@@ -1556,7 +1626,7 @@ export default function EventsTracker() {
                 style={{
                   fontSize: 13,
                   fontWeight: 600,
-                  color: "#1e90ff",
+                  color: "var(--tk-accent)",
                   borderBottom: "1px solid currentColor",
                   display: "inline-block",
                   marginTop: 12,
@@ -1566,10 +1636,10 @@ export default function EventsTracker() {
                 visit event site →
               </a>
             )}
-            {e.status === "scheduled" && (
+            {config.pipelineHref && e.status === "scheduled" && (
               <div style={{ marginTop: 16 }}>
                 <Link
-                  href={`/projects/roebling-gtm/events/pipeline?event=${e.id}`}
+                  href={`${config.pipelineHref}?event=${e.id}`}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -1583,10 +1653,10 @@ export default function EventsTracker() {
                     textDecoration: "none",
                   }}
                 >
-                  open contact pipeline →
+                  open {config.pipelineLabel} →
                 </Link>
                 <span style={{ fontSize: 12, color: "#6a6a6a", marginLeft: 10 }}>
-                  capture, sales follow-up &amp; marketing attribution for this event
+                  {config.pipelineDetailNote}
                 </span>
               </div>
             )}
@@ -1627,7 +1697,7 @@ export default function EventsTracker() {
                   cursor: "pointer",
                   fontSize: 12.5,
                   fontWeight: 600,
-                  background: editingScores ? "#1e90ff" : "#ededed",
+                  background: editingScores ? "var(--tk-accent)" : "#ededed",
                   color: editingScores ? "#f7f9f8" : "#5a5a5a",
                 }}
               >
@@ -1648,7 +1718,7 @@ export default function EventsTracker() {
                   onClick={scoreThis}
                   style={{
                     padding: "12px 26px",
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -1782,7 +1852,7 @@ export default function EventsTracker() {
               className="rt-primary"
               style={{
                 padding: "13px 26px",
-                background: "#1e90ff",
+                background: "var(--tk-accent)",
                 color: "#f7f9f8",
                 border: "none",
                 cursor: "pointer",
@@ -1933,7 +2003,7 @@ export default function EventsTracker() {
                     display: "inline-flex",
                     alignItems: "center",
                     padding: "13px 26px",
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -1961,7 +2031,7 @@ export default function EventsTracker() {
                 </button>
                 <span style={{ fontSize: 12.5, color: "#6a6a6a" }}>
                   {scoring
-                    ? "reading the event and applying Roebling’s calibration"
+                    ? config.calibrationNote
                     : "the rubric reads the details and scores all six criteria"}
                 </span>
               </>
@@ -1972,7 +2042,7 @@ export default function EventsTracker() {
                   className="rt-primary"
                   style={{
                     padding: "13px 26px",
-                    background: "#1e90ff",
+                    background: "var(--tk-accent)",
                     color: "#f7f9f8",
                     border: "none",
                     cursor: "pointer",
@@ -2052,7 +2122,7 @@ export default function EventsTracker() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 6 }}>
                   {d.actionItems.map((a, i) => (
                     <div key={i} style={{ fontSize: 13.5, color: "#333333", display: "flex", gap: 8 }}>
-                      <span style={{ color: "#1e90ff" }}>·</span>
+                      <span style={{ color: "var(--tk-accent)" }}>·</span>
                       <span>{a}</span>
                     </div>
                   ))}
@@ -2065,7 +2135,7 @@ export default function EventsTracker() {
                 className="rt-primary"
                 style={{
                   padding: "13px 28px",
-                  background: "#1e90ff",
+                  background: "var(--tk-accent)",
                   color: "#f7f9f8",
                   border: "none",
                   cursor: "pointer",
@@ -2189,7 +2259,7 @@ export default function EventsTracker() {
                             style={{
                               height: "100%",
                               width: `${((e.scores![cr.key] || 0) / 5) * 100}%`,
-                              background: "#1e90ff",
+                              background: "var(--tk-accent)",
                               borderRadius: 3,
                             }}
                           />
@@ -2215,7 +2285,7 @@ export default function EventsTracker() {
                         className="rt-primary"
                         style={{
                           padding: "10px 20px",
-                          background: "#1e90ff",
+                          background: "var(--tk-accent)",
                           color: "#f7f9f8",
                           border: "none",
                           cursor: "pointer",
@@ -2334,7 +2404,7 @@ export default function EventsTracker() {
                       fontWeight: 600,
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
-                      color: "#1e90ff",
+                      color: "var(--tk-accent)",
                     }}
                   >
                     {fmtMonth(e.start)}
@@ -2422,7 +2492,7 @@ export default function EventsTracker() {
                     height: 26,
                     borderRadius: 6,
                     background: "#f2f2f2",
-                    color: "#1e90ff",
+                    color: "var(--tk-accent)",
                     fontSize: 13,
                     fontWeight: 700,
                     display: "flex",
