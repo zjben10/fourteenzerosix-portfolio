@@ -132,8 +132,8 @@ function LabEntry() {
                 className="text-sm md:text-base leading-relaxed max-w-xl"
                 style={{ color: "rgba(242,238,230,0.75)" }}
               >
-                Small, shipped tools I&apos;ve built with Claude and code to make
-                go-to-market work faster — each one deployed and open.
+                Shipped projects for previous roles using Claude that can make
+                go-to-market work faster.
               </p>
             </div>
             <span

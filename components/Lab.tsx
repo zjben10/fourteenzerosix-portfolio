@@ -162,8 +162,8 @@ export default function Lab() {
             className="text-base md:text-lg leading-relaxed max-w-2xl"
             style={{ color: "rgba(242,238,230,0.92)" }}
           >
-            Shipped tools I&apos;ve built for previous roles using Claude that can
-            make go-to-market work faster.
+            Shipped projects for previous roles using Claude that can make
+            go-to-market work faster.
           </p>
         </section>
 
