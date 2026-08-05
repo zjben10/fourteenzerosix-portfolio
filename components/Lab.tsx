@@ -17,14 +17,6 @@ function GitHubMark() {
   );
 }
 
-function VercelMark() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2 22 20H2L12 2z" />
-    </svg>
-  );
-}
-
 function ArrowUpRight() {
   return (
     <svg
@@ -47,8 +39,15 @@ function ArrowUpRight() {
 }
 
 function ProjectCard({ project }: { project: AiProject }) {
+  const href = project.liveUrl || project.repoUrl;
   return (
-    <article className="lab-card rounded-none p-6 md:p-8 flex flex-col h-full">
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open ${project.title}`}
+      className="lab-card group rounded-none p-6 md:p-8 flex flex-col h-full no-underline"
+    >
       {/* Index · status */}
       <div className="flex items-start justify-between gap-4 mb-5">
         <span className="lab-index text-4xl md:text-5xl font-semibold leading-none tracking-tight">
@@ -104,36 +103,14 @@ function ProjectCard({ project }: { project: AiProject }) {
         ))}
       </div>
 
-      {/* Dual destinations — pinned to the bottom for a consistent baseline */}
-      <div className="mt-auto flex flex-wrap gap-3 pt-2">
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="lab-btn lab-btn-live inline-flex items-center gap-2 rounded-none px-4 py-2.5 text-sm font-semibold"
-            aria-label={`Open the live ${project.title} site`}
-          >
-            <VercelMark />
-            Live
-            <ArrowUpRight />
-          </a>
-        )}
-        {project.repoUrl && (
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="lab-btn lab-btn-code inline-flex items-center gap-2 rounded-none px-4 py-2.5 text-sm font-semibold"
-            aria-label={`View the ${project.title} source on GitHub`}
-          >
-            <GitHubMark />
-            Code
-            <ArrowUpRight />
-          </a>
-        )}
-      </div>
-    </article>
+      {/* Opens-out cue, pinned to the bottom for a consistent baseline */}
+      <span
+        className="mt-auto inline-flex transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        style={{ color: "var(--brand-sage)" }}
+      >
+        <ArrowUpRight />
+      </span>
+    </a>
   );
 }
 
@@ -172,12 +149,6 @@ export default function Lab() {
       <main className="flex-1">
         {/* ── Header ── */}
         <section className="max-w-7xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-14 md:pb-20">
-          <p
-            className="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] uppercase mb-6"
-            style={{ color: "var(--brand-sage)" }}
-          >
-            <span aria-hidden="true">🔧</span> AI Marketing Engineering
-          </p>
           <h1
             className="font-bold leading-[1.02] tracking-tight mb-6"
             style={{
@@ -191,9 +162,8 @@ export default function Lab() {
             className="text-base md:text-lg leading-relaxed max-w-2xl"
             style={{ color: "rgba(242,238,230,0.92)" }}
           >
-            Where the marketing meets the machine. Small, shipped tools I&apos;ve
-            built with Claude and code to make go-to-market work faster — each one
-            deployed and open. Click through to the live app or read the source.
+            Shipped tools I&apos;ve built for previous roles using Claude that can
+            make go-to-market work faster.
           </p>
         </section>
 
@@ -237,9 +207,7 @@ export default function Lab() {
               className="text-sm md:text-base leading-relaxed max-w-2xl mt-4"
               style={{ color: "rgba(242,238,230,0.7)" }}
             >
-              The systems I wire together to run go-to-market: AI and automation
-              layered on top of the CRM, demand gen, and analytics tools that
-              actually move pipeline.
+              The systems and tools I&apos;ve worked with to run go-to-market.
             </p>
           </div>
 
